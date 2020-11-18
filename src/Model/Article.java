@@ -29,7 +29,7 @@ public class Article {
 		this.quantity = quantity;
 		nextArticle = null;
 	}
-	
+
 	/*
 	name: getName
 	allows to obtain the name of the article
