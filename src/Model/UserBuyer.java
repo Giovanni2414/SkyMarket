@@ -1,6 +1,6 @@
 package Model;
 
-public class UserBuyer extends User{
+public class UserBuyer extends User {
 	
 	private Article basket;
 	private Article history;
