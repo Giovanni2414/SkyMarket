@@ -2,6 +2,8 @@ package Model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 public class UserTest {
@@ -13,7 +15,8 @@ public class UserTest {
 	@Test
 	public void testUser(){
 		setupStage1();
-		User userTest = new User("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul");
+		LocalDate ld = LocalDate.now();
+		User userTest = new User("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul",ld);
 		
 		assertEquals("Raul", userTest.getName());
 		assertEquals("Gomez", userTest.getLastName());
@@ -22,12 +25,14 @@ public class UserTest {
 		assertEquals("raulg10", userTest.getPassword());
 		assertEquals("raulito20", userTest.getUsername());
 		assertEquals("data/PictureRaul", userTest.getPicture());
+		assertEquals(ld,userTest.getBirthday());
 	}
 	
 	@Test
 	public void testGettersAndSetters() {
 		setupStage1();
-		User userTest = new User("","","","","","","");
+		LocalDate ld = LocalDate.now();
+		User userTest = new User("","","","","","","",ld);
 		userTest.setName("Raul");
 		userTest.setLastName("Gomez");
 		userTest.setIdentification("1005040032");
@@ -43,5 +48,6 @@ public class UserTest {
 		assertEquals("raulg10", userTest.getPassword());
 		assertEquals("raulito20", userTest.getUsername());
 		assertEquals("data/PictureRaul", userTest.getPicture());
+		assertEquals(ld,userTest.getBirthday());
 	}
 }

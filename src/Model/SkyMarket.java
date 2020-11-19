@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class SkyMarket {
@@ -42,12 +43,12 @@ public class SkyMarket {
 	 * @param picture Picture of the user
 	 * @param type Type of account, 0 = Buyer, 1 = Seller, 2 = Admin
 	 */
-	public void newUser(String name, String lastname, String identification,String email, String password, String username, String picture, int type) {
+	public void newUser(String name, String lastname, String identification,String email, String password, String username, String picture, LocalDate birthday,int type) {
 		User newUserObject = null;
 		if(type == 0) {
-			newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture);
+			newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture,birthday);
 		} else if(type == 1) {
-			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture);
+			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture,birthday);
 		} else {
 			//Pendiente por crear el usuario administrador
 		}

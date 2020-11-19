@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDate;
+
 public class User {
 	private String name;
 	private String lastName;
@@ -8,7 +10,8 @@ public class User {
 	private String password; 
 	private String username;
 	private String picture;
-	
+	private LocalDate birthday;
+
 	/*
 	name: User
 	Its the constructor of User
@@ -20,7 +23,7 @@ public class User {
 	@param: username
 	@param: picture
 	**/
-	public User(String name, String lastName, String identification,String email, String password, String username, String picture) {
+	public User(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate bithday) {
 		this.name = name;
 		this.lastName = lastName;
 		this.identification = identification;
@@ -175,5 +178,26 @@ public class User {
 	**/
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+	
+	/*
+	name: getBirthday
+	allows to obtain the birthday of the User
+	<b>pre:</b>The user object must be created
+	<b>post:</b>obtain the birthday of the user saved in variable "birthday"
+	**/
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	/*
+	name: setBirthday
+	allows entering a new birthday for the User
+	<b>pre:</b>The user object must be created
+	<b>post:</b>the birthday will be saved in the variable "birthday"
+	@param: birthday
+	**/
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 }

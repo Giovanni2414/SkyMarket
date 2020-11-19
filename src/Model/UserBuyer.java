@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDate;
+
 public class UserBuyer extends User {
 	
 	private Article basket;
@@ -15,8 +17,8 @@ public class UserBuyer extends User {
 	@param: username
 	@param: picture
 	**/
-	public UserBuyer(String name, String lastName, String identification,String email, String password, String username, String picture) {
-		super(name,lastName,identification,email,password,username,picture);
+	public UserBuyer(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
+		super(name,lastName,identification,email,password,username,picture,birthday);
 		basket = null;
 		history = null;
 	}

@@ -2,6 +2,8 @@ package Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 class UserBuyerTest {
@@ -13,7 +15,8 @@ class UserBuyerTest {
 	@Test
 	public void testUserBuyer() {
 		setupStage1();
-		UserBuyer userTest = new UserBuyer("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul");
+		LocalDate ld = LocalDate.now();
+		UserBuyer userTest = new UserBuyer("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul",ld);
 		
 		assertEquals("Raul", userTest.getName());
 		assertEquals("Gomez", userTest.getLastName());
@@ -24,12 +27,14 @@ class UserBuyerTest {
 		assertEquals("data/PictureRaul", userTest.getPicture());
 		assertNull(userTest.getBasket());
 		assertNull(userTest.getHistory());
+		assertEquals(ld,userTest.getBirthday());
 	} 
 	
 	@Test
 	public void testGettersAndSetters() {
 		setupStage1();
-		UserBuyer userTest = new UserBuyer("","","","","","","");
+		LocalDate ld = LocalDate.now();
+		UserBuyer userTest = new UserBuyer("","","","","","","",ld);
 		userTest.setName("Raul");
 		userTest.setLastName("Gomez");
 		userTest.setIdentification("1005040032");
@@ -48,5 +53,6 @@ class UserBuyerTest {
 		assertEquals("data/PictureRaul", userTest.getPicture());
 		assertNull(userTest.getBasket());
 		assertNull(userTest.getHistory());
+		assertEquals(ld,userTest.getBirthday());
 	}
 }

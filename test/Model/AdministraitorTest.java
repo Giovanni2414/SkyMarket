@@ -2,6 +2,8 @@ package Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 class AdministraitorTest {
@@ -13,7 +15,8 @@ class AdministraitorTest {
 	@Test
 	public void testUser(){
 		setupStage1();
-		User administraitorTest = new User("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul");
+		LocalDate ld = LocalDate.now();
+		User administraitorTest = new User("Raul","Gomez","1005040032","raulg@gmail.com","raulg10","raulito20","data/PictureRaul",ld);
 		
 		assertEquals("Raul", administraitorTest.getName());
 		assertEquals("Gomez", administraitorTest.getLastName());
@@ -22,13 +25,15 @@ class AdministraitorTest {
 		assertEquals("raulg10", administraitorTest.getPassword());
 		assertEquals("raulito20", administraitorTest.getUsername());
 		assertEquals("data/PictureRaul", administraitorTest.getPicture());
+		assertEquals(ld,administraitorTest.getBirthday());
 	}
 	
 	@Test
 	public void testGettersAndSetters() {
 		setupStage1();
+		LocalDate ld = LocalDate.now();
 		
-		Administraitor administraitorTest = new Administraitor("", "", "", "", "", "", "", null);
+		Administraitor administraitorTest = new Administraitor("", "", "", "", "", "", "",ld, null);
 		administraitorTest.setName("Raul");
 		administraitorTest.setLastName("Gomez");
 		administraitorTest.setIdentification("1005040032");
@@ -44,6 +49,7 @@ class AdministraitorTest {
 		assertEquals("raulg10", administraitorTest.getPassword());
 		assertEquals("raulito20", administraitorTest.getUsername());
 		assertEquals("data/PictureRaul", administraitorTest.getPicture());
+		assertEquals(ld,administraitorTest.getBirthday());
 	}
 
 }

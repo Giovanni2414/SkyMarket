@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class UserSeller extends User{
@@ -14,12 +15,14 @@ public class UserSeller extends User{
 	@param: name
 	@param: lastName
 	@param: identification
+	@param: email
 	@param: password
 	@param: username
 	@param: picture
+	@param: bithday
 	**/
-	public UserSeller(String name, String lastName, String identification,String email, String password, String username, String picture) {
-		super(name,lastName,identification,email,password,username,picture);
+	public UserSeller(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
+		super(name,lastName,identification,email,password,username,picture,birthday);
 		calification = 0;
 		history = null;
 		sellArticles = null;
