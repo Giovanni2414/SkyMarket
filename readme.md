@@ -2,6 +2,9 @@
 
 _Basic system about selling and buying created in the Java language implementing GUI interfaces created in SceneBuilder_
 
+## Assignments
+<a href="https://github.com/Giovanni2414/SkyMarket/blob/master/docs/Mosquera%20A00365672%20-%20Sanin%20A00296776%20-%20Zorrilla%20-A00365972.pdf">First milestone assignment</a>
+
 ## Starting 🚀
 
 _To create a copy of the project in case of tests or improvements you need to fork this project and respect the rights._
