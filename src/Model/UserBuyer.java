@@ -15,8 +15,8 @@ public class UserBuyer extends User {
 	@param: username
 	@param: picture
 	**/
-	public UserBuyer(String name, String lastName, String identification, String password, String username, String picture) {
-		super(name,lastName,identification,password,username,picture);
+	public UserBuyer(String name, String lastName, String identification,String email, String password, String username, String picture) {
+		super(name,lastName,identification,email,password,username,picture);
 		basket = null;
 		history = null;
 	}

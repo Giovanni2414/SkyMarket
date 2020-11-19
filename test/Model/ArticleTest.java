@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class ArticleTest {
 
-	public void setupScenary1() {
+	public void setupStage1() {
 		
 	}
 	
 	@Test
 	public void testArticle() {
+		setupStage1();
 		Article articleTest = new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3);
 		
 		assertEquals("Y9", articleTest.getName());
@@ -25,7 +26,7 @@ class ArticleTest {
 	
 	@Test
 	public void testGettersAndSetters(){
-		setupScenary1();
+		setupStage1();
 		Article articleTest = new Article(" "," ",0," "," ",0);
 		articleTest.setName("Mate 20");
 		articleTest.setCode("1234");

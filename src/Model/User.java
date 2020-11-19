@@ -4,6 +4,7 @@ public class User {
 	private String name;
 	private String lastName;
 	private String identification;
+	private String email;
 	private String password; 
 	private String username;
 	private String picture;
@@ -14,14 +15,16 @@ public class User {
 	@param: name
 	@param: lastName
 	@param: identification
+	@param: email
 	@param: password
 	@param: username
 	@param: picture
 	**/
-	public User(String name, String lastName, String identification, String password, String username, String picture) {
+	public User(String name, String lastName, String identification,String email, String password, String username, String picture) {
 		this.name = name;
 		this.lastName = lastName;
 		this.identification = identification;
+		this.email = email;
 		this.password = password;
 		this.username = username;
 		this.picture = picture;
@@ -88,6 +91,27 @@ public class User {
 	**/
 	public void setIdentification(String identification) {
 		this.identification = identification;
+	}
+	
+	/*
+	name: getEmail
+	allows to obtain the email of the User
+	<b>pre:</b>The user object must be created
+	<b>post:</b>obtain the email of the user saved in variable "email"
+	**/
+	public String getEmail() {
+		return email;
+	}
+
+	/*
+	name: setEmail
+	allows entering a new email for the User
+	<b>pre:</b>The user object must be created
+	<b>post:</b>the email will be saved in the variable "email"
+	@param: email
+	**/
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	/*

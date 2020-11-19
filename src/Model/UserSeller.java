@@ -18,8 +18,8 @@ public class UserSeller extends User{
 	@param: username
 	@param: picture
 	**/
-	public UserSeller(String name, String lastName, String identification, String password, String username, String picture) {
-		super(name,lastName,identification,password,username,picture);
+	public UserSeller(String name, String lastName, String identification,String email, String password, String username, String picture) {
+		super(name,lastName,identification,email,password,username,picture);
 		calification = 0;
 		history = null;
 		sellArticles = null;

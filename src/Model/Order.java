@@ -1,21 +1,47 @@
 package Model;
 
+import java.util.Date;
+
 public class Order {
 
+	private Date date; 
 	private int orderCode;
 	private Article articles;
 	
 	/*
 	name: Order
 	Its the constructor of Order 
+	@param: date
 	@param: codeOrder
 	@param: articles
 	**/
 	public Order(int orderCode, Article articles) {
+		this.date = new java.util.Date();
 		this.orderCode = orderCode;
 		this.articles = articles;
 	}
 
+	/*
+	name: getDate
+	allows to obtain the date of the Order
+	<b>pre:</b>The Order object must be created
+	<b>post:</b>obtain the date of the Order saved in variable "date"
+	**/
+	public Date getDate() {
+		return date;
+	}
+
+	/*
+	name: setDate
+	allows entering a new date for the Order
+	<b>pre:</b>The Order object must be created
+	<b>post:</b>the date will be saved in the variable "date"
+	@param: date
+	**/
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
 	/*
 	name: getOrderCode
 	allows to obtain the code order of the Order
