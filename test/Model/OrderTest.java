@@ -26,7 +26,7 @@ class OrderTest {
 		Order orderTest = new Order(0, null);
 		Article newArticle = setupStage1(); 
 		
-		orderTest.setOrderCode();
+		orderTest.setOrderCode(123332);
 		orderTest.setArticles(newArticle);
 		
 		assertNotNull(orderTest.getDate());
