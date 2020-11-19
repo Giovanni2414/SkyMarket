@@ -23,4 +23,20 @@ public class Administraitor extends User{
 		//duda con cambio de LinkedList a ArrayList
 	}
 
+	public ArrayList<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
+
+	public ArrayList<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(ArrayList<Article> articles) {
+		this.articles = articles;
+	}
+
 }
