@@ -39,9 +39,9 @@ _Tools._
 
 _Founders_
 
-* **Juan Camilo Zorrilla** - *Parte lógica*
-* **Juan Pablo Sanin** - *Parte gráfica y wireframes*
-* **Giovanni Mosquera Diazgranados** - *Parte lógica*
+* **Juan Camilo Zorrilla (A00365972)** - *Logic*
+* **Juan Pablo Sanin (A00296776)** - *Graphical part and wireframes*
+* **Giovanni Mosquera Diazgranados (A00365672)** - *Logic*
 
 ## Acknowledgements 🎁
 
