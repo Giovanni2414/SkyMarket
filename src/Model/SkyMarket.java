@@ -43,18 +43,18 @@ public class SkyMarket {
 	 * @param type Type of account, 0 = Buyer, 1 = Seller, 2 = Admin
 	 */
 	public void newUser(String name, String lastname, String identification,String email, String password, String username, String picture, int type) {
+		User newUserObject = null;
+		if(type == 0) {
+			newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture);
+		} else if(type == 1) {
+			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture);
+		} else {
+			//Pendiente por crear el usuario administrador
+		}
 		if(users.isEmpty()) {
-			users.add(null);
+			users.add(newUserObject);
 		} else {
 			int c = 0;
-			User newUserObject = null;
-			if(type == 0) {
-				newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture);
-			} else if(type == 1) {
-				newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture);
-			} else {
-				//Pendiente por crear el usuario administrador
-			}
 			while(c < users.size() && comparatorAddUser(username, (users.get(c)).getUsername()) >= 1) {
 				c++;
 			}
@@ -100,7 +100,7 @@ public class SkyMarket {
 		while(in <= fin && !find) {
 			int pos = (int) Math.floor((in+fin)/2);
 			if(pos != users.size()) {
-				String el = users.get(pos).getName();
+				String el = users.get(pos).getUsername();
 				int compar = username.compareToIgnoreCase(el);
 				if(compar == 0) {
 					userSeek = users.get(pos);
@@ -124,10 +124,12 @@ public class SkyMarket {
 	 */
 	public void login(String username, String password) {
 		User tryUse = binarySearchUser(username);
-		if(tryUse.getPassword().equals(password)) {
-			currentUser = tryUse;
-		} else {
-			//Falta acción en caso de que no
+		if(tryUse != null) {
+			if(tryUse.getPassword().equals(password)) {
+				setCurrentUser(tryUse);
+			} else {
+				//Falta acción en caso de que no
+			}
 		}
 	}
 	
