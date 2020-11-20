@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="83.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="81.0" fitWidth="140.0" layoutX="230.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/picturesApp/skymarket-logo.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="551.0" layoutY="32.0" mnemonicParsing="false" onAction="#logout" text="Exit" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="172.0" layoutY="14.0" text="Seleccione la accion que desea realizar">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button layoutX="28.0" layoutY="131.0" mnemonicParsing="false" onAction="#viewListArticleForSale" text="Ver productos ofrecidos" />
+            <Button layoutX="232.0" layoutY="131.0" mnemonicParsing="false" onAction="#viewBasket" text="Ver carrito de compras" />
+            <Button layoutX="428.0" layoutY="131.0" mnemonicParsing="false" onAction="#historyShopping" prefHeight="25.0" prefWidth="143.0" text="Historial de compras" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

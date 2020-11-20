@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="72.0" fitWidth="137.0" layoutX="237.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../data/picturesApp/skymarket-logo.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="171.0" layoutY="64.0" prefHeight="293.0" prefWidth="259.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="144.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="10.0" prefWidth="105.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="84.0" text="Nombre" />
+            <TextField fx:id="txtNameRegister" prefHeight="25.0" prefWidth="0.0" GridPane.columnIndex="1" />
+            <Label prefHeight="17.0" prefWidth="84.0" text="Apellidos" GridPane.rowIndex="1" />
+            <TextField fx:id="txtLastNameRegister" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="161.0" text="Numero de identificación" GridPane.rowIndex="2" />
+            <TextField fx:id="txtIdentificationRegister" prefHeight="25.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="57.0" text="Email" GridPane.rowIndex="3" />
+            <TextField fx:id="txtEmailRegister" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Contraseña" GridPane.rowIndex="4" />
+            <Label text="Nombre de usuario" GridPane.rowIndex="5" />
+            <Label text="Foto de perfil" GridPane.rowIndex="6" />
+            <TextField fx:id="txtPasswordRegister" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtUsernameRegister" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtPathPictureRegister" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Fecha de nacimiento" GridPane.rowIndex="7" />
+            <DatePicker fx:id="dpBirthday" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         </children>
+      </GridPane>
+      <Button layoutX="198.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserBuyer" text="Comprador" />
+      <Button layoutX="326.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserSeller" prefHeight="25.0" prefWidth="77.0" text="Vendedor" />
+      <Button layoutX="442.0" layoutY="291.0" mnemonicParsing="false" onAction="#browsePathPicture" text="Browse" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitRegister" text="Exit" />
+   </children>
+</AnchorPane>
