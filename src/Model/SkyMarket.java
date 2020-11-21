@@ -3,6 +3,7 @@ package Model;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
+import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
 
 public class SkyMarket {
@@ -43,6 +44,23 @@ public class SkyMarket {
 	public void verificationPasswords(String password, String passwordVerify) throws PasswordNotEqualsException{
 		if(!password.equals(passwordVerify)) {
 			throw new PasswordNotEqualsException();
+		}
+	}
+	
+	/**
+	 * Method to verify info of register
+	 * <br>Post:<b>the info  to register is not null</b>
+	 * @param name Name of the user
+	 * @param lastname LastName of the user
+	 * @param identification Identification of the user
+	 * @param password Password of login from the new user
+	 * @param username Username of the user
+	 * @param picture Picture of the user
+	 * @param type Type of account, 0 = Buyer, 1 = Seller, 2 = Admin
+	 */
+	public void verificationFieldsRegister(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) throws EmptyFieldException{
+		if(name==null || lastName == null ||identification == null || email == null || password == null || username == null || picture == null || birthday == null) {
+			throw new EmptyFieldException();
 		}
 	}
 	

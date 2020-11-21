@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
 import Model.SkyMarket;
+import Model.User;
+import Model.UserBuyer;
+import Model.UserSeller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,8 +94,83 @@ public class SkyMarketGUI {
 	
 	//methods login
     @FXML
-    public void login(ActionEvent event) {
+    public void login(ActionEvent event) throws IOException {
+    	User userToLogin = skymarket.binarySearchUser(txtUsername.getText());
+    	if(userToLogin!=null) {
+    		if(userToLogin.getPassword().equals(txtPassword.getText())) {
+    			loginManagement(userToLogin);
+    		}else {
+    			userPasswordIncorrectAlert();
+    		}
+    	}else {
+    		userDoesNotExistAlert();
+    	}
+    }
+    
+    public void loginManagement(User userToLogin) throws IOException {
+    	if(userToLogin instanceof UserBuyer) {
+    		loadUserBuyerScreen();
+    	}else if(userToLogin instanceof UserSeller) {
+    		loadUserSellerScreen();
+    	}else {
+    		loadAdministraitorScreen();
+    	}
+    }
+    
+    public void userDoesNotExistAlert(){
+    	cleanFieldsLogin();
     	
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Cliente no existente");
+    	alert.setContentText("El cliente no se encuentra en nuestros datos, por favor verifique su nombre de usuario");
+    	alert.showAndWait();
+    }
+    
+    public void userPasswordIncorrectAlert(){
+    	cleanFieldsLogin();
+    	
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Contraseña incorrecta");
+    	alert.setContentText("La contraseña que usted ingreso no es la correcta");
+    	alert.showAndWait();
+    }
+    
+    public void loadUserBuyerScreen() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainScreenUserBuyer.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent userBuyerScreenPane = fxmlLoader.load(); 
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(userBuyerScreenPane);
+    }
+    
+    public void loadUserSellerScreen() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainScreenUserSeller.fxml"));
+    	
+    	fxmlLoader.setController(this);
+
+    	Parent userSellerScreenPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(userSellerScreenPane);
+    }
+
+	public void loadAdministraitorScreen() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainScreenAdministrator.fxml"));
+		
+		fxmlLoader.setController(this);
+		
+		Parent administraitorScreenPane = fxmlLoader.load();
+		
+		mainPanel.getChildren().clear();
+		mainPanel.setCenter(administraitorScreenPane);
+	}
+    
+    public void cleanFieldsLogin() {
+    	txtUsername.setText("");
+    	txtPassword.setText("");
     }
 
     @FXML
@@ -108,7 +187,7 @@ public class SkyMarketGUI {
     
     //methods register
     @FXML
-    public void addUserBuyer(ActionEvent event) {
+    public void addUserBuyer(ActionEvent event) throws IOException {
     	try {
     		String name = txtNameRegister.getText();
         	String lastName = txtLastNameRegister.getText();
@@ -116,18 +195,24 @@ public class SkyMarketGUI {
         	String email = txtEmailRegister.getText();
         	String password = txtPasswordRegister.getText();
         	String passwordVerify = txtPasswordVerificationRegister.getText();
-        	skymarket.verificationPasswords(password, passwordVerify);
         	String username = txtUsernameRegister.getText();
         	String pathPicture = txtPathPictureRegister.getText();
         	LocalDate birthday = dpBirthday.getValue();
+        	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
+        	skymarket.verificationPasswords(password, passwordVerify);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 0);
+        	cleanFieldsRegister();
+        	clientAddedAlert(username, 0);
+        	loadLogin();
+    	}catch(EmptyFieldException efe) {
+    		fieldEmptyAlert();
     	}catch(PasswordNotEqualsException pnee) {
-    		incorrectPassword();
+    		incorrectPasswordAlert();
     	}
     }
     
     @FXML
-    public void addUserSeller(ActionEvent event) {
+    public void addUserSeller(ActionEvent event) throws IOException {
     	try {
     		String name = txtNameRegister.getText();
         	String lastName = txtLastNameRegister.getText();
@@ -135,17 +220,54 @@ public class SkyMarketGUI {
         	String email = txtEmailRegister.getText();
         	String password = txtPasswordRegister.getText();
         	String passwordVerify = txtPasswordVerificationRegister.getText();
-        	skymarket.verificationPasswords(password, passwordVerify);
         	String username = txtUsernameRegister.getText();
         	String pathPicture = txtPathPictureRegister.getText();
         	LocalDate birthday = dpBirthday.getValue();
+        	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
+        	skymarket.verificationPasswords(password, passwordVerify);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 1);
+        	cleanFieldsRegister();
+        	clientAddedAlert(username, 1);
+        	loadLogin();
+    	}catch(EmptyFieldException efe) {
+    		fieldEmptyAlert();
     	}catch(PasswordNotEqualsException pnee) {
-    		incorrectPassword();
+    		incorrectPasswordAlert();
     	}
     }
     
-    public void incorrectPassword() {
+    public void incorrectPasswordAlert() {
+    	cleanFieldsRegister();
+    	
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Contraseñas incorrectas");
+    	alert.setContentText("Las contraseñas que ingreson no son iguales");
+    	alert.showAndWait();
+    }
+    
+    public void fieldEmptyAlert() {
+    	cleanFieldsRegister();
+    	
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Campo vacío");
+    	alert.setContentText("Todos los campos tienen que tener un dato ingresado");
+    	alert.showAndWait();
+    }
+    
+    public void clientAddedAlert(String username, int type) {
+    	cleanFieldsRegister();
+    	
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setHeaderText("Cliente agregado correctamente");
+    	if(type == 0) {
+    		alert.setContentText("El cliente se ha guardado como comprador con el nombre de usuario: " + username);
+    	}else {
+    		alert.setContentText("El cliente se ha guardado como vendedor con el nombre de usuario: " + username);
+    	}
+    	alert.showAndWait();
+    }
+    
+    public void cleanFieldsRegister() {
     	txtNameRegister.setText("");
     	txtLastNameRegister.setText("");
     	txtIdentificationRegister.setText("");
@@ -155,11 +277,6 @@ public class SkyMarketGUI {
     	txtUsernameRegister.setText("");
     	txtPathPictureRegister.setText("");
     	dpBirthday.setValue(null);
-    	
-    	Alert alert = new Alert(AlertType.ERROR);
-    	alert.setHeaderText("Contraseñas incorrectas");
-    	alert.setContentText("Las contraseñas que ingreson no son iguales");
-    	alert.showAndWait();
     }
 
     
