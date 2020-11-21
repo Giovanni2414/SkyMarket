@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,6 +33,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="84.0" text="Nombre" />
@@ -43,18 +45,20 @@
             <Label prefHeight="17.0" prefWidth="57.0" text="Email" GridPane.rowIndex="3" />
             <TextField fx:id="txtEmailRegister" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Contraseña" GridPane.rowIndex="4" />
-            <Label text="Nombre de usuario" GridPane.rowIndex="5" />
-            <Label text="Foto de perfil" GridPane.rowIndex="6" />
-            <TextField fx:id="txtPasswordRegister" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtUsernameRegister" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="txtPathPictureRegister" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Fecha de nacimiento" GridPane.rowIndex="7" />
-            <DatePicker fx:id="dpBirthday" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Nombre de usuario" GridPane.rowIndex="6" />
+            <Label text="Foto de perfil" GridPane.rowIndex="7" />
+            <TextField fx:id="txtUsernameRegister" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtPathPictureRegister" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Fecha de nacimiento" GridPane.rowIndex="8" />
+            <DatePicker fx:id="dpBirthday" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <PasswordField fx:id="txtPasswordRegister" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label prefHeight="17.0" prefWidth="128.0" text="Reingrese contraseña" GridPane.rowIndex="5" />
+            <PasswordField fx:id="txtPasswordVerificationRegister" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <Button layoutX="198.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserBuyer" text="Comprador" />
       <Button layoutX="326.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserSeller" prefHeight="25.0" prefWidth="77.0" text="Vendedor" />
-      <Button layoutX="442.0" layoutY="291.0" mnemonicParsing="false" onAction="#browsePathPicture" text="Browse" />
+      <Button layoutX="440.0" layoutY="297.0" mnemonicParsing="false" onAction="#browsePathPicture" text="Browse" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitRegister" text="Exit" />
    </children>
 </AnchorPane>

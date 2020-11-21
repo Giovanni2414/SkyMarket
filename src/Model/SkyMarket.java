@@ -3,6 +3,8 @@ package Model;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
+import Exceptions.PasswordNotEqualsException;
+
 public class SkyMarket {
 
 	/**
@@ -29,6 +31,19 @@ public class SkyMarket {
 		currentUser = null;
 		users = new LinkedList<>();
 		setArticles(new LinkedList<>());
+	}
+	
+	/**
+	 * Method to verify password
+	 * <br>Pre:<b>password diferent to null</b>
+	 * <br>Post:<b>the password are the same</b>
+	 * @param  password password of the user
+	 * @param  passwordVerify password to verify to the user
+	 */
+	public void verificationPasswords(String password, String passwordVerify) throws PasswordNotEqualsException{
+		if(!password.equals(passwordVerify)) {
+			throw new PasswordNotEqualsException();
+		}
 	}
 	
 	/**
