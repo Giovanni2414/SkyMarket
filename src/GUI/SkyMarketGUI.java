@@ -307,4 +307,66 @@ public class SkyMarketGUI {
     	mainPanel.getChildren().clear();
     	mainPanel.setCenter(loginPane);
     }
+    
+    //methods mainScreenUserBuyer
+    
+    @FXML
+    void historyShopping(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewBasket(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewListArticleForSale(ActionEvent event) {
+
+    }
+    
+    //methods mainScreenUserSeller
+    
+    @FXML
+    void addArticleToSell(ActionEvent event) {
+
+    }
+
+    @FXML
+    void historySales(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewListArticlesToSell(ActionEvent event) {
+
+    }
+    
+    //methods mainScreenAdministraitor
+    
+    @FXML
+    void ViewAllArticles(ActionEvent event) {
+
+    }
+
+    @FXML
+    void banUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void importData(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewAllUsers(ActionEvent event) {
+
+    }
+    //methods share mainScreenUserSeller, mainScreenuserBuyer and mainScreenAdministrator
+    
+    @FXML
+    void logout(ActionEvent event) throws IOException {
+    	loadLogin();
+    }
 }

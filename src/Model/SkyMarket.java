@@ -131,6 +131,7 @@ public class SkyMarket {
 		boolean find = false;
 		int in = 0;
 		int fin = users.size();
+		
 		while(in <= fin && !find) {
 			int pos = (int) Math.floor((in+fin)/2);
 			if(pos != users.size()) {
