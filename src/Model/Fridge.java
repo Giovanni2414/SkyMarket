@@ -3,7 +3,7 @@ package Model;
 public class Fridge extends HomeAppliances{
 
 	private boolean smart;
-	private boolean noFridge;
+	private boolean frost;
 	
 	/**
 	* name: Fridge
@@ -20,12 +20,12 @@ public class Fridge extends HomeAppliances{
 	* @param: height
 	* @param: widht
 	* @param: smart
-	* @param: noFridge
+	* @param: fridge
 	**/
 	public Fridge(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, boolean smart, boolean noFridge) {
 		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht);
 		this.smart = smart;
-		this.noFridge = noFridge;
+		this.frost = noFridge;
 	}
 
 	/**
@@ -51,25 +51,25 @@ public class Fridge extends HomeAppliances{
 	}
 
 	/**
-	 * name: isNoFridge
-	 * allows to obtain the boolean noFridge of the Fridge
+	 * name: isFrost
+	 * allows to obtain the boolean frost of the Fridge
 	 * <br>Pre:<b>The Fridge object must be created</b>
-	 * <br>Post:<b>obtain the noFridge boolean of the Fridge saved in variable "noFridge"</b>
-	 * @return smart boolean;
+	 * <br>Post:<b>obtain the frost boolean of the Fridge saved in variable "frost"</b>
+	 * @return frost boolean;
 	 */
-	public boolean isNoFridge() {
-		return noFridge;
+	public boolean isFrost() {
+		return frost;
 	}
 
 	/**
-	 * name: setNoFridge
-	 * allows entering a new noFridge boolean for the Fridge
+	 * name: setFrost
+	 * allows entering a new frost boolean for the Fridge
 	 * <br>Pre:<b>The Fridge object must be created</b>
-	 * <br>Post:<b>the noFridge boolean will be saved in the variable "noFridge"</b>
-	 * @param noFridge boolean
+	 * <br>Post:<b>the frost boolean will be saved in the variable "frost"</b>
+	 * @param frost boolean
 	 */
-	public void setNoFridge(boolean noFridge) {
-		this.noFridge = noFridge;
+	public void setFrost(boolean noFridge) {
+		this.frost = noFridge;
 	}
 	
 	/**
@@ -86,15 +86,15 @@ public class Fridge extends HomeAppliances{
 	}
 	
 	/**
-	 * name: isNoFridgeString
-	 * allows to obtain the String noFridge of the Fridge
+	 * name: isFrostString
+	 * allows to obtain the String frost of the Fridge
 	 * <br>Pre:<b>The Fridge object must be created and noFridge must be entered</b>
-	 * <br>Post:<b>obtain the noFridge String of the Fridge saved in variable "noFridge"</b>
+	 * <br>Post:<b>obtain the frost String of the Fridge saved in variable "answer"</b>
 	 * @return answer;
 	 */
-	public String isNoFridgeString() {
+	public String isFrostString() {
 		String answer;
-		answer = (noFridge)?"Si":"NO";
+		answer = (frost)?"SI":"NO";
 		return answer;
 	}
 }

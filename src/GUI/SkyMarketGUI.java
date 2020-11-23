@@ -64,7 +64,6 @@ public class SkyMarketGUI {
 
     @FXML
     private DatePicker dpBirthday;
-	
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk) {
@@ -110,10 +109,13 @@ public class SkyMarketGUI {
     public void loginManagement(User userToLogin) throws IOException {
     	if(userToLogin instanceof UserBuyer) {
     		loadUserBuyerScreen();
+    		skymarket.setCurrentUser(userToLogin);
     	}else if(userToLogin instanceof UserSeller) {
     		loadUserSellerScreen();
+    		skymarket.setCurrentUser(userToLogin);
     	}else {
     		loadAdministraitorScreen();
+    		skymarket.setCurrentUser(userToLogin);
     	}
     }
     
@@ -368,5 +370,6 @@ public class SkyMarketGUI {
     @FXML
     void logout(ActionEvent event) throws IOException {
     	loadLogin();
+    	skymarket.setCurrentUser(null);
     }
 }

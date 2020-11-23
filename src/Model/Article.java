@@ -9,6 +9,7 @@ public class Article {
 	private String picture;
 	private int quantity;
 	private Article nextArticle;
+	private Article prevArticle; 
 	
 	/*
 	name: Article
@@ -28,6 +29,7 @@ public class Article {
 		this.picture = picture;
 		this.quantity = quantity;
 		nextArticle = null;
+		prevArticle = null; 
 	}
 
 	/*
@@ -176,4 +178,27 @@ public class Article {
 	public void setNextArticle(Article nextArticle) {
 		this.nextArticle = nextArticle;
 	}
+
+	/*
+	name: getPrevArticle
+	allows to obtain the prev article of the article
+	<b>pre:</b>The Article object must be created
+	<b>post:</b>obtain the prev article of the article saved in variable "prevArticle"
+	**/
+	public Article getPrevArticle() {
+		return prevArticle;
+	}
+
+	/*
+	name: setPrevArticle
+	allows entering a new prev article for the article
+	<b>pre:</b>The Article object must be created
+	<b>post:</b>the prev article will be saved in the variable "prevArticle"
+	@param: prevArticle
+	**/
+	public void setPrevArticle(Article prevArticle) {
+		this.prevArticle = prevArticle;
+	}
+	
+	
 }

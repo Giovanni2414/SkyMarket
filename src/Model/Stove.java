@@ -79,15 +79,15 @@ public class Stove extends HomeAppliances{
 	 * <br>Post:<b>obtain the name type of stove of the Stove </b>
 	 * @return answer;
 	 */
-	public String getTyperStoveString() {
+	public String getTypeStoveString() {
 		String answer=null;
 		
 		if(typeStove == 0) {
 			answer = "Gas";
 		}else if(typeStove == 1) {
-			answer = "Electric";
+			answer = "Electrica";
 		}else if(typeStove == 2) {
-			answer = "Gas and electric";
+			answer = "Gas y electrica";
 		}
 		
 		return answer;
