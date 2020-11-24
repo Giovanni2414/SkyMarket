@@ -2,8 +2,8 @@ package GUI;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
-
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
 import Model.SkyMarket;
@@ -17,12 +17,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
 public class SkyMarketGUI {
+	
+	private final static String PATH_PICTURE_PEOPLE = "data/picturesPeople/";
 
 	private SkyMarket skymarket;
 	
@@ -64,6 +69,29 @@ public class SkyMarketGUI {
 
     @FXML
     private DatePicker dpBirthday;
+    
+    //Attributes personalDataScreen
+    
+    @FXML
+    private ImageView ivPictureUserPD;
+
+    @FXML
+    private Label lblNamePD;
+
+    @FXML
+    private Label lblLastNamePD;
+
+    @FXML
+    private Label lblIdentificationPD;
+
+    @FXML
+    private Label lblEmailPD;
+
+    @FXML
+    private Label lblUsernamePD;
+
+    @FXML
+    private Label lblBirthdayPD;
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk) {
@@ -292,7 +320,7 @@ public class SkyMarketGUI {
     	
     	fileChooser.setInitialDirectory(theDirectory);
     	try {
-    		txtPathPictureRegister.setText(fileChooser.showOpenDialog(null).getPath());
+    		txtPathPictureRegister.setText(fileChooser.showOpenDialog(null).getName());
     	}catch(NullPointerException npe) {
     		txtPathPictureRegister.setText("data/picturesApp/people");
     	}
@@ -343,6 +371,11 @@ public class SkyMarketGUI {
     void viewListArticlesToSell(ActionEvent event) {
 
     }
+
+    @FXML
+    void modifyShipping(ActionEvent event) {
+
+    }
     
     //methods mainScreenAdministraitor
     
@@ -366,6 +399,46 @@ public class SkyMarketGUI {
 
     }
     //methods share mainScreenUserSeller, mainScreenuserBuyer and mainScreenAdministrator
+    
+    @FXML
+    void personalDataScreen(ActionEvent event) throws IOException {
+		String currentName = skymarket.getCurrentUser().getName();
+		String currentLastName = skymarket.getCurrentUser().getLastName();
+		String currentIdentification = skymarket.getCurrentUser().getIdentification();
+		String currentEmail = skymarket.getCurrentUser().getEmail();
+		String currentUsername = skymarket.getCurrentUser().getUsername();
+		String currentBirthday = skymarket.getCurrentUser().getBirthday().toString();
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("personalDataScreen.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent personalDataPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(personalDataPane);
+    	
+    	lblNamePD.setText(currentName);
+    	lblLastNamePD.setText(currentLastName);
+    	lblIdentificationPD.setText(currentIdentification);
+    	lblEmailPD.setText(currentEmail);
+    	lblUsernamePD.setText(currentUsername);
+    	lblBirthdayPD.setText(currentBirthday);
+    	
+    	String path = PATH_PICTURE_PEOPLE + skymarket.getCurrentUser().getPicture();
+    	
+    	System.out.println(path);
+    	
+    	InputStream urlImage = getClass().getResourceAsStream(path);
+    	Image newImage = new Image(urlImage);
+    	
+    	ivPictureUserPD.setImage(newImage);
+    }
+    
+    @FXML
+    void exit(ActionEvent event) throws IOException {
+    	loginManagement(skymarket.getCurrentUser());
+    }
     
     @FXML
     void logout(ActionEvent event) throws IOException {

@@ -23,7 +23,7 @@ public class User {
 	@param: username
 	@param: picture
 	**/
-	public User(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate bithday) {
+	public User(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
 		this.name = name;
 		this.lastName = lastName;
 		this.identification = identification;
@@ -31,6 +31,7 @@ public class User {
 		this.password = password;
 		this.username = username;
 		this.picture = picture;
+		this.birthday = birthday;
 	}
 	
 	/*
