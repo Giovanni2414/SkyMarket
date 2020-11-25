@@ -1,8 +1,8 @@
 package GUI;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
@@ -429,8 +429,8 @@ public class SkyMarketGUI {
     	
     	System.out.println(path);
     	
-    	InputStream urlImage = getClass().getResourceAsStream(path);
-    	Image newImage = new Image(urlImage);
+    	
+    	Image newImage = new Image( new FileInputStream(path));
     	
     	ivPictureUserPD.setImage(newImage);
     }
