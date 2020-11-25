@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import Model.User;
+
 public class UserTest {
 
 	public void setupStage1() {

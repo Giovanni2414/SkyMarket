@@ -1,5 +1,10 @@
 package Model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -8,6 +13,8 @@ import Exceptions.PasswordNotEqualsException;
 
 public class SkyMarket {
 
+	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
+	
 	/**
 	 * The current user logged in the program
 	 */
@@ -226,6 +233,53 @@ public class SkyMarket {
 	 */
 	public void setArticles(LinkedList<Article> articles) {
 		this.articles = articles;
+	}
+	
+	/**
+	 * generateRandomNumber
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b>Generated a new random number
+	 * @return new code String, is a new number generated automatic
+	 */
+	public String generateRandomNumber() {
+		int number = (int)(Math.random()*((99999999+1)-10000000)+10000000);
+		String newCode = String.valueOf(number);
+		return newCode;
+	}
+	
+	/**
+	 * verificationFieldsAddArticle
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b>check the content of the fields to add a new article
+	 */
+	public void verificationFieldsAddArticle(String name,String code,double price, String description, String picture, int quantity,String type) throws EmptyFieldException{
+		if(name == null || code == null || price == 0  || description == null || picture == null || quantity == 0 || type == null) {
+			throw new EmptyFieldException();
+		}
+	}
+	
+	/**
+	 * laadDataClients
+	 * allows load the data serializable
+	 * <br>Pre:<b>a serialized file must exist</b>
+	 * <br>Post:<b>the file was deserialized
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadDataClients() throws IOException, ClassNotFoundException{	
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_SERIALIZABLE_USERS));
+		users = (LinkedList<User>)ois.readObject();
+		ois.close();
+	}
+	
+	/**
+	 * saveDataRestaurants
+	 * <br>Pre:<b>There must be information to serialize</b>
+	 * <br>Post:<b>The file was serialized
+	 */
+	public void saveDataRestaurants() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_USERS));
+		oos.writeObject(users);
+		oos.close();
 	}
 	
 }

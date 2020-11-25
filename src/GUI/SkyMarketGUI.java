@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
+import Model.Article;
 import Model.SkyMarket;
+import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
@@ -16,9 +19,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +33,8 @@ import javafx.stage.FileChooser;
 public class SkyMarketGUI {
 	
 	private final static String PATH_PICTURE_PEOPLE = "data/picturesPeople/";
+	
+	private Article currentArticle;
 
 	private SkyMarket skymarket;
 	
@@ -93,9 +100,75 @@ public class SkyMarketGUI {
     @FXML
     private Label lblBirthdayPD;
     
+    //Attributes screenAddNewArticle
+    
+    @FXML
+    private TextField txtNameArticleNA;
+
+    @FXML
+    private TextField txtPriceArticleNA;
+
+    @FXML
+    private TextArea txtaDescriptionArticleNA;
+
+    @FXML
+    private TextField txtPictureArticleNA;
+
+    @FXML
+    private TextField txtQuantityArticleNA;
+
+    @FXML
+    private ChoiceBox<String> cbTypeArticleNA;
+    
+    //Attributes screenAddNewTechnology
+    
+    @FXML
+    private TextField txtBatteryWatsNT;
+
+    @FXML
+    private TextField txtScreenSizeNT;
+
+    @FXML
+    private TextField txtProcessorNT;
+
+    @FXML
+    private ChoiceBox<String> cbTypeTechnologyNT;
+
+    @FXML
+    private TextField txtRamNT;
+
+    //Attributes screenAddNewHomeAppliances
+    
+    @FXML
+    private TextField txtWeightNH;
+
+    @FXML
+    private TextField txtCapacityNH;
+
+    @FXML
+    private TextField txtHeightNH;
+
+    @FXML
+    private TextField txtWattsConsumNH;
+
+    @FXML
+    private TextField txtWidthNH;
+
+    @FXML
+    private ChoiceBox<String> cbTypeHomeAppliancesNH;
+    
 	//Constructor
-	public SkyMarketGUI(SkyMarket sk) {
+	public SkyMarketGUI(SkyMarket sk){
 		skymarket = sk;
+		serializeData();
+	}
+	
+	public void serializeData(){
+		try {
+			skymarket.loadDataClients();
+		}catch(IOException | ClassNotFoundException iocnfe) {
+			serializableAlert();
+		}
 	}
 	
 	public void loadLogin() throws IOException {
@@ -233,10 +306,13 @@ public class SkyMarketGUI {
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 0);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 0);
+        	skymarket.saveDataRestaurants();
         	loadLogin();
     	}catch(EmptyFieldException efe) {
+    		cleanFieldsRegister();
     		fieldEmptyAlert();
     	}catch(PasswordNotEqualsException pnee) {
+    		cleanFieldsRegister();
     		incorrectPasswordAlert();
     	}
     }
@@ -258,29 +334,21 @@ public class SkyMarketGUI {
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 1);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 1);
+        	skymarket.saveDataRestaurants();
         	loadLogin();
     	}catch(EmptyFieldException efe) {
+    		cleanFieldsRegister();
     		fieldEmptyAlert();
     	}catch(PasswordNotEqualsException pnee) {
+    		cleanFieldsRegister();
     		incorrectPasswordAlert();
     	}
     }
     
     public void incorrectPasswordAlert() {
-    	cleanFieldsRegister();
-    	
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Contraseñas incorrectas");
     	alert.setContentText("Las contraseñas que ingreson no son iguales");
-    	alert.showAndWait();
-    }
-    
-    public void fieldEmptyAlert() {
-    	cleanFieldsRegister();
-    	
-    	Alert alert = new Alert(AlertType.ERROR);
-    	alert.setHeaderText("Campo vacío");
-    	alert.setContentText("Todos los campos tienen que tener un dato ingresado");
     	alert.showAndWait();
     }
     
@@ -309,10 +377,8 @@ public class SkyMarketGUI {
     	dpBirthday.setValue(null);
     }
 
-    
-    //pendiente
     @FXML
-    public void browsePathPicture(ActionEvent event) {
+    public void browsePathPictureProfile(ActionEvent event) {
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Buscar imagen");
  
@@ -322,7 +388,7 @@ public class SkyMarketGUI {
     	try {
     		txtPathPictureRegister.setText(fileChooser.showOpenDialog(null).getName());
     	}catch(NullPointerException npe) {
-    		txtPathPictureRegister.setText("data/picturesApp/people");
+    		txtPathPictureRegister.setText("data/picturesApp/people.PNG");
     	}
     }
 
@@ -358,8 +424,17 @@ public class SkyMarketGUI {
     //methods mainScreenUserSeller
     
     @FXML
-    void addArticleToSell(ActionEvent event) {
-
+    void addArticleToSell(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewArticle.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewArticlePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewArticlePane);
+    	cbTypeArticleNA.getItems().add("Tecnologia");
+    	cbTypeArticleNA.getItems().add("Electrodomestico");
     }
 
     @FXML
@@ -398,10 +473,112 @@ public class SkyMarketGUI {
     void viewAllUsers(ActionEvent event) {
 
     }
+    
+    //methods screenAddNewArticle
+    
+    @FXML
+    public void browsePathPictureArticle(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Buscar imagen articulo");
+    	
+    	File pathPictureArticle = new File("data/picturesArticles");
+    	
+    	fileChooser.setInitialDirectory(pathPictureArticle);
+    	try {
+    		txtPictureArticleNA.setText(fileChooser.showOpenDialog(null).getName());
+    	}catch(NullPointerException npe) {
+    		txtPictureArticleNA.setText("data/picturesApp/Producto.JPG");
+    	}
+    }
+
+    @FXML
+    public void continueToTypeArticle(ActionEvent event) {
+    	try {
+    		String nameArticle = txtNameArticleNA.getText();
+    		String code = skymarket.generateRandomNumber();
+    		Double priceArticle = Double.parseDouble(txtPriceArticleNA.getText());
+    		String description = txtaDescriptionArticleNA.getText();
+    		String pathImageArticle = txtIdentificationRegister.getText();
+    		int quantity = Integer.parseInt(txtQuantityArticleNA.getText());
+    		String type = cbTypeArticleNA.getValue();
+    		
+    		skymarket.verificationFieldsAddArticle(nameArticle, code, priceArticle, description, pathImageArticle, quantity,type);    		
+    		managementAddArticle(type);
+    	}catch(EmptyFieldException efe) {
+    		clearFieldsAddArticle();
+    		fieldEmptyAlert();
+    	} catch(NumberFormatException nfe) {
+    		nfe.getStackTrace();
+    		FormatAlert();
+    	}
+    }
+    
+    public void clearFieldsAddArticle() {
+    	txtNameArticleNA.setText("");
+    	txtPriceArticleNA.setText("");
+    	txtaDescriptionArticleNA.setText("");
+    	txtIdentificationRegister.setText("");
+    	txtQuantityArticleNA.setText("");
+    }
+    
+    public void managementAddArticle(String type) {
+	    try {
+    		if(type.equals("Tecnologia")) {
+	    		loadScreenTechnology();
+	    	}else if(type.equals("Electrodomestico")){
+	    		loadScreenHomeAppliances();
+	    	}
+	    }catch(IOException ioe) {
+	    	fxmlNotFound();
+	    } 
+    }
+    
+    public void loadScreenTechnology() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewTechnology.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewTechnologyPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewTechnologyPane);
+    	
+    	cbTypeTechnologyNT.getItems().add("Celular");
+    	cbTypeTechnologyNT.getItems().add("Computador");
+    }
+    
+    public void loadScreenHomeAppliances() throws IOException {
+    	FXMLLoader fxmlLoader= new FXMLLoader(getClass().getResource("screenAddNewHomeAppliances.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddHomeAppliancesPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddHomeAppliancesPane);
+    	
+    	cbTypeHomeAppliancesNH.getItems().add("Nevera");
+    	cbTypeHomeAppliancesNH.getItems().add("Estufa");
+    }
+    
+    //methods screenAddNewTechnology
+    
+    @FXML
+    void continueToTypeTechnology(ActionEvent event) {
+    	
+    }
+    
+    //methods screenAddNewHomeAppliances
+    
+    @FXML
+    void continueToTypeHomeAppliances(ActionEvent event) {
+
+    }
+    
     //methods share mainScreenUserSeller, mainScreenuserBuyer and mainScreenAdministrator
     
     @FXML
-    void personalDataScreen(ActionEvent event) throws IOException {
+    public void personalDataScreen(ActionEvent event) throws IOException {
 		String currentName = skymarket.getCurrentUser().getName();
 		String currentLastName = skymarket.getCurrentUser().getLastName();
 		String currentIdentification = skymarket.getCurrentUser().getIdentification();
@@ -427,22 +604,49 @@ public class SkyMarketGUI {
     	
     	String path = PATH_PICTURE_PEOPLE + skymarket.getCurrentUser().getPicture();
     	
-    	System.out.println(path);
-    	
-    	
     	Image newImage = new Image( new FileInputStream(path));
     	
     	ivPictureUserPD.setImage(newImage);
     }
     
     @FXML
-    void exit(ActionEvent event) throws IOException {
+    public void exit(ActionEvent event) throws IOException {
     	loginManagement(skymarket.getCurrentUser());
     }
     
     @FXML
-    void logout(ActionEvent event) throws IOException {
+    public void logout(ActionEvent event) throws IOException {
     	loadLogin();
     	skymarket.setCurrentUser(null);
+    }
+    
+    //Alerts
+    
+    public void fieldEmptyAlert() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Campo vacío");
+    	alert.setContentText("Todos los campos tienen que tener un dato ingresado");
+    	alert.showAndWait();
+    }
+    
+    public void fxmlNotFound() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Archivo no encontrado");
+    	alert.setContentText("El archivo no se pudo cargar");
+    	alert.showAndWait();
+    }
+    
+    public void FormatAlert() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Ingresar formato adecuado");
+    	alert.setContentText("Porfavor ingrese los tipo de datos pertinentes\nEjemplo: precio = numeros");
+    	alert.showAndWait();
+    }
+    
+    public void serializableAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Imposible serializar la informacion");
+    	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
+    	alert.showAndWait();
     }
 }

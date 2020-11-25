@@ -6,6 +6,10 @@ import java.util.LinkedList;
 
 public class Administraitor extends User{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<User> users;
 	private ArrayList<Article> articles;
 	

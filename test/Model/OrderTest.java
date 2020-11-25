@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import Model.Article;
+import Model.Order;
+
 class OrderTest {
 
 	public Article setupStage1(){

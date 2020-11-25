@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 public class UserBuyer extends User {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Article basket;
 	private Article history;
 	

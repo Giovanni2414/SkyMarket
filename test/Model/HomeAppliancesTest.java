@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import Model.HomeAppliances;
+
 class HomeAppliancesTest {
 
 	public void setupStage1(){

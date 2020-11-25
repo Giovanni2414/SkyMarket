@@ -58,7 +58,7 @@
       </GridPane>
       <Button layoutX="198.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserBuyer" text="Comprador" />
       <Button layoutX="326.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserSeller" prefHeight="25.0" prefWidth="77.0" text="Vendedor" />
-      <Button layoutX="440.0" layoutY="297.0" mnemonicParsing="false" onAction="#browsePathPicture" text="Browse" />
+      <Button layoutX="440.0" layoutY="297.0" mnemonicParsing="false" onAction="#browsePathPictureProfile" text="Browse" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitRegister" text="Exit" />
    </children>
 </AnchorPane>

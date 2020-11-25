@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import Model.Stove;
+
 class StoveTest {
 
 	public void setupStage1() {

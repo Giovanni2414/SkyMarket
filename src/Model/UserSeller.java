@@ -5,6 +5,10 @@ import java.util.LinkedList;
 
 public class UserSeller extends User{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double calification;
 	private Article history; 
 	private LinkedList<Article> sellArticles;

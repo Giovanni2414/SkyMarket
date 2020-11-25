@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import Model.Administraitor;
+import Model.User;
+
 class AdministraitorTest {
 
 	public void setupStage1() {
