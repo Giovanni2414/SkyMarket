@@ -17,15 +17,15 @@ class TVTest {
 		setupStage1();
 		TV tvTest = new TV("oled", "12345", 1500000, "TV ultima tecnologia", "data/PictureTVOled", 10,4000,20,4,"Hisilicon Kirin",true,4);
 		
-		assertEquals("Y9", tvTest.getName());
+		assertEquals("oled", tvTest.getName());
 		assertEquals("12345", tvTest.getCode());
-		assertEquals(1000000, tvTest.getPrice());
-		assertEquals("Celular gama media", tvTest.getDescription());
-		assertEquals("data/PictureHuaweiY9", tvTest.getPicture());
-		assertEquals(3, tvTest.getQuantity());
+		assertEquals(1500000, tvTest.getPrice());
+		assertEquals("TV ultima tecnologia", tvTest.getDescription());
+		assertEquals("data/PictureTVOled", tvTest.getPicture());
+		assertEquals(10, tvTest.getQuantity());
 		assertNull(tvTest.getNextArticle());
 		assertNull(tvTest.getPrevArticle());
-		assertEquals(2000, tvTest.getBatteryWatts());
+		assertEquals(4000, tvTest.getBatteryWatts());
 		assertEquals(20, tvTest.getScreenSize());
 		assertEquals(4, tvTest.getRam());
 		assertEquals("Hisilicon Kirin", tvTest.getProcessor());

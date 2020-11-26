@@ -11,16 +11,19 @@ import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
-import Model.Article;
-import Model.SkyMarket;
-import Model.Technology;
-import Model.User;
-import Model.UserBuyer;
-
 class SkyMarketTests {
 
 	public SkyMarket setupStage1() {
 		SkyMarket object = new SkyMarket();
+		return object;
+	}
+	
+	public SkyMarket setupStage2() {
+		SkyMarket object = new SkyMarket();
+		object.newUser("Giovanni", "Mosquera", "1006055396", "Giovanni2414g@gmail.com", "1234", "xGiovanni", "images/",LocalDate.now(), 0);
+		object.newUser("Ramiro", "Alberto", "1006055396", "Giovanni2414g@gmail.com", "1234", "xRamiro", "images/",LocalDate.now(), 1);
+		object.newUser("Jairo", "Torres", "1006055396", "Giovanni2414g@gmail.com", "1234", "xJairo", "images/", LocalDate.now(),1);
+		object.newUser("Camila", "Andrea", "1006055396", "Giovanni2414g@gmail.com", "1234", "xCamila", "images/", LocalDate.now(),0);
 		return object;
 	}
 	
@@ -35,11 +38,7 @@ class SkyMarketTests {
 	
 	@Test
 	void binarySearchUserTest() {
-		SkyMarket object = setupStage1();
-		object.newUser("Giovanni", "Mosquera", "1006055396", "Giovanni2414g@gmail.com", "1234", "xGiovanni", "images/",LocalDate.now(), 0);
-		object.newUser("Ramiro", "Alberto", "1006055396", "Giovanni2414g@gmail.com", "1234", "xRamiro", "images/",LocalDate.now(), 1);
-		object.newUser("Jairo", "Torres", "1006055396", "Giovanni2414g@gmail.com", "1234", "xJairo", "images/", LocalDate.now(),1);
-		object.newUser("Camila", "Andrea", "1006055396", "Giovanni2414g@gmail.com", "1234", "xCamila", "images/", LocalDate.now(),0);
+		SkyMarket object = setupStage2();
 		User testObject = object.binarySearchUser("xRamiro");
 		User testObjectToNull = object.binarySearchUser("Estela");
 		assertEquals("User don't finded", "Alberto", testObject.getLastName());
