@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
+import Exceptions.RepeatArticleCodeException;
 
 public class SkyMarket {
 
@@ -28,7 +29,7 @@ public class SkyMarket {
 	/**
 	 * Linked list with the products to sell
 	 */
-	private LinkedList<Article> articles;
+	public LinkedList<Article> articles;
 	
 	/**
 	 * Constructor of SkyMarket, set the currentUser on null
@@ -173,6 +174,29 @@ public class SkyMarket {
 				//Falta acción en caso de que no
 			}
 		}
+	}
+	
+	public void addNewArticleToArticles(Article newArticle) throws RepeatArticleCodeException{
+		for(int i = 0; i < articles.size(); i++) {
+			if(newArticle.getCode()==articles.get(i).getCode()) {
+				throw new RepeatArticleCodeException();
+			}
+		}
+		articles.add(newArticle);
+	}
+	
+	public void addNewArticleToUserSeller(String username, Article newArticle) {
+		boolean find = false; 
+		UserSeller user = null;
+		while(!find) {
+			for(int i = 0; i<users.size();i++) {
+				if(username.equals(users.get(i).getUsername())) {
+					user = (UserSeller) users.get(i);
+					find = true;
+				}
+			}
+		}
+		user.addArticleToArticlesSeller(newArticle);
 	}
 	
 	/**

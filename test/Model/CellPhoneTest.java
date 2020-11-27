@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Model.CellPhone;
-
 class CellPhoneTest {
 
 	public void setupStage1(){

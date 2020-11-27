@@ -1,7 +1,6 @@
 package Model;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 
 public class UserSeller extends User{
 	
@@ -11,7 +10,7 @@ public class UserSeller extends User{
 	private static final long serialVersionUID = 1L;
 	private double calification;
 	private Article history; 
-	private LinkedList<Article> sellArticles;
+	private Article sellArticles;
 	
 	/*
 	name: UserSeller
@@ -80,7 +79,7 @@ public class UserSeller extends User{
 	<b>pre:</b>The UserSeller object must be created
 	<b>post:</b>obtain the items sold of the user seller saved in the linked list "sellArticles"
 	**/
-	public LinkedList<Article> getSellArticles() {
+	public Article getSellArticles() {
 		return sellArticles;
 	}
 
@@ -91,12 +90,24 @@ public class UserSeller extends User{
 	<b>post:</b>the items sold will be saved in the linked list "sellArticles"
 	@param: sellArticles
 	**/
-	public void setSellArticles(LinkedList<Article> sellArticles) {
+	public void setSellArticles(Article sellArticles) {
 		this.sellArticles = sellArticles;
 	}
 	
-	public void addArticle(Article newArticle) {
-		sellArticles.add(newArticle);
+	public void addArticleToArticlesSeller(Article newArticle) {
+		if(sellArticles == null) {
+			sellArticles = newArticle;
+		}else {
+			addArticleToSellArticles(history, newArticle);
+		}
+	}
+	
+	public void addArticleToSellArticles(Article current,Article newArticle) {
+		if(current.getNextArticle() == null) {
+			current.setNextArticle(newArticle);
+		}else {
+			addArticleToSellArticles(current.getNextArticle(), newArticle);
+		}
 	}
 	
 	public void addArticleToHistory(Article newArticle) {

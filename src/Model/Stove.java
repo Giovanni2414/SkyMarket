@@ -3,7 +3,7 @@ package Model;
 public class Stove extends HomeAppliances{
 
 	private int numberOfNozzles;
-	private int typeStove;
+	private String typeStove;
 	
 	/**
 	* name: Stove
@@ -22,7 +22,7 @@ public class Stove extends HomeAppliances{
 	* @param: numberOfNozzles
 	* @param: typeStove
 	**/
-	public Stove(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, int numberOfNozzles, int typeStove) {
+	public Stove(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, int numberOfNozzles, String typeStove) {
 		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht);
 		this.numberOfNozzles = numberOfNozzles;
 		this.typeStove = typeStove;
@@ -57,7 +57,7 @@ public class Stove extends HomeAppliances{
 	 * <br>Post:<b>obtain the type of stove of the Stove saved in variable "typeStove"</b>
 	 * @return typeStove;
 	 */
-	public int getTypeStove() {
+	public String getTypeStove() {
 		return typeStove;
 	}
 
@@ -68,28 +68,7 @@ public class Stove extends HomeAppliances{
 	 * <br>Post:<b>the type of stove will be saved in the variable "numberOfNozzles"</b>
 	 * @param typeStove
 	 */
-	public void setTypeStove(int typeStove) {
+	public void setTypeStove(String typeStove) {
 		this.typeStove = typeStove;
-	}
-	
-	/**
-	 * name: getTypeStoveString
-	 * allows to obtain the name type of stove of the Stove
-	 * <br>Pre:<b>The Stove object must be created</b>
-	 * <br>Post:<b>obtain the name type of stove of the Stove </b>
-	 * @return answer;
-	 */
-	public String getTypeStoveString() {
-		String answer=null;
-		
-		if(typeStove == 0) {
-			answer = "Gas";
-		}else if(typeStove == 1) {
-			answer = "Electrica";
-		}else if(typeStove == 2) {
-			answer = "Gas y electrica";
-		}
-		
-		return answer;
 	}
 }

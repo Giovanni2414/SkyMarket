@@ -7,8 +7,13 @@ import java.time.LocalDate;
 
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
+import Exceptions.RepeatArticleCodeException;
 import Model.Article;
+import Model.CellPhone;
+import Model.Fridge;
+import Model.HomeAppliances;
 import Model.SkyMarket;
+import Model.Stove;
 import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
@@ -25,6 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -156,6 +163,31 @@ public class SkyMarketGUI {
 
     @FXML
     private ChoiceBox<String> cbTypeHomeAppliancesNH;
+    
+    //Attributes screenAddCellphone
+    
+    @FXML
+    private TextField txtNumberSimsNC;
+
+    @FXML
+    private TextField txtNumberCameraNC;
+    
+    //Attributes screenAddNewFridge
+    
+    @FXML
+    private ToggleGroup tgSmart;
+
+    @FXML
+    private ToggleGroup tgFrost;
+    
+    //Attributes screenAddNewStove
+    
+    @FXML
+    private TextField txtNumberNozzlesNS;
+
+    @FXML
+    private ChoiceBox<String> cbTypeStoveNS;
+    
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
@@ -439,7 +471,7 @@ public class SkyMarketGUI {
 
     @FXML
     void historySales(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -498,11 +530,11 @@ public class SkyMarketGUI {
     		String code = skymarket.generateRandomNumber();
     		Double priceArticle = Double.parseDouble(txtPriceArticleNA.getText());
     		String description = txtaDescriptionArticleNA.getText();
-    		String pathImageArticle = txtIdentificationRegister.getText();
+    		String pathImageArticle = txtPictureArticleNA.getText();
     		int quantity = Integer.parseInt(txtQuantityArticleNA.getText());
     		String type = cbTypeArticleNA.getValue();
-    		
     		skymarket.verificationFieldsAddArticle(nameArticle, code, priceArticle, description, pathImageArticle, quantity,type);    		
+    		currentArticle = new Article(nameArticle,code,priceArticle,description,pathImageArticle,quantity);
     		managementAddArticle(type);
     	}catch(EmptyFieldException efe) {
     		clearFieldsAddArticle();
@@ -564,15 +596,161 @@ public class SkyMarketGUI {
     //methods screenAddNewTechnology
     
     @FXML
-    void continueToTypeTechnology(ActionEvent event) {
+    public void continueToTypeTechnology(ActionEvent event) {
+    	double batteryWatts = Double.parseDouble(txtBatteryWatsNT.getText());
+    	int screenSize = Integer.parseInt(txtScreenSizeNT.getText());
+    	int ram = Integer.parseInt(txtRamNT.getText());
+    	String processor = txtProcessorNT.getText();
+    	String type = cbTypeTechnologyNT.getValue();
     	
+    	currentArticle = new Technology(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),batteryWatts,screenSize,ram,processor);
+    	managementAddTechnology(type);
+    }
+    
+    public void managementAddTechnology(String type) {
+     try {
+    		if(type.equals("Celular")) {
+        		loadScreenAddNewCellphone();
+        	}else if(type.equals("Computador")) {
+        		
+        	}
+     	}catch(IOException ioe) {
+     		fxmlNotFound();
+     	}
+    		
+    }
+    
+    public void loadScreenAddNewCellphone() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewCellphone.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewCellphonePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewCellphonePane);
     }
     
     //methods screenAddNewHomeAppliances
     
     @FXML
-    void continueToTypeHomeAppliances(ActionEvent event) {
-
+    public void continueToTypeHomeAppliances(ActionEvent event) {
+    	Double weight = Double .parseDouble(txtWeightNH.getText());
+    	Double capacity = Double.parseDouble(txtCapacityNH.getText());
+    	Double wattsConsum = Double.parseDouble(txtWattsConsumNH.getText());
+    	Double height = Double.parseDouble(txtHeightNH.getText());
+    	Double widht = Double.parseDouble(txtWidthNH.getText());
+    	String type = cbTypeHomeAppliancesNH.getValue();
+    	
+    	currentArticle = new HomeAppliances(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),weight,capacity,wattsConsum,height,widht);
+    	managementAddHomeAppliances(type);
+    }
+    
+    public void managementAddHomeAppliances(String type) {
+    	try {
+    		if(type.equals("Nevera")) {
+        		loadScreenAddNewFridge();
+        	}else if(type.equals("Estufa")){
+        		loadScreenAddNewStove();
+        	}
+    	}catch(IOException ioe) {
+    		fxmlNotFound();
+    	}
+    }
+  
+    public void loadScreenAddNewFridge() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewFridge.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewFridgePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewFridgePane);
+    }
+    
+    public void loadScreenAddNewStove() throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewFridge.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewFridgePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewFridgePane);
+    }
+    
+    //methods screenAddNewCellphone
+    
+    @FXML
+    public void addNewArticleCellphone(ActionEvent event) {
+    	int numberSims = Integer.parseInt(txtNumberSimsNC.getText());
+    	int numberCameras = Integer.parseInt(txtNumberCameraNC.getText());
+    	
+    	Technology currentArticleT = (Technology)currentArticle;
+    	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras);
+    	
+    	addNewArticle(newCellphone);
+    	
+    	try {
+    		loginManagement(skymarket.getCurrentUser());
+    	}catch(IOException ioe) {
+    		fxmlNotFound();
+    	}
+    }
+    
+    //methods screenAddNewFridge
+    
+    @FXML
+    public void addNewArticleFridge(ActionEvent event) {
+    	Toggle toggleSmart = tgSmart.getSelectedToggle();
+    	String smartString = toggleSmart.toString();
+    	boolean smart = (smartString.equals("Si"))?true:false;
+    	Toggle toggleFrost = tgFrost.getSelectedToggle();
+    	String frostString = toggleFrost.toString();
+    	boolean frost = (frostString.equals("Si"))?true:false;
+    	
+    	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
+    	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost);
+    	
+    	addNewArticle(newFridge);
+    	
+    	try {
+    		loginManagement(skymarket.getCurrentUser());
+    	}catch(IOException ioe) {
+    		fxmlNotFound();
+    	}
+    }
+    
+    //methods screenAddNewStove
+    
+    @FXML
+    public void addNewArticleStove(ActionEvent event) {
+    	int numberOfNozzles = Integer.parseInt(txtNumberNozzlesNS.getText());
+    	String typeStove = cbTypeStoveNS.getValue();
+    	
+    	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
+    	Stove newFridge = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove);
+    	
+    	addNewArticle(newFridge);
+    	
+    	try {
+    		loginManagement(skymarket.getCurrentUser());
+    	}catch(IOException ioe) {
+    		fxmlNotFound();
+    	}
+    }
+    
+    //methods share screenAddNewCellphone, screenAddNewFridge, screenAddNewStove
+    
+    public void addNewArticle(Article newArticle) {
+    	try {
+    		skymarket.addNewArticleToArticles(newArticle);
+    		skymarket.addNewArticleToUserSeller(skymarket.getCurrentUser().getUsername(), newArticle);
+    	}catch(RepeatArticleCodeException race) {
+    		newArticle.setCode(skymarket.generateRandomNumber());
+    		addNewArticle(newArticle);
+    	}
     }
     
     //methods share mainScreenUserSeller, mainScreenuserBuyer and mainScreenAdministrator

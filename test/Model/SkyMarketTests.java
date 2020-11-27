@@ -11,12 +11,6 @@ import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
-import Model.Article;
-import Model.SkyMarket;
-import Model.Technology;
-import Model.User;
-import Model.UserBuyer;
-
 class SkyMarketTests {
 
 	public SkyMarket setupStage1() {
