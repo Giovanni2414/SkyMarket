@@ -17,11 +17,16 @@
                   <Image url="@../../data/picturesApp/skymarket-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="551.0" layoutY="32.0" mnemonicParsing="false" onAction="#personalDataScreen" text="info" />
+            <Button layoutX="551.0" layoutY="58.0" mnemonicParsing="false" onAction="#personalDataScreen" text="info" />
+            <ImageView fitHeight="40.0" fitWidth="38.0" layoutX="551.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/148-profile.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </top>
-   <center>
+   <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="172.0" layoutY="14.0" text="Seleccione la accion que desea realizar">
@@ -29,11 +34,31 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#addArticleToSell" prefHeight="25.0" prefWidth="183.0" text="Agregar producto a vender" />
-            <Button layoutX="209.0" layoutY="131.0" mnemonicParsing="false" onAction="#viewListArticlesToSell" text="Ver lista de productos a vender" />
-            <Button layoutX="403.0" layoutY="131.0" mnemonicParsing="false" onAction="#historySales" prefHeight="25.0" prefWidth="188.0" text="Historial de productos vendidos" />
-            <Button layoutX="251.0" layoutY="178.0" mnemonicParsing="false" onAction="#modifyShipping" text="Modificar envio" />
+            <Button layoutX="14.0" layoutY="144.0" mnemonicParsing="false" onAction="#addArticleToSell" prefHeight="25.0" prefWidth="183.0" text="Agregar producto a vender" />
+            <Button layoutX="204.0" layoutY="144.0" mnemonicParsing="false" onAction="#viewListArticlesToSell" text="Ver lista de productos a vender" />
+            <Button layoutX="398.0" layoutY="144.0" mnemonicParsing="false" onAction="#historySales" prefHeight="25.0" prefWidth="188.0" text="Historial de productos vendidos" />
+            <Button layoutX="252.0" layoutY="264.0" mnemonicParsing="false" onAction="#modifyShipping" text="Modificar envio" />
+            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="66.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/005-bag.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="261.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/081-shopping-bag-4.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="75.0" fitWidth="74.0" layoutX="455.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/089-ecommerce-1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/024-delivery-truck.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </center>
+   </left>
 </BorderPane>

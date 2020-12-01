@@ -14,9 +14,19 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <ImageView fitHeight="39.0" fitWidth="35.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../data/iconPacks/basic-icons/012-backwards.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="72.0" fitWidth="137.0" layoutX="237.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../data/picturesApp/skymarket-logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="502.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../data/iconPacks/basic-icons/108-image-1.png" />
          </image>
       </ImageView>
       <GridPane layoutX="171.0" layoutY="64.0" prefHeight="293.0" prefWidth="259.0">
@@ -59,6 +69,6 @@
       <Button layoutX="198.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserBuyer" text="Comprador" />
       <Button layoutX="326.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUserSeller" prefHeight="25.0" prefWidth="77.0" text="Vendedor" />
       <Button layoutX="440.0" layoutY="297.0" mnemonicParsing="false" onAction="#browsePathPictureProfile" text="Browse" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitRegister" text="Exit" />
+      <Button layoutX="14.0" layoutY="63.0" mnemonicParsing="false" onAction="#exitRegister" text="Exit" />
    </children>
 </AnchorPane>
