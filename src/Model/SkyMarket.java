@@ -91,6 +91,7 @@ public class SkyMarket {
 		} else if(type == 1) {
 			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture,birthday);
 		} else {
+			newUserObject = new Administraitor(name, lastname, identification, email, password, username, picture,birthday, users);
 			//Pendiente por crear el usuario administrador
 		}
 		if(users.isEmpty()) {
@@ -305,5 +306,4 @@ public class SkyMarket {
 		oos.writeObject(users);
 		oos.close();
 	}
-	
 }

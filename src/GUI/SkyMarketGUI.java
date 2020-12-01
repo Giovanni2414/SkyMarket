@@ -453,6 +453,52 @@ public class SkyMarketGUI {
 
     }
     
+   //methods mainScreenAdministraitor
+    
+    @FXML
+    void ViewAllArticles(ActionEvent event) {
+
+    }
+
+    @FXML
+    void banUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void importData(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewAllUsers(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("optionsShowUser.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent optionsShowUserPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(optionsShowUserPane);
+    }
+    
+    //methods optionsShowUser
+    
+    @FXML
+    void showByNameFromHighestToLowest(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showByNameFromLowestToHighest(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showByNumberIdentification(ActionEvent event) {
+
+    }
+    
     //methods mainScreenUserSeller
     
     @FXML
@@ -481,28 +527,6 @@ public class SkyMarketGUI {
 
     @FXML
     void modifyShipping(ActionEvent event) {
-
-    }
-    
-    //methods mainScreenAdministraitor
-    
-    @FXML
-    void ViewAllArticles(ActionEvent event) {
-
-    }
-
-    @FXML
-    void banUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void importData(ActionEvent event) {
-
-    }
-
-    @FXML
-    void viewAllUsers(ActionEvent event) {
 
     }
     

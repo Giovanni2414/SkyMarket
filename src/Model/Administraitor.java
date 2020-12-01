@@ -25,6 +25,7 @@ public class Administraitor extends User{
 	**/
 	public Administraitor(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday,LinkedList<User> users) {
 		super(name,lastName,identification,email,password,username,picture,birthday);
+		this.users = new ArrayList<>(users);
 		//duda con cambio de LinkedList a ArrayList
 	}
 
