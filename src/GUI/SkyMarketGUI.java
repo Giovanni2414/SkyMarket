@@ -12,12 +12,14 @@ import Model.Article;
 import Model.CellPhone;
 import Model.Fridge;
 import Model.HomeAppliances;
+import Model.ProgressBar;
 import Model.SkyMarket;
 import Model.Stove;
 import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
+import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +37,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
 public class SkyMarketGUI {
@@ -44,6 +47,13 @@ public class SkyMarketGUI {
 	private Article currentArticle;
 
 	private SkyMarket skymarket;
+	
+	
+	private ProgressBar pb;
+	
+	//Rectangle ProgressBar
+    @FXML
+    private Rectangle progressBar;
 	
 	//attributes main-panel
 	@FXML
@@ -192,6 +202,7 @@ public class SkyMarketGUI {
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
 		skymarket = sk;
+		pb= new ProgressBar();
 		serializeData();
 	}
 	
@@ -224,6 +235,35 @@ public class SkyMarketGUI {
 		 alert.showAndWait();
 	 }
 	
+	 //ProgressBar Methods
+	 
+	 public void loadProgressBar() throws IOException {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("progress-bar.fxml"));
+			
+			fxmlLoader.setController(this);
+			
+			Parent progressPane = fxmlLoader.load();
+			
+			mainPanel.getChildren().clear();
+	    	mainPanel.setCenter(progressPane); 	
+	    	 pb.setActive(true);
+			 new ProgressBarThread(pb,this).start();
+			 
+			 
+		}
+	 
+	 
+	 public void updateBar() {
+		 progressBar.setWidth(pb.getProgressLevel());
+		 if(pb.isActive()==false) {
+			 try {
+				loadLogin();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
+		}
+	 
 	//methods login
     @FXML
     public void login(ActionEvent event) throws IOException {
@@ -827,4 +867,6 @@ public class SkyMarketGUI {
     	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
     	alert.showAndWait();
     }
+
+	
 }
