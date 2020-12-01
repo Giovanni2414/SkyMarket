@@ -17,11 +17,16 @@
                   <Image url="@../../data/picturesApp/skymarket-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="551.0" layoutY="32.0" mnemonicParsing="false" onAction="#exitToScreenAdministraitor" text="Exit" />
+            <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#exitToScreenAdministraitor" text="Exit" />
+            <ImageView fitHeight="37.0" fitWidth="49.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/012-backwards.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </top>
-   <center>
+   <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="172.0" layoutY="14.0" text="Seleccione la accion que desea realizar">
@@ -29,10 +34,30 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="36.0" layoutY="131.0" mnemonicParsing="false" onAction="#importUsers" prefHeight="25.0" prefWidth="136.0" text="Importar lista usuarios" />
-            <Button layoutX="428.0" layoutY="131.0" mnemonicParsing="false" onAction="#importArticles" text="Importar lista articulos" />
-            <Button layoutX="204.0" layoutY="131.0" mnemonicParsing="false" onAction="#importUsersAndArticles" prefHeight="25.0" prefWidth="193.0" text="Importar lista usuarios y articulos" />
+            <Button layoutX="36.0" layoutY="172.0" mnemonicParsing="false" onAction="#importUsers" prefHeight="25.0" prefWidth="136.0" text="Importar lista usuarios" />
+            <Button layoutX="414.0" layoutY="172.0" mnemonicParsing="false" onAction="#importArticles" text="Importar lista articulos" />
+            <Button layoutX="204.0" layoutY="172.0" mnemonicParsing="false" onAction="#importUsersAndArticles" prefHeight="25.0" prefWidth="193.0" text="Importar lista usuarios y articulos" />
+            <ImageView fitHeight="92.0" fitWidth="81.0" layoutX="64.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/198-add-user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="69.0" fitWidth="55.0" layoutX="241.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/198-add-user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="92.0" fitWidth="81.0" layoutX="441.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/005-bag.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="59.0" layoutX="301.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/005-bag.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </center>
+   </left>
 </BorderPane>

@@ -17,11 +17,16 @@
                   <Image url="@../../data/picturesApp/skymarket-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="551.0" layoutY="32.0" mnemonicParsing="false" onAction="#personalDataScreen" text="info" />
+            <Button layoutX="535.0" layoutY="60.0" mnemonicParsing="false" onAction="#personalDataScreen" text="info" />
+            <ImageView fitHeight="39.0" fitWidth="34.0" layoutX="537.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/148-profile.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </top>
-   <center>
+   <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="172.0" layoutY="14.0" text="Seleccione la accion que desea realizar">
@@ -29,11 +34,31 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#ViewAllArticles" text="Ver articulos" />
-            <Button layoutX="172.0" layoutY="131.0" mnemonicParsing="false" onAction="#viewAllUsers" prefHeight="25.0" prefWidth="96.0" text="Ver Usuarios" />
-            <Button layoutX="504.0" layoutY="131.0" mnemonicParsing="false" onAction="#importData" prefHeight="25.0" prefWidth="82.0" text="Importar" />
-            <Button layoutX="333.0" layoutY="131.0" mnemonicParsing="false" onAction="#banUser" text="Banear usuario" />
+            <ImageView fitHeight="61.0" fitWidth="75.0" layoutX="25.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/082-shopping-bag-5.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="14.0" layoutY="151.0" mnemonicParsing="false" onAction="#ViewAllArticles" text="Ver articulos" />
+            <Button layoutX="172.0" layoutY="151.0" mnemonicParsing="false" onAction="#viewAllUsers" prefHeight="25.0" prefWidth="96.0" text="Ver Usuarios" />
+            <Button layoutX="504.0" layoutY="151.0" mnemonicParsing="false" onAction="#importData" prefHeight="25.0" prefWidth="82.0" text="Importar" />
+            <Button layoutX="333.0" layoutY="151.0" mnemonicParsing="false" onAction="#banUser" text="Banear usuario" />
+            <ImageView fitHeight="61.0" fitWidth="75.0" layoutX="190.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/220-users.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="61.0" fitWidth="75.0" layoutX="350.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/214-block-user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="61.0" fitWidth="75.0" layoutX="515.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/068-down-arrow-1.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </center>
+   </left>
 </BorderPane>
