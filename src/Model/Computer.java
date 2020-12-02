@@ -47,6 +47,19 @@ public class Computer extends Technology {
 	public void setToch(boolean touch) {
 		this.touch = touch;
 	}
+	
+	/**
+	 * name: isTouchString
+	 * allows to obtain the String touch of the computer
+	 * <br>Pre:<b>The Computer object must be created and touch must be entered</b>
+	 * <br>Post:<b>obtain the smart String of the Computer saved in variable "answer"</b>
+	 * @return answer;
+	 */
+	public String isSmartString() {
+		String answer;
+		answer = (touch)?"SI":"NO";
+		return answer;
+	}
 
 	/**
 	 * Getter of numberOfPorts
