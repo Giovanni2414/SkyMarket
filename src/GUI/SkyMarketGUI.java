@@ -19,6 +19,10 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import Thread.ProgressBarThread;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ProgressBarThread;
@@ -41,9 +45,12 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+
+import javafx.event.EventHandler;
 
 public class SkyMarketGUI {
 	
@@ -544,7 +551,41 @@ public class SkyMarketGUI {
     	tcNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
     	tcLastNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
     	tcCalificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
+    	tvUserSellerListB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+                System.out.println("clicked on " + tvUserSellerListB.getSelectionModel().getSelectedItem());
+                try {
+                	loadTest(tvUserSellerListB.getSelectionModel().getSelectedItem());
+                }catch(IOException ioe) {
+                	
+                }
+            }
+        });
     }
+    
+    //Inicio Prueba
+    @FXML
+    private Label pruebaNombre;
+
+    @FXML
+    private Label pruebaApellido;
+    
+    public void loadTest(UserSeller x) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("prueba.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent test = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(test);
+    	
+    	pruebaNombre.setText(x.getName());
+    	pruebaApellido.setText(x.getLastName());
+    }
+    
+    //Fin prueba
 
     @FXML
     void banUser(ActionEvent event) throws IOException {
@@ -1007,7 +1048,7 @@ public class SkyMarketGUI {
     	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
     	alert.showAndWait();
     }
-    
+
     public void clientIdentificationAlert() {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("No se encontro el usuario");
