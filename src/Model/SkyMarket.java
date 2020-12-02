@@ -306,6 +306,14 @@ public class SkyMarket {
 			throw new EmptyFieldException();
 		}
 	}
+	public LinkedList<Article> getListProductsOnSale() {
+		LinkedList<Article> listAllProductsOnSale = new LinkedList<>();
+		for(int c = 0; c < articles.size(); c++) {
+			listAllProductsOnSale.add(articles.get(c));
+		}
+		return listAllProductsOnSale;
+	}
+	
 	
 	public LinkedList<UserSeller> getListUsersSellers() {
 		LinkedList<UserSeller> listAllUsersSellers = new LinkedList<>();
