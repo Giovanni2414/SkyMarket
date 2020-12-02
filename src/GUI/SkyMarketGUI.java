@@ -222,7 +222,7 @@ public class SkyMarketGUI {
     private TableColumn<UserSeller, String> tcUsernameB;
 
     @FXML
-    private TableColumn<UserSeller, String> tcCodeB;
+    private TableColumn<UserSeller, String> tcIdentificationB;
 
     @FXML
     private TableColumn<UserSeller, String> tcNameB;
@@ -233,6 +233,27 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<UserSeller, Double> tcCalificationB;
     
+
+    //Attributes screenToBuyArticles
+    
+    @FXML
+    private TableView<Article> tvArticlesTSUB;
+
+    @FXML
+    private TableColumn<Article, String> tcNameTSUB;
+
+    @FXML
+    private TableColumn<Article, String> tcCodeTSUB;
+
+    @FXML
+    private TableColumn<Article, Double> tcPriceTSUB;
+
+    @FXML
+    private TableColumn<Article, String> tcDescriptionTSUB;
+
+    @FXML
+    private TableColumn<Article, Integer> tcQuantityTSUB;
+
     @FXML
     private TableView<Article> tvArticlesOnSale;
     
@@ -250,6 +271,7 @@ public class SkyMarketGUI {
 
     @FXML
     private TableColumn<Article, Button> tcActionOnSale;
+
     
     @FXML
     private TableView<User> tvFiltedUsers;
@@ -279,6 +301,7 @@ public class SkyMarketGUI {
 	public void serializeData(){
 		try {
 			skymarket.loadDataClients();
+			skymarket.loadDataArticles();
 		}catch(IOException | ClassNotFoundException iocnfe) {
 			serializableAlert();
 		}
@@ -453,7 +476,7 @@ public class SkyMarketGUI {
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 0);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 0);
-        	skymarket.saveDataRestaurants();
+        	skymarket.saveDataClients();
         	loadLogin();
     	}catch(EmptyFieldException efe) {
     		cleanFieldsRegister();
@@ -481,7 +504,7 @@ public class SkyMarketGUI {
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 1);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 1);
-        	skymarket.saveDataRestaurants();
+        	skymarket.saveDataClients();
         	loadLogin();
     	}catch(EmptyFieldException efe) {
     		cleanFieldsRegister();
@@ -555,13 +578,49 @@ public class SkyMarketGUI {
     
     @FXML
     void historyShopping(ActionEvent event) {
-
+    	skymarket.test();
     }
 
     @FXML
     void viewBasket(ActionEvent event) {
 
     }
+
+
+    public void initializeTableBuyArticles() {
+    	ObservableList<Article> observableList;
+    	observableList = FXCollections.observableList(skymarket.getArticles());
+    	
+    	tvArticlesTSUB.setItems(observableList);
+    	tcNameTSUB.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeTSUB.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceTSUB.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcDescriptionTSUB.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
+    	tcQuantityTSUB.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
+    	tvArticlesTSUB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+                System.out.println("clicked on " + tvArticlesTSUB.getSelectionModel().getSelectedItem());
+                System.out.println("clicked on " + tvArticlesTSUB.getSelectionModel().getSelectedItem().getName());
+                System.out.println("clicked on " + tvArticlesTSUB.getSelectionModel().getSelectedItem().getCode());
+            }
+        });
+    }
+    
+    @FXML
+    void viewListArticleForSale(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenToBuyArticles.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenToBuyArticlePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenToBuyArticlePane);
+    	initializeTableBuyArticles();
+    }
+
+
     
    //methods mainScreenAdministraitor
     
@@ -583,7 +642,7 @@ public class SkyMarketGUI {
     	
     	tvUserSellerListB.setItems(observableList);
     	tcUsernameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Username"));
-    	tcCodeB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Identification"));
+    	tcIdentificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Identification"));
     	tcNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
     	tcLastNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
     	tcCalificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
@@ -591,37 +650,9 @@ public class SkyMarketGUI {
 
             public void handle(MouseEvent event) {
                 System.out.println("clicked on " + tvUserSellerListB.getSelectionModel().getSelectedItem());
-                try {
-                	loadTest(tvUserSellerListB.getSelectionModel().getSelectedItem());
-                }catch(IOException ioe) {
-                	
-                }
             }
         });
     }
-    
-    //Inicio Prueba
-    @FXML
-    private Label pruebaNombre;
-
-    @FXML
-    private Label pruebaApellido;
-    
-    public void loadTest(UserSeller x) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("prueba.fxml"));
-    	
-    	fxmlLoader.setController(this);
-    	
-    	Parent test = fxmlLoader.load();
-    	
-    	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(test);
-    	
-    	pruebaNombre.setText(x.getName());
-    	pruebaApellido.setText(x.getLastName());
-    }
-    
-    //Fin prueba
 
     @FXML
     void banUser(ActionEvent event) throws IOException {
@@ -786,7 +817,7 @@ public class SkyMarketGUI {
 
     @FXML
     void modifyShipping(ActionEvent event) {
-
+    	skymarket.test();
     }
     
     //methods screenAddNewArticle
@@ -1030,9 +1061,12 @@ public class SkyMarketGUI {
     	try {
     		skymarket.addNewArticleToArticles(newArticle);
     		skymarket.addNewArticleToUserSeller(skymarket.getCurrentUser().getUsername(), newArticle);
+    		skymarket.saveDataArticles();
     	}catch(RepeatArticleCodeException race) {
     		newArticle.setCode(skymarket.generateRandomNumber());
     		addNewArticle(newArticle);
+    	}catch(IOException ioe) {
+    		
     	}
     }
     
@@ -1124,4 +1158,14 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
+
+
+    public void serializableSaveAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("No es posible serializar");
+    	alert.setContentText("No es posible guardar la informacion en un archivo serializable");
+    	alert.showAndWait();
+    }
+
+
 }
