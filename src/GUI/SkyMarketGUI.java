@@ -23,9 +23,6 @@ import Model.UserSeller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ProgressBarThread;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +63,9 @@ public class SkyMarketGUI {
 	//Rectangle ProgressBar
     @FXML
     private Rectangle progressBar;
+    
+    @FXML
+    private Label txtPercent;
 	
 	//attributes main-panel
 	@FXML
@@ -288,6 +288,7 @@ public class SkyMarketGUI {
 	 
 	 
 	 public void updateBar() {
+		 txtPercent.setText((pb.getProgressLevel()/3)+"%");
 		 progressBar.setWidth(pb.getProgressLevel());
 		 if(pb.isActive()==false) {
 			 try {
