@@ -19,10 +19,6 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
-<<<<<<< HEAD
-=======
-
->>>>>>> 1498763a6fb875f3ce9df034b89d5e3b7f8753ce
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ProgressBarThread;
@@ -324,10 +320,14 @@ public class SkyMarketGUI {
 	//methods login
     @FXML
     public void login(ActionEvent event) throws IOException {
-    	User userToLogin = skymarket.binarySearchUser(txtUsername.getText());
+    	UserSeller userToLogin = (UserSeller) skymarket.binarySearchUser(txtUsername.getText());
     	if(userToLogin!=null) {
     		if(userToLogin.getPassword().equals(txtPassword.getText())) {
-    			loginManagement(userToLogin);
+    			if(!userToLogin.isBan()) {
+    				loginManagement(userToLogin);
+    			} else {
+    				userSellerBan();
+    			}
     		}else {
     			userPasswordIncorrectAlert();
     		}
@@ -543,27 +543,6 @@ public class SkyMarketGUI {
     @FXML
     void viewBasket(ActionEvent event) {
 
-    }
-
-    @FXML
-    void viewListArticleForSale(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showProductsOnSale.fxml"));
-    	fxmlLoader.setController(this);
-    	Parent showProductsOnSale = fxmlLoader.load();
-    	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(showProductsOnSale);
-    	initializeTableProductsOnSale();
-    }
-    
-    public void initializeTableProductsOnSale() {
-    	ObservableList <Article> observableList;
-    	observableList = FXCollections.observableList(skymarket.getListProductsOnSale());
-    	tvArticlesOnSale.setItems(observableList);
-    	tcPictureOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Picture"));
-    	tcNameOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
-    	tcCodeOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
-    	tcPriceOnSale.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
-    	tcActionOnSale.setCellValueFactory(new PropertyValueFactory<Article, Button>("Action"));
     }
     
    //methods mainScreenAdministraitor
@@ -1103,8 +1082,4 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1498763a6fb875f3ce9df034b89d5e3b7f8753ce
 }
