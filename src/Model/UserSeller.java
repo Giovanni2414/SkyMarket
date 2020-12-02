@@ -13,7 +13,7 @@ public class UserSeller extends User{
 	private Article sellArticles;
 	private boolean ban;
 	
-	/*
+	/**
 	name: UserSeller
 	Its the constructor of UserSeller
 	@param: name
@@ -24,7 +24,7 @@ public class UserSeller extends User{
 	@param: username
 	@param: picture
 	@param: bithday
-	**/
+	*/
 	public UserSeller(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
 		super(name,lastName,identification,email,password,username,picture,birthday);
 		calification = 0;
@@ -33,7 +33,7 @@ public class UserSeller extends User{
 		ban = false;
 	}
 	
-	/*
+	/**
 	name: isBan
 	allows to obtain the ban of the user seller
 	<b>pre:</b>The UserSeller object must be created
@@ -43,23 +43,23 @@ public class UserSeller extends User{
 		return ban;
 	}
 	
-	/*
+	/**
 	name: setBan
 	allows entering a new ban for the user seller
 	<b>pre:</b>The UserSeller object must be created
 	<b>post:</b>the ban will be saved in the variable "ban"
 	@param: ban
-	**/
+	*¿*/
 	public void setBan(boolean ban) {
 		this.ban = ban;
 	}
 
-	/*
+	/**
 	name: getCalification
 	allows to obtain the calification of the user seller
 	<b>pre:</b>The UserSeller object must be created
 	<b>post:</b>obtain the calification of the user seller saved in variable "calification"
-	**/
+	*/
 	public double getCalification() {
 		return calification;
 	}

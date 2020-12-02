@@ -19,18 +19,16 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import Thread.ProgressBarThread;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -65,6 +63,9 @@ public class SkyMarketGUI {
 	//Rectangle ProgressBar
     @FXML
     private Rectangle progressBar;
+    
+    @FXML
+    private Label txtPercent;
 	
 	//attributes main-panel
 	@FXML
@@ -232,6 +233,7 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<UserSeller, Double> tcCalificationB;
     
+
     //Attributes screenToBuyArticles
     
     @FXML
@@ -251,6 +253,25 @@ public class SkyMarketGUI {
 
     @FXML
     private TableColumn<Article, Integer> tcQuantityTSUB;
+
+    @FXML
+    private TableView<Article> tvArticlesOnSale;
+    
+    @FXML
+    private TableColumn<Article, String> tcPictureOnSale;
+
+    @FXML
+    private TableColumn<Article, String> tcNameOnSale;
+
+    @FXML
+    private TableColumn<Article, Double> tcPriceOnSale;
+
+    @FXML
+    private TableColumn<Article, String> tcCodeOnSale;
+
+    @FXML
+    private TableColumn<Article, Button> tcActionOnSale;
+
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
@@ -308,6 +329,7 @@ public class SkyMarketGUI {
 	 
 	 
 	 public void updateBar() {
+		 txtPercent.setText((pb.getProgressLevel()/3)+"%");
 		 progressBar.setWidth(pb.getProgressLevel());
 		 if(pb.isActive()==false) {
 			 try {
@@ -321,10 +343,14 @@ public class SkyMarketGUI {
 	//methods login
     @FXML
     public void login(ActionEvent event) throws IOException {
-    	User userToLogin = skymarket.binarySearchUser(txtUsername.getText());
+    	UserSeller userToLogin = (UserSeller) skymarket.binarySearchUser(txtUsername.getText());
     	if(userToLogin!=null) {
     		if(userToLogin.getPassword().equals(txtPassword.getText())) {
-    			loginManagement(userToLogin);
+    			if(!userToLogin.isBan()) {
+    				loginManagement(userToLogin);
+    			} else {
+    				userSellerBan();
+    			}
     		}else {
     			userPasswordIncorrectAlert();
     		}
@@ -542,6 +568,7 @@ public class SkyMarketGUI {
 
     }
 
+
     public void initializeTableBuyArticles() {
     	ObservableList<Article> observableList;
     	observableList = FXCollections.observableList(skymarket.getArticles());
@@ -574,6 +601,8 @@ public class SkyMarketGUI {
     	mainPanel.setCenter(screenToBuyArticlePane);
     	initializeTableBuyArticles();
     }
+
+
     
    //methods mainScreenAdministraitor
     
@@ -648,7 +677,9 @@ public class SkyMarketGUI {
     
     @FXML
     public void showUsersByNameFromHighestToLowest(ActionEvent event) {
-
+    	//btnPrueba.getProperties().put("idProducto", "Zorrilla loca");
+    	//alert.setContentText("Información extraida: " + btnPrueba.getProperties().get("idProducto"));
+    	
     }
 
     @FXML
@@ -1072,7 +1103,6 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
 
-    
     public void clientIdentificationAlert() {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("No se encontro el usuario");
@@ -1087,10 +1117,13 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
 
+
     public void serializableSaveAlert() {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("No es posible serializar");
     	alert.setContentText("No es posible guardar la informacion en un archivo serializable");
     	alert.showAndWait();
     }
+
+
 }
