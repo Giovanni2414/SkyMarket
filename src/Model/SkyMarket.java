@@ -15,6 +15,7 @@ import Exceptions.RepeatArticleCodeException;
 public class SkyMarket {
 
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
+	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
 	
 	/**
 	 * The current user logged in the program
@@ -334,13 +335,45 @@ public class SkyMarket {
 	}
 	
 	/**
-	 * saveDataRestaurants
+	 * saveDataClients
 	 * <br>Pre:<b>There must be information to serialize</b>
 	 * <br>Post:<b>The file was serialized
 	 */
-	public void saveDataRestaurants() throws IOException {
+	public void saveDataClients() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_USERS));
 		oos.writeObject(users);
 		oos.close();
+	}
+	
+	/**
+	 * laadDataAricles
+	 * allows load the data serializable
+	 * <br>Pre:<b>a serialized file must exist</b>
+	 * <br>Post:<b>the file was deserialized
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadDataArticles() throws ClassNotFoundException, IOException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_SERIALIZABLE_ARTICLE));
+		articles = (LinkedList<Article>)ois.readObject();
+		ois.close();
+	}
+	
+	/**
+	 * saveDataArticles
+	 * <br>Pre:<b>There must be information to serialize</b>
+	 * <br>Post:<b>The file was serialized
+	 */
+	public void saveDataArticles() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_ARTICLE));
+		oos.writeObject(articles);
+		oos.close();
+	}
+	
+	public void test() {
+		for(int i = 0; i<articles.size();i++) {
+    		System.out.println("name: " + articles.get(i).getName());
+    		System.out.println("code: " + articles.get(i).getCode());
+    		System.out.println("price: " + articles.get(i).getPrice());
+    	}
 	}
 }
