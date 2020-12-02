@@ -29,8 +29,8 @@ public class Main extends Application{
 		fxmlLoader.setController(skymarketGUI);
 		Parent root = fxmlLoader.load();
 		
-		skymarketGUI.loadLogin();
-		
+		skymarketGUI.loadProgressBar();
+
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("SkyMarket");
