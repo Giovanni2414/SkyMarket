@@ -19,12 +19,9 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
-<<<<<<< HEAD
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-=======
 import Thread.ProgressBarThread;
->>>>>>> c547dc07cfe8a99496493547afa3d129216374e2
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -1010,7 +1007,6 @@ public class SkyMarketGUI {
     	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
     	alert.showAndWait();
     }
-<<<<<<< HEAD
     
     public void clientIdentificationAlert() {
     	Alert alert= new Alert(AlertType.ERROR);
@@ -1025,8 +1021,5 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
-=======
 
-	
->>>>>>> c547dc07cfe8a99496493547afa3d129216374e2
 }

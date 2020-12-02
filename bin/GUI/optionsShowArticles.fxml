@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane prefHeight="83.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="81.0" fitWidth="140.0" layoutX="230.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/picturesApp/skymarket-logo.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="14.0" layoutY="30.0" mnemonicParsing="false" onAction="#exit" text="Volver" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="234.0" layoutY="14.0" text="Ordenar articulos por:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromHighestToLowest" prefHeight="25.0" prefWidth="163.0" text="Nombre de mayor a menor" />
+            <Button layoutX="167.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPriceFromLowestToHighest" prefHeight="25.0" prefWidth="135.0" text="Precio menor a mayor" />
+            <Button layoutX="424.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromLowestToHighest" prefHeight="25.0" prefWidth="162.0" text="Nombre de menor a mayor" />
+            <Button layoutX="312.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPricepriceFromHighestToLowest" prefHeight="25.0" prefWidth="135.0" text="Precio mayor a menor" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
