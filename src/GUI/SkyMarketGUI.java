@@ -19,18 +19,16 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
-<<<<<<< HEAD
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-=======
 import Thread.ProgressBarThread;
->>>>>>> c547dc07cfe8a99496493547afa3d129216374e2
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -228,6 +226,24 @@ public class SkyMarketGUI {
 
     @FXML
     private TableColumn<UserSeller, Double> tcCalificationB;
+    
+    @FXML
+    private TableView<Article> tvArticlesOnSale;
+    
+    @FXML
+    private TableColumn<Article, String> tcPictureOnSale;
+
+    @FXML
+    private TableColumn<Article, String> tcNameOnSale;
+
+    @FXML
+    private TableColumn<Article, Double> tcPriceOnSale;
+
+    @FXML
+    private TableColumn<Article, String> tcCodeOnSale;
+
+    @FXML
+    private TableColumn<Article, Button> tcActionOnSale;
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
@@ -519,8 +535,24 @@ public class SkyMarketGUI {
     }
 
     @FXML
-    void viewListArticleForSale(ActionEvent event) {
-
+    void viewListArticleForSale(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showProductsOnSale.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showProductsOnSale = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showProductsOnSale);
+    	initializeTableProductsOnSale();
+    }
+    
+    public void initializeTableProductsOnSale() {
+    	ObservableList <Article> observableList;
+    	observableList = FXCollections.observableList(skymarket.getListProductsOnSale());
+    	tvArticlesOnSale.setItems(observableList);
+    	tcPictureOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Picture"));
+    	tcNameOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeOnSale.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceOnSale.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcActionOnSale.setCellValueFactory(new PropertyValueFactory<Article, Button>("Action"));
     }
     
    //methods mainScreenAdministraitor
@@ -590,7 +622,9 @@ public class SkyMarketGUI {
     
     @FXML
     public void showUsersByNameFromHighestToLowest(ActionEvent event) {
-
+    	//btnPrueba.getProperties().put("idProducto", "Zorrilla loca");
+    	//alert.setContentText("Información extraida: " + btnPrueba.getProperties().get("idProducto"));
+    	
     }
 
     @FXML
@@ -1010,8 +1044,7 @@ public class SkyMarketGUI {
     	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
     	alert.showAndWait();
     }
-<<<<<<< HEAD
-    
+
     public void clientIdentificationAlert() {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("No se encontro el usuario");
@@ -1025,8 +1058,4 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
-=======
-
-	
->>>>>>> c547dc07cfe8a99496493547afa3d129216374e2
 }

@@ -9,7 +9,7 @@ public class Article {
 	private String picture;
 	private int quantity;
 	private Article nextArticle;
-	private Article prevArticle; 
+	private Article prevArticle;
 	
 	/*
 	name: Article
