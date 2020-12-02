@@ -15,6 +15,7 @@ import Exceptions.RepeatArticleCodeException;
 public class SkyMarket {
 
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
+	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
 	
 	/**
 	 * The current user logged in the program
@@ -137,22 +138,24 @@ public class SkyMarket {
 	 */
 	public User binarySearchUser(String username) {
 		User userSeek = null;
-		boolean find = false;
-		int in = 0;
-		int fin = users.size();
-		
-		while(in <= fin && !find) {
-			int pos = (int) Math.floor((in+fin)/2);
-			if(pos != users.size()) {
-				String el = users.get(pos).getUsername();
-				int compar = username.compareToIgnoreCase(el);
-				if(compar == 0) {
-					userSeek = users.get(pos);
-					find = true;
-				} else if(compar < 0) {
-					fin = pos - 1;
-				} else if(compar > 0) {
-					in = pos + 1;
+		if(users.size() > 0) {
+			boolean find = false;
+			int in = 0;
+			int fin = users.size();
+			
+			while(in <= fin && !find) {
+				int pos = (int) Math.floor((in+fin)/2);
+				if(pos != users.size()) {
+					String el = users.get(pos).getUsername();
+					int compar = username.compareToIgnoreCase(el);
+					if(compar == 0) {
+						userSeek = users.get(pos);
+						find = true;
+					} else if(compar < 0) {
+						fin = pos - 1;
+					} else if(compar > 0) {
+						in = pos + 1;
+					}
 				}
 			}
 		}
@@ -306,6 +309,65 @@ public class SkyMarket {
 			throw new EmptyFieldException();
 		}
 	}
+	
+	public LinkedList<User> getListUsersFiltredNameInsertion() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		for(int c = 0; c < tempArr.length; c++) {
+			User key = tempArr[c];
+			int i = c - 1;
+			while((i > -1) && ((tempArr[i].getName()).compareToIgnoreCase(key.getName()) > 0)) {
+				tempArr[i + 1] = tempArr[i];
+				i--;
+			}
+			tempArr[i + 1] = key;
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
+	public LinkedList<User> getListUsersFiltredNameSelection() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		for(int c = 0; c < tempArr.length - 1; c++ ) {
+			int index = c;
+			for(int v = 0; v < tempArr.length; v++) {
+				if(tempArr[v].getName().compareToIgnoreCase(tempArr[index].getName()) < 0) {
+					index = v;
+				}
+			}
+			User smaller = tempArr[index];
+			tempArr[index] = tempArr[c];
+			tempArr[c] = smaller;
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
+	public LinkedList<User> getListUsersFiltredIdentificationBubble() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		User temp = null;
+		for(int c = 0; c < tempArr.length; c++) {
+			for(int v = 0; v < (tempArr.length - c); v++) {
+				if(Integer.parseInt(tempArr[v-1].getIdentification()) > Integer.parseInt(tempArr[v].getIdentification())) {  
+                    //swap elements  
+                    temp = tempArr[v-1];  
+                    tempArr[v-1] = tempArr[v];  
+                    tempArr[v] = temp;  
+				}
+			}
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
 	public LinkedList<Article> getListProductsOnSale() {
 		LinkedList<Article> listAllProductsOnSale = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
@@ -342,13 +404,45 @@ public class SkyMarket {
 	}
 	
 	/**
-	 * saveDataRestaurants
+	 * saveDataClients
 	 * <br>Pre:<b>There must be information to serialize</b>
 	 * <br>Post:<b>The file was serialized
 	 */
-	public void saveDataRestaurants() throws IOException {
+	public void saveDataClients() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_USERS));
 		oos.writeObject(users);
 		oos.close();
+	}
+	
+	/**
+	 * laadDataAricles
+	 * allows load the data serializable
+	 * <br>Pre:<b>a serialized file must exist</b>
+	 * <br>Post:<b>the file was deserialized
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadDataArticles() throws ClassNotFoundException, IOException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_SERIALIZABLE_ARTICLE));
+		articles = (LinkedList<Article>)ois.readObject();
+		ois.close();
+	}
+	
+	/**
+	 * saveDataArticles
+	 * <br>Pre:<b>There must be information to serialize</b>
+	 * <br>Post:<b>The file was serialized
+	 */
+	public void saveDataArticles() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_ARTICLE));
+		oos.writeObject(articles);
+		oos.close();
+	}
+	
+	public void test() {
+		for(int i = 0; i<articles.size();i++) {
+    		System.out.println("name: " + articles.get(i).getName());
+    		System.out.println("code: " + articles.get(i).getCode());
+    		System.out.println("price: " + articles.get(i).getPrice());
+    	}
 	}
 }

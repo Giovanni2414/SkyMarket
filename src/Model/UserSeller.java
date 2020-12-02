@@ -121,7 +121,7 @@ public class UserSeller extends User{
 		if(sellArticles == null) {
 			sellArticles = newArticle;
 		}else {
-			addArticleToSellArticles(history, newArticle);
+			addArticleToSellArticles(sellArticles, newArticle);
 		}
 	}
 	
