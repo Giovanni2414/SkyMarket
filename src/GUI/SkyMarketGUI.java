@@ -19,6 +19,10 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1498763a6fb875f3ce9df034b89d5e3b7f8753ce
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ProgressBarThread;
@@ -42,9 +46,12 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+
+import javafx.event.EventHandler;
 
 public class SkyMarketGUI {
 	
@@ -60,6 +67,9 @@ public class SkyMarketGUI {
 	//Rectangle ProgressBar
     @FXML
     private Rectangle progressBar;
+    
+    @FXML
+    private Label txtPercent;
 	
 	//attributes main-panel
 	@FXML
@@ -300,6 +310,7 @@ public class SkyMarketGUI {
 	 
 	 
 	 public void updateBar() {
+		 txtPercent.setText((pb.getProgressLevel()/3)+"%");
 		 progressBar.setWidth(pb.getProgressLevel());
 		 if(pb.isActive()==false) {
 			 try {
@@ -579,7 +590,41 @@ public class SkyMarketGUI {
     	tcNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
     	tcLastNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
     	tcCalificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
+    	tvUserSellerListB.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+                System.out.println("clicked on " + tvUserSellerListB.getSelectionModel().getSelectedItem());
+                try {
+                	loadTest(tvUserSellerListB.getSelectionModel().getSelectedItem());
+                }catch(IOException ioe) {
+                	
+                }
+            }
+        });
     }
+    
+    //Inicio Prueba
+    @FXML
+    private Label pruebaNombre;
+
+    @FXML
+    private Label pruebaApellido;
+    
+    public void loadTest(UserSeller x) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("prueba.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent test = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(test);
+    	
+    	pruebaNombre.setText(x.getName());
+    	pruebaApellido.setText(x.getLastName());
+    }
+    
+    //Fin prueba
 
     @FXML
     void banUser(ActionEvent event) throws IOException {
@@ -1058,4 +1103,8 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1498763a6fb875f3ce9df034b89d5e3b7f8753ce
 }
