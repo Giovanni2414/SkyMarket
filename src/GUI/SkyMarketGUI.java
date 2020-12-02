@@ -251,6 +251,24 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<Article, Button> tcActionOnSale;
     
+    @FXML
+    private TableView<User> tvFiltedUsers;
+
+    @FXML
+    private TableColumn<User, String> tcNameFiltredTv;
+
+    @FXML
+    private TableColumn<User, String> tcLastnameFiltredTv;
+
+    @FXML
+    private TableColumn<User, String> tcIdentificationFiltredTv;
+
+    @FXML
+    private TableColumn<User, String> tcEmailFiltredTv;
+
+    @FXML
+    private TableColumn<User, String> tcUsernameFiltredTv;
+    
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
 		skymarket = sk;
@@ -645,10 +663,34 @@ public class SkyMarketGUI {
     //methods optionsShowUser
     
     @FXML
-    public void showUsersByNameFromHighestToLowest(ActionEvent event) {
-    	//btnPrueba.getProperties().put("idProducto", "Zorrilla loca");
-    	//alert.setContentText("Información extraida: " + btnPrueba.getProperties().get("idProducto"));
-    	
+    public void showUsersByNameFromHighestToLowest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showFiltredUsers.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredUsersPane = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredUsersPane);
+    	initializateTableFiltredUsers(1);
+    }
+    
+    private void initializateTableFiltredUsers(int fil) {
+    	ObservableList <User> observableList = null;
+    	switch(fil) {
+    		case 1:
+    	    	observableList = FXCollections.observableList(skymarket.getListUsersFiltredNameInsertion());
+    			break;
+    		case 2:
+    			observableList = FXCollections.observableList(skymarket.getListUsersFiltredNameSelection());
+    			break;
+    		case 3:
+    			
+    			break;
+    	}
+    	tvFiltedUsers.setItems(observableList);
+    	tcNameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));
+    	tcLastnameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Lastname"));
+    	tcIdentificationFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Identification"));
+    	tcEmailFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Email"));
+    	tcUsernameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Username"));
     }
 
     @FXML

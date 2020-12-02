@@ -137,22 +137,24 @@ public class SkyMarket {
 	 */
 	public User binarySearchUser(String username) {
 		User userSeek = null;
-		boolean find = false;
-		int in = 0;
-		int fin = users.size();
-		
-		while(in <= fin && !find) {
-			int pos = (int) Math.floor((in+fin)/2);
-			if(pos != users.size()) {
-				String el = users.get(pos).getUsername();
-				int compar = username.compareToIgnoreCase(el);
-				if(compar == 0) {
-					userSeek = users.get(pos);
-					find = true;
-				} else if(compar < 0) {
-					fin = pos - 1;
-				} else if(compar > 0) {
-					in = pos + 1;
+		if(users.size() > 0) {
+			boolean find = false;
+			int in = 0;
+			int fin = users.size();
+			
+			while(in <= fin && !find) {
+				int pos = (int) Math.floor((in+fin)/2);
+				if(pos != users.size()) {
+					String el = users.get(pos).getUsername();
+					int compar = username.compareToIgnoreCase(el);
+					if(compar == 0) {
+						userSeek = users.get(pos);
+						find = true;
+					} else if(compar < 0) {
+						fin = pos - 1;
+					} else if(compar > 0) {
+						in = pos + 1;
+					}
 				}
 			}
 		}
@@ -306,6 +308,65 @@ public class SkyMarket {
 			throw new EmptyFieldException();
 		}
 	}
+	
+	public LinkedList<User> getListUsersFiltredNameInsertion() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		for(int c = 0; c < tempArr.length; c++) {
+			User key = tempArr[c];
+			int i = c - 1;
+			while((i > -1) && ((tempArr[i].getName()).compareToIgnoreCase(key.getName()) > 0)) {
+				tempArr[i + 1] = tempArr[i];
+				i--;
+			}
+			tempArr[i + 1] = key;
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
+	public LinkedList<User> getListUsersFiltredNameSelection() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		for(int c = 0; c < tempArr.length - 1; c++ ) {
+			int index = c;
+			for(int v = 0; v < tempArr.length; v++) {
+				if(tempArr[v].getName().compareToIgnoreCase(tempArr[index].getName()) < 0) {
+					index = v;
+				}
+			}
+			User smaller = tempArr[index];
+			tempArr[index] = tempArr[c];
+			tempArr[c] = smaller;
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
+	public LinkedList<User> getListUsersFiltredIdentificationBubble() {
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		User temp = null;
+		for(int c = 0; c < tempArr.length; c++) {
+			for(int v = 0; v < (tempArr.length - c); v++) {
+				if(Integer.parseInt(tempArr[v-1].getIdentification()) > Integer.parseInt(tempArr[v].getIdentification())) {  
+                    //swap elements  
+                    temp = tempArr[v-1];  
+                    tempArr[v-1] = tempArr[v];  
+                    tempArr[v] = temp;  
+				}
+			}
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
+	}
+	
 	public LinkedList<Article> getListProductsOnSale() {
 		LinkedList<Article> listAllProductsOnSale = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
