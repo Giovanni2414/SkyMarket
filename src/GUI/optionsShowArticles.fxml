@@ -29,10 +29,10 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#showByNameFromHighestToLowest" prefHeight="25.0" prefWidth="163.0" text="Nombre de mayor a menor" />
-            <Button layoutX="167.0" layoutY="194.0" mnemonicParsing="false" onAction="#showByPriceFromLowestToHighest" prefHeight="25.0" prefWidth="135.0" text="Precio menor a mayor" />
-            <Button layoutX="424.0" layoutY="131.0" mnemonicParsing="false" onAction="#showByNameFromLowestToHighest" prefHeight="25.0" prefWidth="162.0" text="Nombre de menor a mayor" />
-            <Button layoutX="312.0" layoutY="194.0" mnemonicParsing="false" onAction="#showByPricepriceFromHighestToLowest" prefHeight="25.0" prefWidth="135.0" text="Precio mayor a menor" />
+            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromHighestToLowest" prefHeight="25.0" prefWidth="163.0" text="Nombre de mayor a menor" />
+            <Button layoutX="167.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPriceFromLowestToHighest" prefHeight="25.0" prefWidth="135.0" text="Precio menor a mayor" />
+            <Button layoutX="424.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromLowestToHighest" prefHeight="25.0" prefWidth="162.0" text="Nombre de menor a mayor" />
+            <Button layoutX="312.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPricepriceFromHighestToLowest" prefHeight="25.0" prefWidth="135.0" text="Precio mayor a menor" />
          </children>
       </AnchorPane>
    </center>

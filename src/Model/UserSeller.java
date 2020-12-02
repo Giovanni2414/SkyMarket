@@ -11,6 +11,7 @@ public class UserSeller extends User{
 	private double calification;
 	private Article history; 
 	private Article sellArticles;
+	private boolean ban;
 	
 	/*
 	name: UserSeller
@@ -29,6 +30,28 @@ public class UserSeller extends User{
 		calification = 0;
 		history = null;
 		sellArticles = null;
+		ban = false;
+	}
+	
+	/*
+	name: isBan
+	allows to obtain the ban of the user seller
+	<b>pre:</b>The UserSeller object must be created
+	<b>post:</b>obtain the ban of the user seller saved in variable "ban"
+	**/
+	public boolean isBan() {
+		return ban;
+	}
+	
+	/*
+	name: setBan
+	allows entering a new ban for the user seller
+	<b>pre:</b>The UserSeller object must be created
+	<b>post:</b>the ban will be saved in the variable "ban"
+	@param: ban
+	**/
+	public void setBan(boolean ban) {
+		this.ban = ban;
 	}
 
 	/*

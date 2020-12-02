@@ -159,6 +159,30 @@ public class SkyMarket {
 		return userSeek;
 	}
 	
+	public UserSeller searchUserByIdentification(String username) {
+		LinkedList<UserSeller> list = getListUsersSellers();
+		UserSeller search = null; 
+		
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).getUsername().equals(username)) {
+				search = list.get(i);
+			}
+		}
+		
+		return search;
+	}
+	
+	/*
+	public void banUser(String identification) {
+		for(int i = 0; i<users.size();i++) {
+			if(users.get(i).getIdentification().) {
+				
+			}
+		}
+	}
+	*/
+	
+	
 	/**
 	 * Method to set an user in currentUser and login into the application
 	 * <br>Pre:<b></b>
@@ -281,6 +305,19 @@ public class SkyMarket {
 		if(name == null || code == null || price == 0  || description == null || picture == null || quantity == 0 || type == null) {
 			throw new EmptyFieldException();
 		}
+	}
+	
+	public LinkedList<UserSeller> getListUsersSellers() {
+		LinkedList<UserSeller> listAllUsersSellers = new LinkedList<>();
+		
+		for(int i = 0; i < users.size();i++) {
+			if(users.get(i) instanceof UserSeller) {
+				UserSeller current = (UserSeller)(users.get(i));
+				listAllUsersSellers.add(current);
+			}
+		}
+		
+		return listAllUsersSellers;
 	}
 	
 	/**

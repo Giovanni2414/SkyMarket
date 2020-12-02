@@ -18,16 +18,21 @@ import Model.Technology;
 import Model.User;
 import Model.UserBuyer;
 import Model.UserSeller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -188,6 +193,28 @@ public class SkyMarketGUI {
     @FXML
     private ChoiceBox<String> cbTypeStoveNS;
     
+    //Attributes banUserScreen
+    
+    @FXML
+    private TextField txtUsernameToBan;
+
+    @FXML
+    private TableView<UserSeller> tvUserSellerListB;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcUsernameB;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcCodeB;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcNameB;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcLastNameB;
+
+    @FXML
+    private TableColumn<UserSeller, Double> tcCalificationB;
     
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
@@ -456,22 +483,56 @@ public class SkyMarketGUI {
    //methods mainScreenAdministraitor
     
     @FXML
-    void ViewAllArticles(ActionEvent event) {
-
+    void ViewAllArticles(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("optionsShowArticles.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent optionShowArticlesPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(optionShowArticlesPane);
+    }
+    
+    public void initializeTableBanUser() {
+    	ObservableList <UserSeller> observableList;
+    	observableList = FXCollections.observableList(skymarket.getListUsersSellers());
+    	
+    	tvUserSellerListB.setItems(observableList);
+    	tcUsernameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Username"));
+    	tcCodeB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Identification"));
+    	tcNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
+    	tcLastNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
+    	tcCalificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
     }
 
     @FXML
-    void banUser(ActionEvent event) {
-
+    void banUser(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("banUserScreen.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent banUserScreen = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(banUserScreen);
+    	initializeTableBanUser();
     }
 
     @FXML
-    void importData(ActionEvent event) {
-
+    void importData(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menuImports.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent menuImportsPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(menuImportsPane);
     }
 
     @FXML
-    void viewAllUsers(ActionEvent event) throws IOException {
+    public void viewAllUsers(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("optionsShowUser.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -485,17 +546,72 @@ public class SkyMarketGUI {
     //methods optionsShowUser
     
     @FXML
-    void showByNameFromHighestToLowest(ActionEvent event) {
+    public void showUsersByNameFromHighestToLowest(ActionEvent event) {
 
     }
 
     @FXML
-    void showByNameFromLowestToHighest(ActionEvent event) {
+    public void showUsersByNameFromLowestToHighest(ActionEvent event) {
 
     }
 
     @FXML
-    void showByNumberIdentification(ActionEvent event) {
+    public void showUsersByNumberIdentification(ActionEvent event) {
+
+    }
+    
+    //methods optionsShowArticles
+    
+    @FXML
+    void showArticlesByNameFromHighestToLowest(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showArticlesByNameFromLowestToHighest(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showArticlesByPriceFromLowestToHighest(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showArticlesByPricepriceFromHighestToLowest(ActionEvent event) {
+
+    }
+    
+    //methods banUserScreen
+    
+    @FXML
+    public void ban(ActionEvent event) {
+    	if(txtUsernameToBan != null) { 
+    		if(skymarket.searchUserByIdentification(txtUsernameToBan.getText()) != null) {
+    			UserSeller search = (UserSeller)(skymarket.binarySearchUser(txtUsernameToBan.getText()));
+    			search.setBan(true);
+    		}else {
+    			clientIdentificationAlert();
+    		}
+    	}else {
+    		fieldEmptyAlert();
+    	}
+    }
+    
+    //methods menuImports
+    
+    @FXML
+    void importArticles(ActionEvent event) {
+
+    }
+
+    @FXML
+    void importUsers(ActionEvent event) {
+
+    }
+
+    @FXML
+    void importUsersAndArticles(ActionEvent event) {
 
     }
     
@@ -849,6 +965,20 @@ public class SkyMarketGUI {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("Imposible serializar la informacion");
     	alert.setContentText("Este error puede ocurrir debido a que no existe un archivo para serializar");
+    	alert.showAndWait();
+    }
+    
+    public void clientIdentificationAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("No se encontro el usuario");
+    	alert.setContentText("No se encontro el usuario o puede no existir");
+    	alert.showAndWait();
+    }
+    
+    public void userSellerBan() {
+    	Alert alert= new Alert(AlertType.INFORMATION);
+    	alert.setHeaderText("Su usuario se encuentra baneado");
+    	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
 }

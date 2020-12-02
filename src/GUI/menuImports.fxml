@@ -17,7 +17,7 @@
                   <Image url="@../../data/picturesApp/skymarket-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#exitToScreenAdministraitor" text="Exit" />
+            <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
             <ImageView fitHeight="37.0" fitWidth="49.0" layoutX="19.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/iconPacks/basic-icons/012-backwards.png" />
