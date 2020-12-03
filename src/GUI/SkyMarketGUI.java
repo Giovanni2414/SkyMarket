@@ -339,6 +339,12 @@ public class SkyMarketGUI {
     @FXML
     private Label lbArticleNumberCameras;
     
+    @FXML
+    private Label lbArticleNumberOfPorts;
+
+    @FXML
+    private Label lbArticleTouch;
+    
 	//Constructor
 	public SkyMarketGUI(SkyMarket sk){
 		skymarket = sk;
@@ -667,13 +673,41 @@ public class SkyMarketGUI {
     		if(article instanceof CellPhone) {
         		CellPhone articleC = (CellPhone)(article);
     			loadCellPhoneInfoToBuy(articleC);
+        	}else if(article instanceof Computer) {
+        		Computer articleC = (Computer)(article);
+    			loadComputerInfoToBuy(articleC);
         	}
+    		
+    		
     	}catch(IOException ioe) {
     		fxmlNotFound();
     	}
     }
     
-    public void loadCellPhoneInfoToBuy(CellPhone article) throws IOException {
+    private void loadComputerInfoToBuy(Computer article) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleComputerBuy.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent articleCellphoneBuyPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(articleCellphoneBuyPane);
+    	lbArticleName.setText(article.getName());
+    	lbArticleDescription.setText(article.getDescription());
+    	lbArticleCode.setText(article.getCode());
+    	lbArticlePrice.setText(String.valueOf(article.getPrice()));
+    	lbArticleQuantity.setText(String.valueOf(article.getQuantity()));
+    	lbArticleBattery.setText(String.valueOf(article.getBatteryWatts()));
+    	lbArticleScreenSize.setText(String.valueOf(article.getScreenSize()));
+    	lbArticleRam.setText(String.valueOf(article.getRam()));
+    	lbArticleProcessor.setText(article.getProcessor());
+    	lbArticleNumberOfPorts.setText(String.valueOf(article.getNumberOfPorts()));
+    	lbArticleTouch.setText(String.valueOf(article.isTouchString()));
+		
+	}
+
+	public void loadCellPhoneInfoToBuy(CellPhone article) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleCellphoneBuy.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -1014,7 +1048,7 @@ public class SkyMarketGUI {
     		if(type.equals("Celular")) {
         		loadScreenAddNewCellphone();
         	}else if(type.equals("Computador")) {
-        		
+        		loadScreenAddNewComputer();
         	}
      	}catch(IOException ioe) {
      		fxmlNotFound();
@@ -1022,7 +1056,19 @@ public class SkyMarketGUI {
     		
     }
     
-    public void loadScreenAddNewCellphone() throws IOException {
+    public void loadScreenAddNewComputer() throws IOException{
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewComputer.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenAddNewComputerPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenAddNewComputerPane);
+		
+	}
+
+	public void loadScreenAddNewCellphone() throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewCellphone.fxml"));
     	
     	fxmlLoader.setController(this);

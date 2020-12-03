@@ -2,6 +2,10 @@ package Model;
 
 public class Technology extends Article{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double batteryWatts;
 	private int screenSize;
 	private int ram;

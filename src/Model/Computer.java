@@ -2,6 +2,10 @@ package Model;
 
 public class Computer extends Technology {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean touch;
 	private int numberOfPorts;
 	
@@ -55,7 +59,7 @@ public class Computer extends Technology {
 	 * <br>Post:<b>obtain the smart String of the Computer saved in variable "answer"</b>
 	 * @return answer;
 	 */
-	public String isSmartString() {
+	public String isTouchString() {
 		String answer;
 		answer = (touch)?"SI":"NO";
 		return answer;

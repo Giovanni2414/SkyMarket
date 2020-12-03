@@ -2,6 +2,10 @@ package Model;
 
 public class CellPhone extends Technology{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numberOfSims;
 	private int numberOfCameras;
 	

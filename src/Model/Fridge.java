@@ -2,6 +2,10 @@ package Model;
 
 public class Fridge extends HomeAppliances{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean smart;
 	private boolean frost;
 	

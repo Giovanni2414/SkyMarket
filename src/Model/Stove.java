@@ -2,6 +2,10 @@ package Model;
 
 public class Stove extends HomeAppliances{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int numberOfNozzles;
 	private String typeStove;
 	
