@@ -365,6 +365,42 @@ public class SkyMarketGUI {
     @FXML
     private Label lbArticleTouch;
     
+    
+    
+    //Home Appliance 
+    
+    @FXML
+    private Label lbArticleWeight;
+
+    @FXML
+    private Label lbArticleCapacity;
+
+    @FXML
+    private Label lbArticleWattsConsumption;
+
+    @FXML
+    private Label lbArticleHeight;
+
+    @FXML
+    private Label lbArticleWidth;
+    
+    //Stove
+
+    @FXML
+    private Label lbArticleNumberNozzles;
+
+    @FXML
+    private Label lbArticleStoveType;
+    
+    //Fridge
+    
+    @FXML
+    private Label lbArticleSmart;
+
+    @FXML
+    private Label lbArticleFrost;
+    
+
 	/**
 	 * Constructor of SkyMarketGUI
 	 * <br><b>Pre:<b><br>
@@ -727,6 +763,12 @@ public class SkyMarketGUI {
         	}else if(article instanceof Computer) {
         		Computer articleC = (Computer)(article);
     			loadComputerInfoToBuy(articleC);
+        	}else if(article instanceof Stove) {
+        		Stove articleC = (Stove)(article);
+    			loadStoveInfoToBuy(articleC);
+        	}else if(article instanceof Fridge) {
+        		Fridge articleC = (Fridge)(article);
+    			loadFridgeInfoToBuy(articleC);
         	}
     		
     		
@@ -735,7 +777,56 @@ public class SkyMarketGUI {
     	}
     }
     
-    private void loadComputerInfoToBuy(Computer article) throws IOException {
+    private void loadFridgeInfoToBuy(Fridge article) throws IOException {
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleFridgeBuy.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent articleCellphoneBuyPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(articleCellphoneBuyPane);
+    	lbArticleName.setText(article.getName());
+    	lbArticleDescription.setText(article.getDescription());
+    	lbArticleCode.setText(article.getCode());
+    	lbArticlePrice.setText(String.valueOf(article.getPrice()));
+    	lbArticleQuantity.setText(String.valueOf(article.getQuantity()));
+    	lbArticleWeight.setText(String.valueOf(article.getWeight()));
+    	lbArticleCapacity.setText(String.valueOf(article.getCapacity()));
+    	lbArticleWattsConsumption.setText(String.valueOf(article.getWattsConsum()));
+    	lbArticleHeight.setText(String.valueOf(article.getHeight()));
+    	lbArticleWidth.setText(String.valueOf(article.getWidth()));
+    	lbArticleSmart.setText(String.valueOf(article.isSmartString()));
+    	lbArticleFrost.setText(String.valueOf(article.isFrostString()));
+		
+	}
+
+	private void loadStoveInfoToBuy(Stove article) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleStoveBuy.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent articleCellphoneBuyPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(articleCellphoneBuyPane);
+    	lbArticleName.setText(article.getName());
+    	lbArticleDescription.setText(article.getDescription());
+    	lbArticleCode.setText(article.getCode());
+    	lbArticlePrice.setText(String.valueOf(article.getPrice()));
+    	lbArticleQuantity.setText(String.valueOf(article.getQuantity()));
+    	lbArticleWeight.setText(String.valueOf(article.getWeight()));
+    	lbArticleCapacity.setText(String.valueOf(article.getCapacity()));
+    	lbArticleWattsConsumption.setText(String.valueOf(article.getWattsConsum()));
+    	lbArticleHeight.setText(String.valueOf(article.getHeight()));
+    	lbArticleWidth.setText(String.valueOf(article.getWidth()));
+    	lbArticleNumberNozzles.setText(String.valueOf(article.getNumberOfNozzles()));
+    	lbArticleStoveType.setText(String.valueOf(article.getTypeStove()));
+    	    
+		
+	}
+
+	private void loadComputerInfoToBuy(Computer article) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleComputerBuy.fxml"));
     	
     	fxmlLoader.setController(this);
