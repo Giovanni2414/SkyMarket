@@ -16,6 +16,7 @@ public class Article implements Serializable{
 	private int quantity;
 	private Article nextArticle;
 	private Article prevArticle;
+	private String nameSeller;
 	
 	/*
 	name: Article
@@ -27,7 +28,7 @@ public class Article implements Serializable{
 	@param: picture
 	@param: quantity
 	**/
-	public Article(String name,String code,double price, String description, String picture, int quantity) {
+	public Article(String name,String code,double price, String description, String picture, int quantity, String nameSeller) {
 		this.name = name;
 		this.code = code;
 		this.price = price;
@@ -36,6 +37,7 @@ public class Article implements Serializable{
 		this.quantity = quantity;
 		nextArticle = null;
 		prevArticle = null; 
+		this.nameSeller = nameSeller;
 	}
 
 	/*
@@ -204,6 +206,14 @@ public class Article implements Serializable{
 	**/
 	public void setPrevArticle(Article prevArticle) {
 		this.prevArticle = prevArticle;
+	}
+
+	public String getNameSeller() {
+		return nameSeller;
+	}
+
+	public void setNameSeller(String nameSeller) {
+		this.nameSeller = nameSeller;
 	}
 	
 	

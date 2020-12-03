@@ -26,8 +26,8 @@ public class Computer extends Technology {
 	 * @param numberOfPorts
 	 * @param touch
 	 */
-	public Computer(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor, int numberOfPorts, boolean touch) {
-		super(name,code,price,description,picture,quantity,batteryWatts,screenSize,ram,processor);
+	public Computer(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor, int numberOfPorts, boolean touch, String ns) {
+		super(name,code,price,description,picture,quantity,batteryWatts,screenSize,ram,processor, ns);
 		this.touch = touch;
 		this.numberOfPorts = numberOfPorts;
 	}

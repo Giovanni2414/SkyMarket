@@ -52,13 +52,24 @@ import javafx.event.EventHandler;
 
 public class SkyMarketGUI {
 	
+	/**
+	 * Route of the pictures of people
+	 */
 	private final static String PATH_PICTURE_PEOPLE = "data/picturesPeople/";
 	
+	/**
+	 * Temp article to help in the process to add
+	 */
 	private Article currentArticle;
 
+	/**
+	 * Variable to manage the program
+	 */
 	private SkyMarket skymarket;
 	
-	
+	/**
+	 * ProgressBar with thread at the end
+	 */
 	private ProgressBar pb;
 	
 	//Rectangle ProgressBar
@@ -345,13 +356,23 @@ public class SkyMarketGUI {
     @FXML
     private Label lbArticleTouch;
     
-	//Constructor
+	/**
+	 * Constructor of SkyMarketGUI
+	 * <br><b>Pre:<b><br>
+	 * <br><b>Post:<b>Initializate boot variables to start the program<br>
+	 * @param sk SkyMarket principal class to manage the Program
+	 */
 	public SkyMarketGUI(SkyMarket sk){
 		skymarket = sk;
 		pb= new ProgressBar();
 		serializeData();
 	}
 	
+	/**
+	 * Method to serialize the saved Data
+	 * <br><b>Pre:<b>SkyMarket variable must be initializated<br>
+	 * <br><b>Post:<b>Data serializated and loaded<br>
+	 */
 	public void serializeData(){
 		try {
 			skymarket.loadDataClients();
@@ -367,6 +388,12 @@ public class SkyMarketGUI {
 		}
 	}
 	
+	/**
+	 * Method to load the screen login
+	 * <br><b>Pre:<b>Principal panel loaded<br>
+	 * <br><b>Post:<b>A new scene in the main screen<br>
+	 * @throws IOException Excepto in case fxml don't exists
+	 */
 	public void loadLogin() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
 		
@@ -388,8 +415,12 @@ public class SkyMarketGUI {
 		 alert.showAndWait();
 	 }
 	
-	 //ProgressBar Methods
-	 
+	 /**
+	  * Method to load progress bar at the end
+	  * <br><b>Pre:<b>Main screen loaded<br>
+	  * <br><b>Post:<b>ProgressBar scene loaded and show<br>
+	  * @throws IOException Exception in case of fxml dont exists
+	  */
 	 public void loadProgressBar() throws IOException {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("progress-bar.fxml"));
 			
@@ -405,7 +436,11 @@ public class SkyMarketGUI {
 			 
 		}
 	 
-	 
+	 /**
+	  * Method to update the progress bar
+	  * <br><b>Pre:<b>Progress bar initializated and thread<br>
+	  * <br><b>Post:<b><br> ProgressBar updated status
+	  */
 	 public void updateBar() {
 		 txtPercent.setText((pb.getProgressLevel()/3)+"%");
 		 progressBar.setWidth(pb.getProgressLevel());
@@ -433,6 +468,13 @@ public class SkyMarketGUI {
     	}
     }
     
+    /**
+     * Method to manage the attempt of login
+     * <br><b>Pre:<b>SkyMarket variable must initializated<br>
+	 * <br><b>Post:<b>CurrentUser setted, Ban verified<br>
+     * @param userToLogin User trying to login
+     * @throws IOException Exception in case of fxml don't exists
+     */
     public void loginManagement(User userToLogin) throws IOException {
     	if(userToLogin instanceof UserBuyer) {
     		loadUserBuyerScreen();
@@ -835,7 +877,7 @@ public class SkyMarketGUI {
     			observableList = FXCollections.observableList(skymarket.getListUsersFiltredNameSelection());
     			break;
     		case 3:
-    			
+    			observableList = FXCollections.observableList(skymarket.getListUsersFiltredIdentificationBubble());
     			break;
     	}
     	tvFiltedUsers.setItems(observableList);
@@ -847,13 +889,23 @@ public class SkyMarketGUI {
     }
 
     @FXML
-    public void showUsersByNameFromLowestToHighest(ActionEvent event) {
-
+    public void showUsersByNameFromLowestToHighest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showFiltredUsers.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredUsersPane = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredUsersPane);
+    	initializateTableFiltredUsers(2);
     }
 
     @FXML
-    public void showUsersByNumberIdentification(ActionEvent event) {
-
+    public void showUsersByNumberIdentification(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showFiltredUsers.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredUsersPane = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredUsersPane);
+    	initializateTableFiltredUsers(3);
     }
     
     //methods optionsShowArticles
@@ -970,7 +1022,7 @@ public class SkyMarketGUI {
     		int quantity = Integer.parseInt(txtQuantityArticleNA.getText());
     		String type = cbTypeArticleNA.getValue();
     		skymarket.verificationFieldsAddArticle(nameArticle, code, priceArticle, description, pathImageArticle, quantity,type);    		
-    		currentArticle = new Article(nameArticle,code,priceArticle,description,pathImageArticle,quantity);
+    		currentArticle = new Article(nameArticle,code,priceArticle,description,pathImageArticle,quantity, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     		managementAddArticle(type);
     	}catch(EmptyFieldException efe) {
     		clearFieldsAddArticle();
@@ -1039,7 +1091,7 @@ public class SkyMarketGUI {
     	String processor = txtProcessorNT.getText();
     	String type = cbTypeTechnologyNT.getValue();
     	
-    	currentArticle = new Technology(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),batteryWatts,screenSize,ram,processor);
+    	currentArticle = new Technology(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),batteryWatts,screenSize,ram,processor, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	managementAddTechnology(type);
     }
     
@@ -1090,7 +1142,7 @@ public class SkyMarketGUI {
     	Double widht = Double.parseDouble(txtWidthNH.getText());
     	String type = cbTypeHomeAppliancesNH.getValue();
     	
-    	currentArticle = new HomeAppliances(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),weight,capacity,wattsConsum,height,widht);
+    	currentArticle = new HomeAppliances(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),weight,capacity,wattsConsum,height,widht, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	managementAddHomeAppliances(type);
     }
     
@@ -1139,7 +1191,7 @@ public class SkyMarketGUI {
     	
     	
     	Technology currentArticleT = (Technology)currentArticle;
-    	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch );
+    	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	
     	addNewArticle(newComputer);
     	
@@ -1158,7 +1210,7 @@ public class SkyMarketGUI {
     	int numberCameras = Integer.parseInt(txtNumberCameraNC.getText());
     	
     	Technology currentArticleT = (Technology)currentArticle;
-    	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras);
+    	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	
     	addNewArticle(newCellphone);
     	
@@ -1181,7 +1233,7 @@ public class SkyMarketGUI {
     	boolean frost = (frostString.equals("Si"))?true:false;
     	
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
-    	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost);
+    	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	
     	addNewArticle(newFridge);
     	
@@ -1200,7 +1252,7 @@ public class SkyMarketGUI {
     	String typeStove = cbTypeStoveNS.getValue();
     	
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
-    	Stove newFridge = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove);
+    	Stove newFridge = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
     	
     	addNewArticle(newFridge);
     	

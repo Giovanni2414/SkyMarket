@@ -26,8 +26,8 @@ public class Stove extends HomeAppliances{
 	* @param: numberOfNozzles
 	* @param: typeStove
 	**/
-	public Stove(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, int numberOfNozzles, String typeStove) {
-		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht);
+	public Stove(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, int numberOfNozzles, String typeStove, String ns) {
+		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht, ns);
 		this.numberOfNozzles = numberOfNozzles;
 		this.typeStove = typeStove;
 	}

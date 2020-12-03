@@ -354,7 +354,7 @@ public class SkyMarket {
 		User[] tempArr = users.toArray(new User[users.size()]);
 		User temp = null;
 		for(int c = 0; c < tempArr.length; c++) {
-			for(int v = 0; v < (tempArr.length - c); v++) {
+			for(int v = 1; v < (tempArr.length - c); v++) {
 				if(Integer.parseInt(tempArr[v-1].getIdentification()) > Integer.parseInt(tempArr[v].getIdentification())) {  
                     //swap elements  
                     temp = tempArr[v-1];  

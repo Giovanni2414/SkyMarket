@@ -2,13 +2,14 @@ package Model;
 
 public class HomeAppliances extends Article{
 
+	private static final long serialVersionUID = 1L;
 	private double weight;
 	private double capacity;
 	private double wattsConsum;
 	private double height;
 	private double width;
 	
-	/*
+	/**
 	name: HomeAppliaces
 	Its the constructor of HomeAppliaces.java 
 	@param: name
@@ -23,8 +24,8 @@ public class HomeAppliances extends Article{
 	@param: height
 	@param: widht
 	**/
-	public HomeAppliances(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht) {
-		super(name,code,price,description,picture,quantity);
+	public HomeAppliances(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, String ns) {
+		super(name,code,price,description,picture,quantity, ns);
 		this.weight = weight;
 		this.capacity = capacity;
 		this.wattsConsum = wattsConsum;
@@ -32,7 +33,7 @@ public class HomeAppliances extends Article{
 		this.width = widht;
 	}
 
-	/*
+	/**
 	name: getWeght
 	allows to obtain the weight of the HomeAppliances
 	<b>pre:</b>The HomeAppliances object must be created
@@ -42,7 +43,7 @@ public class HomeAppliances extends Article{
 		return weight;
 	}
 
-	/*
+	/**
 	name: setWeight
 	allows entering a new weight for the HomeAppliances
 	<b>pre:</b>The HomeAppliences object must be created
@@ -53,7 +54,7 @@ public class HomeAppliances extends Article{
 		this.weight = weight;
 	}
 
-	/*
+	/**
 	name: getCapacity
 	allows to obtain the capacity of the HomeAppliances
 	<b>pre:</b>The HomeAppliances object must be created
@@ -63,7 +64,7 @@ public class HomeAppliances extends Article{
 		return capacity;
 	}
 
-	/*
+	/**
 	name: setCapacity
 	allows entering a new capacity for the HomeAppliances
 	<b>pre:</b>The HomeAppliences object must be created
@@ -74,7 +75,7 @@ public class HomeAppliances extends Article{
 		this.capacity = capacity;
 	}
 
-	/*
+	/**
 	name: getWattsConsum
 	allows to obtain the wattsConsum of the HomeAppliances
 	<b>pre:</b>The HomeAppliances object must be created
@@ -84,7 +85,7 @@ public class HomeAppliances extends Article{
 		return wattsConsum;
 	}
 
-	/*
+	/**
 	name: setWattsConsum
 	allows entering a new wattsConsum for the HomeAppliances
 	<b>pre:</b>The HomeAppliences object must be created
