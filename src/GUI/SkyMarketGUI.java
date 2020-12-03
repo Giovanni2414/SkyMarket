@@ -64,6 +64,12 @@ public class SkyMarketGUI {
 	 */
 	private final static String PATH_PICTURE_ARTICLES_CELLPHONE= "data/picturesArticles/Celulares/";
 	
+	private final static String PATH_PICTURE_ARTICLES_COMPUTERS= "data/picturesArticles/Computadores/";
+	
+	private final static String PATH_PICTURE_ARTICLES_FRIDGE= "data/picturesArticles/Neveras/";
+	
+	private final static String PATH_PICTURE_ARTICLES_STOVE= "data/picturesArticles/Estufas/";
+	
 	/**
 	 * Temp article to help in the process to add
 	 */
@@ -365,7 +371,40 @@ public class SkyMarketGUI {
 
     @FXML
     private Label lbArticleTouch;
+    
+    
+    //Home appliances 
+    @FXML
+    private Label lbArticleWeight;
 
+    @FXML
+    private Label lbArticleCapacity;
+
+    @FXML
+    private Label lbArticleWattsConsumption;
+
+    @FXML
+    private Label lbArticleHeight;
+
+    @FXML
+    private Label lbArticleWidth;
+    
+    //Fridge
+
+    @FXML
+    private Label lbArticleSmart;
+
+    @FXML
+    private Label lbArticleFrost;
+    
+    //Stove
+    @FXML
+    private Label lbArticleNumberNozzles;
+
+    @FXML
+    private Label lbArticleStoveType;
+
+    
     @FXML
     private TableView<Article> tvSortedArticles;
 
@@ -717,7 +756,7 @@ public class SkyMarketGUI {
     }
 
     @FXML
-    void viewBasket(ActionEvent event) {
+    void viewBasket(ActionEvent event) throws IOException {
     	
     }
 
@@ -751,6 +790,12 @@ public class SkyMarketGUI {
         	}else if(article instanceof Computer) {
         		Computer articleC = (Computer)(article);
     			loadComputerInfoToBuy(articleC);
+        	}else if(article instanceof Fridge) {
+        		Fridge articleC = (Fridge)(article);
+    			loadFridgeInfoToBuy(articleC);
+        	}else if(article instanceof Stove) {
+        		Stove articleC = (Stove)(article);
+    			loadStoveInfoToBuy(articleC);
         	}
     		
     		
@@ -759,15 +804,79 @@ public class SkyMarketGUI {
     	}
     }
     
-    private void loadComputerInfoToBuy(Computer article) throws IOException {
+    public void loadStoveInfoToBuy(Stove article) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleStoveBuy.fxml"));
+
+    	fxmlLoader.setController(this);
+
+    	Parent articleStoveBuyPane = fxmlLoader.load();
+
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(articleStoveBuyPane);
+    	lbArticleName.setText(article.getName());
+    	lbArticleDescription.setText(article.getDescription());
+    	lbArticleCode.setText(article.getCode());
+    	lbArticlePrice.setText(String.valueOf(article.getPrice()));
+    	lbArticleQuantity.setText(String.valueOf(article.getQuantity()));
+    	lbArticleWeight.setText(String.valueOf(article.getWeight()));
+    	lbArticleCapacity.setText(String.valueOf(article.getCapacity()));
+    	lbArticleWattsConsumption.setText(String.valueOf(article.getWattsConsum()));
+    	lbArticleHeight.setText(String.valueOf(article.getHeight()));
+    	lbArticleWidth.setText(String.valueOf(article.getWidth()));
+    	lbArticleNumberNozzles.setText(String.valueOf(article.getNumberOfNozzles()));
+    	lbArticleStoveType.setText(String.valueOf(article.getTypeStove()));
+    	
+    	String path = PATH_PICTURE_ARTICLES_FRIDGE + article.getPicture();
+    	
+    	System.out.println(path);
+    	
+    	Image newImage = new Image( new FileInputStream(path));
+    
+    	imgProductImage.setImage(newImage);
+		
+	}
+
+	public void loadFridgeInfoToBuy(Fridge article) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleFridgeBuy.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent articleFridgeBuyPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(articleFridgeBuyPane);
+    	lbArticleName.setText(article.getName());
+    	lbArticleDescription.setText(article.getDescription());
+    	lbArticleCode.setText(article.getCode());
+    	lbArticlePrice.setText(String.valueOf(article.getPrice()));
+    	lbArticleQuantity.setText(String.valueOf(article.getQuantity()));
+    	
+    	lbArticleWeight.setText(String.valueOf(article.getWeight()));
+    	lbArticleCapacity.setText(String.valueOf(article.getCapacity()));
+    	lbArticleWattsConsumption.setText(String.valueOf(article.getWattsConsum()));
+    	lbArticleHeight.setText(String.valueOf(article.getHeight()));
+    	lbArticleWidth.setText(String.valueOf(article.getWidth()));
+    	lbArticleSmart.setText(String.valueOf(article.isSmartString()));
+    	lbArticleFrost.setText(String.valueOf(article.isFrostString()));
+    
+    	
+    	String path = PATH_PICTURE_ARTICLES_FRIDGE + article.getPicture();
+    	
+    	Image newImage = new Image( new FileInputStream(path));
+    
+    	imgProductImage.setImage(newImage);
+		
+	}
+
+	public void loadComputerInfoToBuy(Computer article) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("articleComputerBuy.fxml"));
     	
     	fxmlLoader.setController(this);
     	
-    	Parent articleCellphoneBuyPane = fxmlLoader.load();
+    	Parent articleComputerBuyPane = fxmlLoader.load();
     	
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(articleCellphoneBuyPane);
+    	mainPanel.setCenter(articleComputerBuyPane);
     	lbArticleName.setText(article.getName());
     	lbArticleDescription.setText(article.getDescription());
     	lbArticleCode.setText(article.getCode());
@@ -780,7 +889,11 @@ public class SkyMarketGUI {
     	lbArticleNumberOfPorts.setText(String.valueOf(article.getNumberOfPorts()));
     	lbArticleTouch.setText(String.valueOf(article.isTouchString()));
     	
-    	
+    	String path = PATH_PICTURE_ARTICLES_COMPUTERS + article.getPicture();
+    	System.out.println(path);
+    	Image newImage = new Image( new FileInputStream(path));
+    
+    	imgProductImage.setImage(newImage);
 		
 	}
 
@@ -807,7 +920,6 @@ public class SkyMarketGUI {
     	
     	String path = PATH_PICTURE_ARTICLES_CELLPHONE + article.getPicture();
     	
-    	System.out.println(path);
     	
     	Image newImage = new Image( new FileInputStream(path));
     
