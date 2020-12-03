@@ -365,6 +365,24 @@ public class SkyMarketGUI {
 
     @FXML
     private Label lbArticleTouch;
+
+    @FXML
+    private TableView<Article> tvSortedArticles;
+
+    @FXML
+    private TableColumn<Article, String> tcNameSortedArticles;
+
+    @FXML
+    private TableColumn<Article, String> tcCodeSortedArticles;
+
+    @FXML
+    private TableColumn<Article, Double> tcPriceSortedArticles;
+
+    @FXML
+    private TableColumn<Article, String> tcDescriptionSortedArticles;
+
+    @FXML
+    private TableColumn<Article, Integer> tcQuantitySortedArticles;
     
 	/**
 	 * Constructor of SkyMarketGUI
@@ -423,6 +441,11 @@ public class SkyMarketGUI {
 		 alert.setContentText("Juan Camilo Zorrilla\nJuan Pablo Sanin\nGiovanni Mosquera\nAlgorithms II");
 		 
 		 alert.showAndWait();
+	 }
+	 
+	 @FXML
+	 void onEnter(ActionEvent event) throws IOException {
+		 login(event);
 	 }
 	
 	 /**
@@ -938,23 +961,67 @@ public class SkyMarketGUI {
     //methods optionsShowArticles
     
     @FXML
-    void showArticlesByNameFromHighestToLowest(ActionEvent event) {
-    	System.out.println("Name A-Z");
+    void showArticlesByNameFromHighestToLowest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showSortedArticles.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredArticlesAZ = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredArticlesAZ);
+    	initializateTableShowArticlesSorted(1);
+    }
+    
+    public void initializateTableShowArticlesSorted(int fil) {
+    	ObservableList <Article> observableList = null;
+    	switch(fil) {
+    		case 1:
+    	    	observableList = FXCollections.observableList(skymarket.getArticlesAZ(1));
+    			break;
+    		case 2:
+    			observableList = FXCollections.observableList(skymarket.getArticlesAZ(2));
+    			break;
+    		case 3:
+    			observableList = FXCollections.observableList(skymarket.getArticlesPricesComparator(1));
+    			break;
+    		case 4:
+    			observableList = FXCollections.observableList(skymarket.getArticlesPricesComparator(2));
+    			break;
+    	}
+    	tvSortedArticles.setItems(observableList);
+    	tcNameSortedArticles.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeSortedArticles.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceSortedArticles.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcDescriptionSortedArticles.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
+    	tcQuantitySortedArticles.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
     }
 
     @FXML
-    void showArticlesByNameFromLowestToHighest(ActionEvent event) {
-    	System.out.println("Name Z-A");
+    void showArticlesByNameFromLowestToHighest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showSortedArticles.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredArticlesAZ = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredArticlesAZ);
+    	initializateTableShowArticlesSorted(2);
     }
 
     @FXML
-    void showArticlesByPriceFromLowestToHighest(ActionEvent event) {
-    	System.out.println("PRICE L-H");
+    void showArticlesByPriceFromLowestToHighest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showSortedArticles.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredArticlesAZ = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredArticlesAZ);
+    	initializateTableShowArticlesSorted(4);
     }
 
     @FXML
-    void showArticlesByPricepriceFromHighestToLowest(ActionEvent event) {
-    	System.out.println("PRICE H");
+    void showArticlesByPricepriceFromHighestToLowest(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showSortedArticles.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent showFiltredArticlesAZ = fxmlLoader.load();
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showFiltredArticlesAZ);
+    	initializateTableShowArticlesSorted(3);
     }
     
     //methods banUserScreen

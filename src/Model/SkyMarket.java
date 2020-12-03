@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 import Exceptions.EmptyFieldException;
@@ -463,4 +465,95 @@ public class SkyMarket {
     		System.out.println("price: " + articles.get(i).getPrice());
     	}
 	}
+	
+	public LinkedList<Article> getArticlesPricesComparator(int fil) {
+		LinkedList<Article> list = new LinkedList<>();
+		for(int c = 0; c < articles.size(); c++) {
+			list.add(articles.get(c));
+		}
+		switch(fil) {
+		case 1:
+			priceComparatorMayToMen pcm = new priceComparatorMayToMen();
+			Collections.sort(list, pcm);
+			break;
+		case 2:
+			priceComparatorMenToMay pcn = new priceComparatorMenToMay();
+			Collections.sort(list, pcn);
+			break;
+		}
+		return list;
+	}
+	
+	public class priceComparatorMayToMen implements Comparator<Article> {
+		@Override
+		public int compare(Article u1, Article u2) {
+			int response = 0;
+			if(u1.getPrice() > u2.getPrice()) {
+				response = -1;
+			} else if(u1.getPrice() < u2.getPrice()) {
+				response = 1;
+			}
+			return response;
+		}
+	}
+	
+	public class priceComparatorMenToMay implements Comparator<Article> {
+		@Override
+		public int compare(Article u1, Article u2) {
+			int response = 0;
+			if(u1.getPrice() < u2.getPrice()) {
+				response = -1;
+			} else if(u1.getPrice() > u2.getPrice()) {
+				response = 1;
+			}
+			return response;
+		}
+	}
+	
+	public LinkedList<Article> getArticlesAZ(int fil) {
+		LinkedList<Article> list = new LinkedList<>();
+		for(int c = 0; c < articles.size(); c++) {
+			list.add(articles.get(c));
+		}
+		switch(fil) {
+			case 1:
+				nameComparatorZA nc = new nameComparatorZA();
+				Collections.sort(list, nc);
+				break;
+			case 2:
+				nameComparatorAZ cn = new nameComparatorAZ();
+				Collections.sort(list, cn);
+				break;
+		}
+		return list;
+	}
+	
+	public class nameComparatorAZ implements Comparator<Article> {
+		@Override
+		public int compare(Article u1, Article u2) {
+			int response = 0;
+			if(u1.getName().compareToIgnoreCase(u2.getName()) > 0) {
+				response = -1;
+			} else if(u1.getName().compareToIgnoreCase(u2.getName()) < 0) {
+				response = 1;
+			}
+			return response;
+		}
+	}
+	
+	public class nameComparatorZA implements Comparator<Article> {
+		@Override
+		public int compare(Article u1, Article u2) {
+			int response = 0;
+			if(u1.getName().compareToIgnoreCase(u2.getName()) > 0) {
+				response = 1;
+			} else if(u1.getName().compareToIgnoreCase(u2.getName()) < 0) {
+				response = -1;
+			}
+			return response;
+		}
+	}
+	
+	
+	
 }
