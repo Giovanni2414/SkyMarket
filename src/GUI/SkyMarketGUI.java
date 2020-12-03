@@ -57,6 +57,12 @@ public class SkyMarketGUI {
 	 */
 	private final static String PATH_PICTURE_PEOPLE = "data/picturesPeople/";
 	
+	
+	/**
+	 * Route of the pictures of products
+	 */
+	private final static String PATH_PICTURE_ARTICLES_CELLPHONE= "data/picturesArticles/Celulares/";
+	
 	/**
 	 * Temp article to help in the process to add
 	 */
@@ -746,6 +752,8 @@ public class SkyMarketGUI {
     	lbArticleProcessor.setText(article.getProcessor());
     	lbArticleNumberOfPorts.setText(String.valueOf(article.getNumberOfPorts()));
     	lbArticleTouch.setText(String.valueOf(article.isTouchString()));
+    	
+    	
 		
 	}
 
@@ -769,6 +777,14 @@ public class SkyMarketGUI {
     	lbArticleProcessor.setText(article.getProcessor());
     	lbArticleNumberSims.setText(String.valueOf(article.getNumberOfSims()));
     	lbArticleNumberCameras.setText(String.valueOf(article.getNumberOfCameras()));
+    	
+    	String path = PATH_PICTURE_ARTICLES_CELLPHONE + article.getPicture();
+    	
+    	System.out.println(path);
+    	
+    	Image newImage = new Image( new FileInputStream(path));
+    
+    	imgProductImage.setImage(newImage);
     }
     
     @FXML
@@ -927,7 +943,7 @@ public class SkyMarketGUI {
 
     @FXML
     void showArticlesByPricepriceFromHighestToLowest(ActionEvent event) {
-    	System.out.println("PRICE H-L");
+    	System.out.println("PRICE H");
     }
     
     //methods banUserScreen
