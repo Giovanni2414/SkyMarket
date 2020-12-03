@@ -22,6 +22,7 @@ public class SkyMarket {
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
 	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
 	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
+	public final static String FILE_DATA_EXPORT_ARTICLES = "data/exportData/articlesData.csv";
 	
 	/**
 	 * The current user logged in the program
@@ -408,6 +409,89 @@ public class SkyMarket {
 			pw.print(current.getName()+s+current.getLastName()+s+current.getIdentification()+s+current.getEmail()+s+current.getPassword()+s+current.getUsername()+s+current.getPicture()+s+current.getBirthday().toString() + "\n");
 		}
 		pw.close();
+	}
+	
+	public void exportDataArticles() throws FileNotFoundException {
+		String s = File.pathSeparator;
+		LinkedList<CellPhone> listCellphone = getOnlyCellphone();
+		LinkedList<Computer> listComputer = getOnlyComputer();
+		LinkedList<Fridge> listFridge = getOnlyFridge();
+		LinkedList<Stove> listStove = getOnlyStove();
+		
+		PrintWriter pw = new PrintWriter(FILE_DATA_EXPORT_ARTICLES);
+		
+		pw.print("ARTICULOS CELULARES\n");
+		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Bateria en watts"+s+"Tamaños de pantalla"+s+"Ram"+s+"Procesador"+s+"Numero de sims"+s+"Numero de camaras\n");
+		for(int i = 0; i<listCellphone.size();i++) {
+			CellPhone current = listCellphone.get(i);
+			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getBatteryWatts()+s+current.getScreenSize()+s+current.getRam()+s+current.getProcessor()+s+current.getNumberOfSims()+s+current.getNumberOfCameras()+"\n");
+		}
+		
+		pw.print("\nARTICULOS COMPUTADORES\n");
+		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Bateria en watts"+s+"Tamaños de pantalla"+s+"Ram"+s+"Procesador"+s+"Numero de puertos"+s+"Touch\n");
+		for(int i = 0; i<listComputer.size();i++) {
+			Computer current = listComputer.get(i);
+			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getBatteryWatts()+s+current.getScreenSize()+s+current.getRam()+s+current.getProcessor()+s+current.getNumberOfPorts()+s+current.isTouchString()+"\n");
+		}
+		
+		pw.print("\nARTICULOS NEVERAS\n");
+		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Peso"+s+"Capacidad"+s+"Consumo en watts"+s+"Altura"+s+"Ancho"+s+"Smart"+s+"Sistema frost\n");
+		for(int i = 0; i<listFridge.size();i++) {
+			Fridge current = listFridge.get(i);
+			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getWeight()+s+current.getCapacity()+s+current.getWattsConsum()+s+current.getHeight()+s+current.getWidth()+s+current.isSmartString()+s+current.isFrostString()+"\n");
+		}
+		
+		pw.print("\nARTICULOS NEVERAS\n");
+		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Peso"+s+"Capacidad"+s+"Consumo en watts"+s+"Altura"+s+"Ancho"+s+"Numero de boquillas"+s+"tipo de estufa\n");
+		for(int i = 0; i<listStove.size();i++) {
+			Stove current = listStove.get(i);
+			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getWeight()+s+current.getCapacity()+s+current.getWattsConsum()+s+current.getHeight()+s+current.getWidth()+s+current.getNumberOfNozzles()+s+current.getTypeStove()+"\n");
+		}
+		pw.close();
+	}
+	
+	public LinkedList<CellPhone> getOnlyCellphone() {
+		LinkedList<CellPhone> list = new LinkedList<>();
+		for(int i = 0; i < articles.size(); i++) {
+			if(articles.get(i) instanceof CellPhone) {
+				CellPhone cp = (CellPhone) articles.get(i);
+				list.add(cp);
+			}
+		}
+		return list;
+	}
+	
+	public LinkedList<Computer> getOnlyComputer() {
+		LinkedList<Computer> list = new LinkedList<>();
+		for(int i = 0; i < articles.size(); i++) {
+			if(articles.get(i) instanceof Computer) {
+				Computer c = (Computer) articles.get(i);
+				list.add(c);
+			}
+		}
+		return list;
+	}
+	
+	public LinkedList<Fridge> getOnlyFridge() {
+		LinkedList<Fridge> list = new LinkedList<>();
+		for(int i = 0; i < articles.size(); i++) {
+			if(articles.get(i) instanceof Fridge) {
+				Fridge f = (Fridge) articles.get(i);
+				list.add(f);
+			}
+		}
+		return list;
+	}
+	
+	public LinkedList<Stove> getOnlyStove() {
+		LinkedList<Stove> list = new LinkedList<>();
+		for(int i = 0; i < articles.size(); i++) {
+			if(articles.get(i) instanceof Stove) {
+				Stove s = (Stove) articles.get(i);
+				list.add(s);
+			}
+		}
+		return list;
 	}
 	
 	/**

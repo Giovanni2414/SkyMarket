@@ -23,6 +23,7 @@ import Model.UserBuyer;
 import Model.UserSeller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import Thread.ExportThread;
 import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -1072,7 +1073,11 @@ public class SkyMarketGUI {
     
     @FXML
     void exportArticles(ActionEvent event) {
-
+    	try {
+    		skymarket.exportDataArticles();
+    	}catch(FileNotFoundException fnfe) {
+    		fileExportAlert();
+    	}
     }
 
     @FXML
@@ -1086,7 +1091,12 @@ public class SkyMarketGUI {
 
     @FXML
     void exportUsersAndArticles(ActionEvent event) {
-
+    	try {
+    		skymarket.exportDataClients();
+    	}catch(FileNotFoundException fnfe) {
+    		fileExportAlert();
+    	}
+    	new ExportThread(skymarket).start();
     }
     
     //methods mainScreenUserSeller
