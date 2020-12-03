@@ -37,6 +37,41 @@
             <Button layoutX="36.0" layoutY="172.0" mnemonicParsing="false" onAction="#exportUsers" prefHeight="25.0" prefWidth="136.0" text="Exportar lista usuarios" />
             <Button layoutX="414.0" layoutY="172.0" mnemonicParsing="false" onAction="#exportArticles" text="Exportar lista articulos" />
             <Button layoutX="204.0" layoutY="172.0" mnemonicParsing="false" onAction="#exportUsersAndArticles" prefHeight="25.0" prefWidth="193.0" text="Exportar lista usuarios y articulos" />
+            <ImageView fitHeight="77.0" fitWidth="71.0" layoutX="60.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/148-profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="36.0" layoutX="121.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/193-upload.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="77.0" fitWidth="71.0" layoutX="219.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/148-profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="36.0" layoutX="361.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/193-upload.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="77.0" fitWidth="71.0" layoutX="290.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/082-shopping-bag-5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="36.0" layoutX="498.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/193-upload.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="77.0" fitWidth="71.0" layoutX="427.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/082-shopping-bag-5.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

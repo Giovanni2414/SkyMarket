@@ -59,6 +59,11 @@
                </image>
             </ImageView>
             <Button layoutX="259.0" layoutY="276.0" mnemonicParsing="false" onAction="#exportData" prefHeight="25.0" prefWidth="82.0" text="Exportar" />
+            <ImageView fitHeight="61.0" fitWidth="75.0" layoutX="270.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/195-upload-2.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
