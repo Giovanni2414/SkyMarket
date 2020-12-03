@@ -1,0 +1,16 @@
+ARTICULOS CELULARES
+Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Bateria en watts;Tamaños de pantalla;Ram;Procesador;Numero de sims;Numero de camaras
+Iphone 12 max 12;16919216;650000.0;Alta gama original;iphone 12 pro max.jpg;3;200.0;6;4;A14 Bionic;2;3
+Huawei Y9;27426362;3200000.0;Nuevo Y9;huawei Y9 prime.jpg;3;30.0;9;4;Snapdragon 210;2;2
+Samsung J7;95183595;1200000.0;Celular bueno, bonito y barato;huawei Y9 prime.jpg;2;35.0;25;12;Ryzen 3;2;1
+
+ARTICULOS COMPUTADORES
+Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Bateria en watts;Tamaños de pantalla;Ram;Procesador;Numero de puertos;Touch
+Macbook Pro M1;53754045;100000.0;Nuevo macbook 
+con chip M1;huawei Y9 prime.jpg;3;200.0;13;8;M1;3;NO
+
+ARTICULOS NEVERAS
+Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Peso;Capacidad;Consumo en watts;Altura;Ancho;Smart;Sistema frost
+
+ARTICULOS NEVERAS
+Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Peso;Capacidad;Consumo en watts;Altura;Ancho;Numero de boquillas;tipo de estufa
