@@ -651,14 +651,15 @@ public class SkyMarketGUI {
     	tcPriceTSUB.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
     	tcDescriptionTSUB.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
     	tcQuantityTSUB.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
-    	/*
+    	
     	tvArticlesTSUB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-                //managementArticleToBuy(tvArticlesOnSale.getSelectionModel().getSelectedItem());
+            	//System.out.println(tvArticlesOnSale.getSelectionModel().getSelectedItem());
+               managementArticleToBuy(tvArticlesTSUB.getSelectionModel().getSelectedItem());
             }
         });
-        */
+        
     }
     
     public void managementArticleToBuy(Article article) {
