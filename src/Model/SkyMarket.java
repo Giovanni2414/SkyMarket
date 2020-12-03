@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 import Exceptions.EmptyFieldException;
@@ -425,6 +426,12 @@ public class SkyMarket {
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_SERIALIZABLE_ARTICLE));
 		articles = (LinkedList<Article>)ois.readObject();
 		ois.close();
+		for(int i = 0; i<articles.size();i++) {
+			System.out.println(articles.get(i).getName());
+		}
+		if(articles == null) {
+			System.out.println("Nulo");
+		}
 	}
 	
 	/**
@@ -444,5 +451,19 @@ public class SkyMarket {
     		System.out.println("code: " + articles.get(i).getCode());
     		System.out.println("price: " + articles.get(i).getPrice());
     	}
+	}
+	
+	public void crearAdministrador() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		String date = "12/01/1964";
+
+		LocalDate localDate = LocalDate.parse(date, formatter);
+		
+		newUser("Jeff", "Bezos", "190234853", "jeff@amazon.com", "jeffrey", "TheBigJeff", "Jeff.jpg", localDate , 3);
+		try {
+			saveDataClients();
+		}catch(IOException ioe) {
+			
+		}
 	}
 }
