@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 import Exceptions.EmptyFieldException;
@@ -330,23 +329,26 @@ public class SkyMarket {
 	}
 	
 	public LinkedList<User> getListUsersFiltredNameSelection() {
-		LinkedList<User> list = new LinkedList<>();
-		User[] tempArr = users.toArray(new User[users.size()]);
-		for(int c = 0; c < tempArr.length - 1; c++ ) {
-			int index = c;
-			for(int v = 0; v < tempArr.length; v++) {
-				if(tempArr[v].getName().compareToIgnoreCase(tempArr[index].getName()) < 0) {
-					index = v;
-				}
-			}
-			User smaller = tempArr[index];
-			tempArr[index] = tempArr[c];
-			tempArr[c] = smaller;
-		}
-		for(int c = 0; c < tempArr.length; c++) {
-			list.add(tempArr[c]);
-		}
-		return list;
+	    LinkedList<User> list = new LinkedList<>();
+	    User[] tempArr = users.toArray(new User[users.size()]);
+	    for(int c = 0; c < tempArr.length - 1; c++ ) {
+	        int menor= c;
+	        int index = c;
+
+	        for(int v = c+1; v < tempArr.length; v++) {
+	            if(tempArr[v].getName().compareToIgnoreCase(tempArr[menor].getName()) > 0) {
+	                menor=v;
+	                index = v;
+	            }
+	        }
+	        User temp = tempArr[c];
+	        tempArr[c] = tempArr[menor];
+	        tempArr[index] = temp;
+	    }
+	    for(int c = 0; c < tempArr.length; c++) {
+	        list.add(tempArr[c]);
+	    }
+	    return list;
 	}
 	
 	public LinkedList<User> getListUsersFiltredIdentificationBubble() {
@@ -426,12 +428,6 @@ public class SkyMarket {
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_SERIALIZABLE_ARTICLE));
 		articles = (LinkedList<Article>)ois.readObject();
 		ois.close();
-		for(int i = 0; i<articles.size();i++) {
-			System.out.println(articles.get(i).getName());
-		}
-		if(articles == null) {
-			System.out.println("Nulo");
-		}
 	}
 	
 	/**
@@ -451,19 +447,5 @@ public class SkyMarket {
     		System.out.println("code: " + articles.get(i).getCode());
     		System.out.println("price: " + articles.get(i).getPrice());
     	}
-	}
-	
-	public void crearAdministrador() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		String date = "12/01/1964";
-
-		LocalDate localDate = LocalDate.parse(date, formatter);
-		
-		newUser("Jeff", "Bezos", "190234853", "jeff@amazon.com", "jeffrey", "TheBigJeff", "Jeff.jpg", localDate , 3);
-		try {
-			saveDataClients();
-		}catch(IOException ioe) {
-			
-		}
 	}
 }

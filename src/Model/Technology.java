@@ -25,8 +25,8 @@ public class Technology extends Article{
 	@param: ram
 	@param: processor
 	**/
-	public Technology(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor, String ns) {
-		super(name,code,price,description,picture,quantity,ns);
+	public Technology(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor) {
+		super(name,code,price,description,picture,quantity);
 		this.batteryWatts = batteryWatts;
 		this.screenSize = screenSize;
 		this.ram = ram;

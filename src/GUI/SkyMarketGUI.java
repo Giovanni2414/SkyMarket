@@ -259,6 +259,9 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<UserSeller, Double> tcCalificationB;
     
+    @FXML
+    private TableColumn<UserSeller, Boolean> tcBanB;
+    
 
     //Attributes screenToBuyArticles
     
@@ -691,7 +694,7 @@ public class SkyMarketGUI {
 
     @FXML
     void viewBasket(ActionEvent event) {
-    	skymarket.crearAdministrador();
+    	
     }
 
 
@@ -826,12 +829,7 @@ public class SkyMarketGUI {
     	tcNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
     	tcLastNameB.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
     	tcCalificationB.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
-    	tvUserSellerListB.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent event) {
-                System.out.println("clicked on " + tvUserSellerListB.getSelectionModel().getSelectedItem());
-            }
-        });
+    	tcBanB.setCellValueFactory(new PropertyValueFactory<UserSeller,Boolean>("ban"));
     }
 
     @FXML
@@ -953,7 +951,18 @@ public class SkyMarketGUI {
     	if(txtUsernameToBan != null) { 
     		if(skymarket.searchUserByIdentification(txtUsernameToBan.getText()) != null) {
     			UserSeller search = (UserSeller)(skymarket.binarySearchUser(txtUsernameToBan.getText()));
-    			search.setBan(true);
+    			if(search.isBan()) {
+    				search.setBan(false);
+    				banConfirmationAlert(1);
+    			}else {
+    				search.setBan(true);
+    				banConfirmationAlert(0);
+    			}
+    			try {
+    				skymarket.saveDataClients();
+    			}catch(IOException ioe) {
+    				serializableAlert();
+    			}
     		}else {
     			clientIdentificationAlert();
     		}
@@ -1038,7 +1047,7 @@ public class SkyMarketGUI {
     		int quantity = Integer.parseInt(txtQuantityArticleNA.getText());
     		String type = cbTypeArticleNA.getValue();
     		skymarket.verificationFieldsAddArticle(nameArticle, code, priceArticle, description, pathImageArticle, quantity,type);    		
-    		currentArticle = new Article(nameArticle,code,priceArticle,description,pathImageArticle,quantity, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    		currentArticle = new Article(nameArticle,code,priceArticle,description,pathImageArticle,quantity);
     		managementAddArticle(type);
     	}catch(EmptyFieldException efe) {
     		clearFieldsAddArticle();
@@ -1107,7 +1116,7 @@ public class SkyMarketGUI {
     	String processor = txtProcessorNT.getText();
     	String type = cbTypeTechnologyNT.getValue();
     	
-    	currentArticle = new Technology(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),batteryWatts,screenSize,ram,processor, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	currentArticle = new Technology(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),batteryWatts,screenSize,ram,processor);
     	managementAddTechnology(type);
     }
     
@@ -1158,7 +1167,7 @@ public class SkyMarketGUI {
     	Double widht = Double.parseDouble(txtWidthNH.getText());
     	String type = cbTypeHomeAppliancesNH.getValue();
     	
-    	currentArticle = new HomeAppliances(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),weight,capacity,wattsConsum,height,widht, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	currentArticle = new HomeAppliances(currentArticle.getName(),currentArticle.getCode(),currentArticle.getPrice(),currentArticle.getDescription(),currentArticle.getPicture(),currentArticle.getQuantity(),weight,capacity,wattsConsum,height,widht);
     	managementAddHomeAppliances(type);
     }
     
@@ -1207,7 +1216,11 @@ public class SkyMarketGUI {
     	
     	
     	Technology currentArticleT = (Technology)currentArticle;
-    	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch);
+    	
+    	String name = skymarket.getCurrentUser().getName();
+    	String lastName = skymarket.getCurrentUser().getLastName();
+    	newComputer.setNameSeller(name + " " + lastName);
     	
     	addNewArticle(newComputer);
     	
@@ -1226,7 +1239,11 @@ public class SkyMarketGUI {
     	int numberCameras = Integer.parseInt(txtNumberCameraNC.getText());
     	
     	Technology currentArticleT = (Technology)currentArticle;
-    	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras);
+    	
+    	String name = skymarket.getCurrentUser().getName();
+    	String lastName = skymarket.getCurrentUser().getLastName();
+    	newCellphone.setNameSeller(name + " " + lastName);
     	
     	addNewArticle(newCellphone);
     	
@@ -1249,7 +1266,11 @@ public class SkyMarketGUI {
     	boolean frost = (frostString.equals("Si"))?true:false;
     	
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
-    	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost);
+    	
+    	String name = skymarket.getCurrentUser().getName();
+    	String lastName = skymarket.getCurrentUser().getLastName();
+    	newFridge.setNameSeller(name + " " + lastName);
     	
     	addNewArticle(newFridge);
     	
@@ -1268,9 +1289,13 @@ public class SkyMarketGUI {
     	String typeStove = cbTypeStoveNS.getValue();
     	
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
-    	Stove newFridge = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove, skymarket.getCurrentUser().getName() + skymarket.getCurrentUser().getLastName());
+    	Stove newStove = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove);
     	
-    	addNewArticle(newFridge);
+    	String name = skymarket.getCurrentUser().getName();
+    	String lastName = skymarket.getCurrentUser().getLastName();
+    	newStove.setNameSeller(name + " " + lastName);
+    	
+    	addNewArticle(newStove);
     	
     	try {
     		loginManagement(skymarket.getCurrentUser());
@@ -1393,7 +1418,20 @@ public class SkyMarketGUI {
     	alert.setContentText("En estos momentos usted se encuentra baneado, comuniquese con el administrador de la pagina para mas información");
     	alert.showAndWait();
     }
-
+    
+    public void banConfirmationAlert(int t) {
+    	if(t == 0) {
+    		Alert alert= new Alert(AlertType.INFORMATION);
+        	alert.setHeaderText("Baneado correctamente");
+        	alert.setContentText("El usuario que usted digito se baneo exitosamente");
+        	alert.showAndWait();
+    	}else if(t == 1){
+    		Alert alert= new Alert(AlertType.INFORMATION);
+        	alert.setHeaderText("Desbaneado correctamente");
+        	alert.setContentText("El usuario que usted digito se desbaneo exitosamente");
+        	alert.showAndWait();
+    	}
+    }
 
     public void serializableSaveAlert() {
     	Alert alert= new Alert(AlertType.ERROR);

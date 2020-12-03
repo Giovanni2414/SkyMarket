@@ -47,11 +47,12 @@
             <Button layoutX="457.0" layoutY="12.0" mnemonicParsing="false" onAction="#ban" text="Banear" />
             <TableView fx:id="tvUserSellerListB" layoutX="12.0" layoutY="43.0" prefHeight="266.0" prefWidth="577.0">
               <columns>
-                <TableColumn fx:id="tcUsernameB" prefWidth="118.0" text="Username" />
-                <TableColumn fx:id="tcIdentificationB" prefWidth="114.0" text="Identificacion" />
-                  <TableColumn fx:id="tcNameB" prefWidth="121.0" text="Nombre" />
-                  <TableColumn fx:id="tcLastNameB" prefWidth="139.0" text="Apellido" />
-                  <TableColumn fx:id="tcCalificationB" prefWidth="84.0" text="Calificacion" />
+                <TableColumn fx:id="tcUsernameB" prefWidth="109.0" text="Username" />
+                <TableColumn fx:id="tcIdentificationB" prefWidth="99.0" text="Identificacion" />
+                  <TableColumn fx:id="tcNameB" prefWidth="132.0" text="Nombre" />
+                  <TableColumn fx:id="tcLastNameB" prefWidth="121.0" text="Apellido" />
+                  <TableColumn fx:id="tcCalificationB" minWidth="0.0" prefWidth="70.0" text="Calificacion" />
+                  <TableColumn fx:id="tcBanB" prefWidth="45.0" text="Ban" />
               </columns>
             </TableView>
          </children>

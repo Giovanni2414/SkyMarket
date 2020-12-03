@@ -24,8 +24,8 @@ public class HomeAppliances extends Article{
 	@param: height
 	@param: widht
 	**/
-	public HomeAppliances(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, String ns) {
-		super(name,code,price,description,picture,quantity, ns);
+	public HomeAppliances(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht) {
+		super(name,code,price,description,picture,quantity);
 		this.weight = weight;
 		this.capacity = capacity;
 		this.wattsConsum = wattsConsum;

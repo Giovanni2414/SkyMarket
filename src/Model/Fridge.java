@@ -26,8 +26,8 @@ public class Fridge extends HomeAppliances{
 	* @param: smart
 	* @param: frost
 	**/
-	public Fridge(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, boolean smart, boolean frost, String ns) {
-		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht,ns);
+	public Fridge(String name,String code,double price, String description, String picture, int quantity, double weight, double capacity, double wattsConsum, double height ,double widht, boolean smart, boolean frost) {
+		super(name,code,price,description,picture,quantity,weight,capacity,wattsConsum,height,widht);
 		this.smart = smart;
 		this.frost = frost;
 	}

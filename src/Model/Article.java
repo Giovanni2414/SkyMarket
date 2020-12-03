@@ -28,16 +28,16 @@ public class Article implements Serializable{
 	@param: picture
 	@param: quantity
 	**/
-	public Article(String name,String code,double price, String description, String picture, int quantity, String nameSeller) {
+	public Article(String name,String code,double price, String description, String picture, int quantity) {
 		this.name = name;
 		this.code = code;
 		this.price = price;
 		this.description = description;
 		this.picture = picture;
 		this.quantity = quantity;
+		this.nameSeller = null;
 		nextArticle = null;
-		prevArticle = null; 
-		this.nameSeller = nameSeller;
+		prevArticle = null;
 	}
 
 	/*
