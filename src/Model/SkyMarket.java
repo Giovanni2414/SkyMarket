@@ -1,10 +1,13 @@
 package Model;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -16,6 +19,7 @@ public class SkyMarket {
 
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
 	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
+	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
 	
 	/**
 	 * The current user logged in the program
@@ -391,6 +395,17 @@ public class SkyMarket {
 		}
 		
 		return listAllUsersSellers;
+	}
+	
+	public void exportDataClients() throws FileNotFoundException {
+		String s = File.pathSeparator;
+		PrintWriter pw = new PrintWriter(FILE_DATA_EXPORT_USERS);
+		pw.print("Nombre" + s + "Apellido" + s + "Identificación" + s + "Email" + s +"Contraseña" + s +"Username" + s + "ruta foto" + s + "Fecha nacimiento" + "\n");
+		for(int i = 0; i < users.size(); i++) {
+			User current = users.get(i);
+			pw.print(current.getName()+s+current.getLastName()+s+current.getIdentification()+s+current.getEmail()+s+current.getPassword()+s+current.getUsername()+s+current.getPicture()+s+current.getBirthday().toString() + "\n");
+		}
+		pw.close();
 	}
 	
 	/**
