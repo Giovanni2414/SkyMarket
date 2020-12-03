@@ -827,7 +827,7 @@ public class SkyMarketGUI {
     	lbArticleNumberNozzles.setText(String.valueOf(article.getNumberOfNozzles()));
     	lbArticleStoveType.setText(String.valueOf(article.getTypeStove()));
     	
-    	String path = PATH_PICTURE_ARTICLES_FRIDGE + article.getPicture();
+    	String path = PATH_PICTURE_ARTICLES_STOVE + article.getPicture();
     	
     	System.out.println(path);
     	
