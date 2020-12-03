@@ -37,7 +37,7 @@
             <TableView fx:id="tvUserSellerListB" layoutX="12.0" layoutY="43.0" prefHeight="266.0" prefWidth="577.0">
               <columns>
                 <TableColumn fx:id="tcUsernameB" prefWidth="118.0" text="Username" />
-                <TableColumn fx:id="tcCodeB" prefWidth="114.0" text="Identificacion" />
+                <TableColumn fx:id="tcIdentificationB" prefWidth="114.0" text="Identificacion" />
                   <TableColumn fx:id="tcNameB" prefWidth="121.0" text="Nombre" />
                   <TableColumn fx:id="tcLastNameB" prefWidth="139.0" text="Apellido" />
                   <TableColumn fx:id="tcCalificationB" prefWidth="84.0" text="Calificacion" />

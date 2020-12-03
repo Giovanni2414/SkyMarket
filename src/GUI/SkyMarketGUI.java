@@ -10,6 +10,7 @@ import Exceptions.PasswordNotEqualsException;
 import Exceptions.RepeatArticleCodeException;
 import Model.Article;
 import Model.CellPhone;
+import Model.Computer;
 import Model.Fridge;
 import Model.HomeAppliances;
 import Model.ProgressBar;
@@ -201,6 +202,14 @@ public class SkyMarketGUI {
 
     @FXML
     private ToggleGroup tgFrost;
+    
+    
+    // Attributes screenAddNewComputer
+    @FXML
+    private TextField txtNumberPortsPC;
+
+    @FXML
+    private ToggleGroup tgTouch;
     
     //Attributes screenAddNewStove
     
@@ -1072,6 +1081,28 @@ public class SkyMarketGUI {
     	mainPanel.setCenter(screenAddNewFridgePane);
     }
     
+    //Methods screenAddNewComputer
+    
+    @FXML
+    void addNewArticleComputer(ActionEvent event) {
+    	int numberOfPorts = Integer.parseInt(txtNumberPortsPC.getText());
+    	Toggle toggleTouch = tgTouch.getSelectedToggle();
+    	String touchString = toggleTouch.toString();
+    	boolean touch = (touchString.equals("Si"))?true:false;
+    	
+    	
+    	Technology currentArticleT = (Technology)currentArticle;
+    	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch );
+    	
+    	addNewArticle(newComputer);
+    	
+    	try {
+    		loginManagement(skymarket.getCurrentUser());
+    	}catch(IOException ioe) {
+    		fxmlNotFound();
+    	}
+    }
+    
     //methods screenAddNewCellphone
     
     @FXML
@@ -1154,6 +1185,10 @@ public class SkyMarketGUI {
     		
     	}
     }
+    
+    
+    
+    
     
     //methods share mainScreenUserSeller, mainScreenuserBuyer and mainScreenAdministrator
     
