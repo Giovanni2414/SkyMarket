@@ -882,7 +882,7 @@ public class SkyMarketGUI {
     	}
     	tvFiltedUsers.setItems(observableList);
     	tcNameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));
-    	tcLastnameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Lastname"));
+    	tcLastnameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("LastName"));
     	tcIdentificationFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Identification"));
     	tcEmailFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Email"));
     	tcUsernameFiltredTv.setCellValueFactory(new PropertyValueFactory<User, String>("Username"));
@@ -912,22 +912,22 @@ public class SkyMarketGUI {
     
     @FXML
     void showArticlesByNameFromHighestToLowest(ActionEvent event) {
-
+    	System.out.println("Name A-Z");
     }
 
     @FXML
     void showArticlesByNameFromLowestToHighest(ActionEvent event) {
-
+    	System.out.println("Name Z-A");
     }
 
     @FXML
     void showArticlesByPriceFromLowestToHighest(ActionEvent event) {
-
+    	System.out.println("PRICE L-H");
     }
 
     @FXML
     void showArticlesByPricepriceFromHighestToLowest(ActionEvent event) {
-
+    	System.out.println("PRICE H-L");
     }
     
     //methods banUserScreen

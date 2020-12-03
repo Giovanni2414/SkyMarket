@@ -17,22 +17,93 @@
                   <Image url="@../../data/picturesApp/skymarket-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="14.0" layoutY="30.0" mnemonicParsing="false" onAction="#exit" text="Volver" />
+            <Button layoutX="14.0" layoutY="58.0" mnemonicParsing="false" onAction="#exit" text="Volver" />
+            <Button layoutX="539.0" layoutY="58.0" mnemonicParsing="false" onAction="#personalDataScreen" text="info" />
+            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="18.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/012-backwards.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="538.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/148-profile.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="234.0" layoutY="14.0" text="Ordenar articulos por:">
+            <Label layoutX="228.0" layoutY="14.0" text="Ordenar articulos por:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromHighestToLowest" prefHeight="25.0" prefWidth="163.0" text="Nombre de mayor a menor" />
-            <Button layoutX="167.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPriceFromLowestToHighest" prefHeight="25.0" prefWidth="135.0" text="Precio menor a mayor" />
-            <Button layoutX="424.0" layoutY="131.0" mnemonicParsing="false" onAction="#showArticlesByNameFromLowestToHighest" prefHeight="25.0" prefWidth="162.0" text="Nombre de menor a mayor" />
-            <Button layoutX="312.0" layoutY="194.0" mnemonicParsing="false" onAction="#showArticlesByPricepriceFromHighestToLowest" prefHeight="25.0" prefWidth="135.0" text="Precio mayor a menor" />
+            <Button layoutX="26.0" layoutY="169.0" mnemonicParsing="false" onAction="#showArticlesByNameFromHighestToLowest" prefHeight="25.0" prefWidth="118.0" text="Nombre de A a Z" />
+            <Button layoutX="158.0" layoutY="170.0" mnemonicParsing="false" onAction="#showArticlesByPricepriceFromHighestToLowest" prefHeight="25.0" prefWidth="141.0" text="Precio mayor a menor" />
+            <Button layoutX="468.0" layoutY="170.0" mnemonicParsing="false" onAction="#showArticlesByNameFromLowestToHighest" prefHeight="25.0" prefWidth="108.0" text="Nombre de Z a A" />
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="104.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/067-down-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="104.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/192-up-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="68.0" layoutX="468.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/082-shopping-bag-5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="536.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/192-up-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="536.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/067-down-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="68.0" layoutX="36.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/082-shopping-bag-5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="247.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/067-down-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="247.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/192-up-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="68.0" layoutX="179.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/011-shopping-bag-1.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="314.0" layoutY="169.0" mnemonicParsing="false" onAction="#showArticlesByPriceFromLowestToHighest" prefHeight="25.0" prefWidth="141.0" text="Precio menor a mayor" />
+            <ImageView fitHeight="70.0" fitWidth="68.0" layoutX="335.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/e-commerce-icons/011-shopping-bag-1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="403.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/192-up-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="403.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/067-down-arrow.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>
