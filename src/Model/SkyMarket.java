@@ -1,21 +1,27 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
 import Exceptions.EmptyFieldException;
+import Exceptions.IdentificationRepeatException;
 import Exceptions.PasswordNotEqualsException;
 import Exceptions.RepeatArticleCodeException;
+import Exceptions.UsernameRepeatException;
 
 public class SkyMarket {
 
@@ -23,6 +29,8 @@ public class SkyMarket {
 	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
 	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
 	public final static String FILE_DATA_EXPORT_ARTICLES = "data/exportData/articlesData.csv";
+	public final static String FILE_DATA_IMPORT_CLIENTS = "data/importData/clientsData.csv";
+	public final static String FILE_DATA_IMPORT_ARTICLES = "data/importData/articlesData.csv";
 	
 	/**
 	 * The current user logged in the program
@@ -98,9 +106,6 @@ public class SkyMarket {
 			newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture,birthday);
 		} else if(type == 1) {
 			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture,birthday);
-		} else {
-			newUserObject = new Administraitor(name, lastname, identification, email, password, username, picture,birthday, users);
-			//Pendiente por crear el usuario administrador
 		}
 		if(users.isEmpty()) {
 			users.add(newUserObject);
@@ -507,6 +512,55 @@ public class SkyMarket {
 			}
 		}
 		return list;
+	}
+	
+	public ArrayList<Integer> importDataClient() throws IOException {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		ArrayList<Integer> numLineError = new ArrayList<>();
+		int cont = 2;
+		
+		BufferedReader br = new BufferedReader(new FileReader(FILE_DATA_IMPORT_CLIENTS));
+		String line = br.readLine();
+		String [] info;
+		line = br.readLine();
+		
+		while(line != null) {
+			boolean repeat = false;
+			info = line.split(";");
+			try {
+				verifyIdentificationNotRepeat(info[2]);
+				verifyUsernameNotRepeat(info[5]);
+			}catch(IdentificationRepeatException | UsernameRepeatException irure) {
+				numLineError.add(cont);
+				repeat = true; 
+			}
+			
+			if(!repeat) {
+				String date = info[7];
+				LocalDate lc = LocalDate.parse(date,formatter);
+				newUser(info[0], info[1], info[2], info[3], info[4], info[5], info[6],lc, Integer.parseInt(info[8]));
+			}
+			cont += 1;
+			line = br.readLine();
+		}
+		br.close();
+		return numLineError;
+	}
+	
+	public void verifyUsernameNotRepeat(String username) throws UsernameRepeatException{
+		for(int i = 0; i<users.size();i++) {
+			if(username.equalsIgnoreCase(users.get(i).getUsername())) {
+				throw new UsernameRepeatException();
+			}
+		}
+	}
+	
+	public void verifyIdentificationNotRepeat(String identification) throws IdentificationRepeatException{
+		for(int i = 0; i<users.size();i++) {
+			if(identification.equalsIgnoreCase(users.get(i).getIdentification())) {
+				throw new IdentificationRepeatException();
+			}
+		}
 	}
 	
 	/**
