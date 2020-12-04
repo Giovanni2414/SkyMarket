@@ -1,16 +1,17 @@
 ARTICULOS CELULARES
 Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Bateria en watts;Tamaños de pantalla;Ram;Procesador;Numero de sims;Numero de camaras
-Iphone 12 max 12;16919216;650000.0;Alta gama original;iphone 12 pro max.jpg;3;200.0;6;4;A14 Bionic;2;3
-Huawei Y9;27426362;3200000.0;Nuevo Y9;huawei Y9 prime.jpg;3;30.0;9;4;Snapdragon 210;2;2
-Samsung J7;95183595;1200000.0;Celular bueno, bonito y barato;huawei Y9 prime.jpg;2;35.0;25;12;Ryzen 3;2;1
+Iphone 12 Pro Max;60775304;6500000.0;Ultimo modelo, alta gama;iphone 12 pro max.jpg;3;2200.0;5.8;6;A14 Bionic;2;3
+Google pixel 4;39023542;3699000.0;Celular alta gama;Google Pixel 4.JPEG;5;2800.0;6.0;6;Snapdragon 855;2;2
 
 ARTICULOS COMPUTADORES
 Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Bateria en watts;Tamaños de pantalla;Ram;Procesador;Numero de puertos;Touch
-Macbook Pro M1;53754045;100000.0;Nuevo macbook 
-con chip M1;huawei Y9 prime.jpg;3;200.0;13;8;M1;3;NO
+Lenovo ThinkPad E14;55107913;5000000.0;Lenovo ultimo modelo;Lenovo ThinkPad E14.jpg;4;3000.0;12.6;12;Ryzen 3;8;NO
+Lenovo thinkpad E14;84923567;4750000.0;Computador perfecto para profesionales;Lenovo ThinkPad E14.jpg;3;3000.0;14.0;16;AMD Renoir;8;NO
 
 ARTICULOS NEVERAS
 Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Peso;Capacidad;Consumo en watts;Altura;Ancho;Smart;Sistema frost
+Nevera Mabe No Frost;72439543;1389000.0;Nevera color grafito;Mabe Nevera No Frost.jpg;2;80.0;299.0;1000.0;1.84;0.7;NO;NO
 
 ARTICULOS NEVERAS
 Nombre;Codigo;Precio;Descripción;Ruta foto;Cantidad;Peso;Capacidad;Consumo en watts;Altura;Ancho;Numero de boquillas;tipo de estufa
+Estufa abba;79825439;400000.0;Estufa para sobremesa;Estufa abba electrica y a gas.jpg;6;8.0;0.0;800.0;0.51;0.51;4;ELECTRICA Y GAS

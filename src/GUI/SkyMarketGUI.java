@@ -8,8 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Exceptions.EmptyFieldException;
+import Exceptions.IdentificationRepeatException;
 import Exceptions.PasswordNotEqualsException;
 import Exceptions.RepeatArticleCodeException;
+import Exceptions.UsernameRepeatException;
 import Model.Article;
 import Model.CellPhone;
 import Model.Computer;
@@ -472,7 +474,6 @@ public class SkyMarketGUI {
 		try {
 			skymarket.loadDataArticles();
 		}catch(IOException | ClassNotFoundException iocnfe) {
-			iocnfe.printStackTrace();
 			serializableAlert();
 		}
 	}
@@ -669,6 +670,8 @@ public class SkyMarketGUI {
         	LocalDate birthday = dpBirthday.getValue();
         	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
         	skymarket.verificationPasswords(password, passwordVerify);
+        	skymarket.verifyIdentificationNotRepeat(identification);
+        	skymarket.verifyUsernameNotRepeat(username);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 0);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 0);
@@ -680,6 +683,12 @@ public class SkyMarketGUI {
     	}catch(PasswordNotEqualsException pnee) {
     		cleanFieldsRegister();
     		incorrectPasswordAlert();
+    	}catch(IdentificationRepeatException ire) {
+    		cleanFieldsRegister();
+    		identificationRepeatAlert();
+    	}catch(UsernameRepeatException unre) {
+    		cleanFieldsRegister();
+    		usernameRepeatAlert();
     	}
     }
     
@@ -697,6 +706,8 @@ public class SkyMarketGUI {
         	LocalDate birthday = dpBirthday.getValue();
         	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
         	skymarket.verificationPasswords(password, passwordVerify);
+        	skymarket.verifyIdentificationNotRepeat(identification);
+        	skymarket.verifyUsernameNotRepeat(username);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 1);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 1);
@@ -708,6 +719,12 @@ public class SkyMarketGUI {
     	}catch(PasswordNotEqualsException pnee) {
     		cleanFieldsRegister();
     		incorrectPasswordAlert();
+    	}catch(IdentificationRepeatException ire) {
+    		cleanFieldsRegister();
+    		identificationRepeatAlert();
+    	}catch(UsernameRepeatException unre) {
+    		cleanFieldsRegister();
+    		usernameRepeatAlert();
     	}
     }
     
@@ -1276,6 +1293,7 @@ public class SkyMarketGUI {
     @FXML
     void historySales(ActionEvent event) {
     	testAlert();
+    	skymarket.crearAdministrador();
     }
 
     @FXML
@@ -1789,6 +1807,20 @@ public class SkyMarketGUI {
     	
     	alertText += "el codigo de articulo ya existe";
     	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void usernameRepeatAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Usuario repetido");
+    	alert.setContentText("El nombre de usuario con el que intento registrarse ya esta en uso");
+    	alert.showAndWait();
+    }
+    
+    public void identificationRepeatAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Identificacion repetida");
+    	alert.setContentText("El numero de identificacion con la que intento registrarse ya esta en uso");
     	alert.showAndWait();
     }
     

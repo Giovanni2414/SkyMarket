@@ -25,8 +25,8 @@ import Exceptions.UsernameRepeatException;
 
 public class SkyMarket {
 
-	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData";
-	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData";
+	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData.ap2";
+	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData.ap2";
 	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
 	public final static String FILE_DATA_EXPORT_ARTICLES = "data/exportData/articlesData.csv";
 	public final static String FILE_DATA_IMPORT_CLIENTS = "data/importData/clientsData.csv";
@@ -106,6 +106,8 @@ public class SkyMarket {
 			newUserObject = new UserBuyer(name, lastname, identification, email, password, username, picture,birthday);
 		} else if(type == 1) {
 			newUserObject = new UserSeller(name, lastname, identification, email, password, username, picture,birthday);
+		} else if(type == 3) {
+			newUserObject = new Administraitor(name, lastname, identification, email, password, username, picture,birthday,users);
 		}
 		if(users.isEmpty()) {
 			users.add(newUserObject);
@@ -360,7 +362,7 @@ public class SkyMarket {
 		User temp = null;
 		for(int c = 0; c < tempArr.length; c++) {
 			for(int v = 1; v < (tempArr.length - c); v++) {
-				if(Integer.parseInt(tempArr[v-1].getIdentification()) > Integer.parseInt(tempArr[v].getIdentification())) {  
+				if(Long.parseLong(tempArr[v-1].getIdentification()) > Long.parseLong(tempArr[v].getIdentification())) {  
                     //swap elements  
                     temp = tempArr[v-1];  
                     tempArr[v-1] = tempArr[v];  
@@ -756,8 +758,17 @@ public class SkyMarket {
 		}
 	}
 
-	
-	
-	
-	
+	public void crearAdministrador() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        String date = "12/01/1964";
+
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        newUser("Jeff", "Bezos", "190234853", "jeff@amazon.com", "jeffrey", "TheBigJeff", "Jeff.jpg", localDate , 3);
+        try {
+            saveDataClients();
+        }catch(IOException ioe) {
+
+        }
+    }
 }
