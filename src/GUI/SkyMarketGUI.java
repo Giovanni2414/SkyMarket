@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import Exceptions.EmptyFieldException;
 import Exceptions.PasswordNotEqualsException;
@@ -1173,7 +1174,15 @@ public class SkyMarketGUI {
 
     @FXML
     void importUsers(ActionEvent event) {
-
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataClient();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importRepeatAlert(listNum);
+    	}
     }
 
     @FXML
@@ -1669,5 +1678,30 @@ public class SkyMarketGUI {
     	alert.setContentText("El archivo o la ruta en la que se deseaba exportar no existe");
     	alert.showAndWait();
     }
-
+    
+    public void fileImportAlert() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Archivo para importar no encontrado");
+    	alert.setContentText("El archivo o la ruta en la que se deseaba importar no existe");
+    	alert.showAndWait();
+    }
+    
+    public void importRepeatAlert(ArrayList<Integer> listNum) {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Usuarios no importados");
+    	String alertText = "En las lineas ";
+    	
+    	for(int i = 0; i<listNum.size();i++) {
+    		if(i == listNum.size()-1) {
+    			alertText += String.valueOf(listNum.get(i)) + " ";
+    		}else {
+    			alertText += String.valueOf(listNum.get(i)) + ",";
+    		}
+    		
+    	}
+    	
+    	alertText += "el numero de identificacion o nombre de usuario se repitieron";
+    	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
 }
