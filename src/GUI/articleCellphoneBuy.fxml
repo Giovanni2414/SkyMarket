@@ -36,7 +36,7 @@
          </children>
       </AnchorPane>
    </top>
-   <center>
+   <bottom>
       <AnchorPane prefHeight="325.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lbArticleCode" layoutX="354.0" layoutY="115.0" prefHeight="21.0" prefWidth="209.0">
@@ -154,7 +154,8 @@
                   </GridPane>
                </content>
             </ScrollPane>
+            <Button layoutX="363.0" layoutY="238.0" mnemonicParsing="false" onAction="#btnAddToCart" prefHeight="28.0" prefWidth="178.0" text="Agregar al Carrito" />
          </children>
       </AnchorPane>
-   </center>
+   </bottom>
 </BorderPane>
