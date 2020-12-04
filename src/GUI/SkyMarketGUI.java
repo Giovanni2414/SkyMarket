@@ -425,6 +425,25 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<Article, Integer> tcQuantitySortedArticles;
     
+
+    @FXML
+    private TableView<Article> tvArticlesSeller;
+
+    @FXML
+    private TableColumn<Article, String>tcNameArticleSeller;
+
+    @FXML
+    private TableColumn<Article, String> tcCodeArticleSeller;
+
+    @FXML
+    private TableColumn<Article, Double> tcPriceArticleSeller;
+
+    @FXML
+    private TableColumn<Article, String> tcDescriptionArticleSeller;
+
+    @FXML
+    private TableColumn<Article, Integer> tcQuantityArticleSeller;
+    
 	/**
 	 * Constructor of SkyMarketGUI
 	 * <br><b>Pre:<b><br>
@@ -1242,11 +1261,34 @@ public class SkyMarketGUI {
     }
 
     @FXML
-    void viewListArticlesToSell(ActionEvent event) {
+    void viewListArticlesToSell(ActionEvent event) throws IOException {
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showArticlesSeller.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenSellerArticlesPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenSellerArticlesPane);
+    	initializeTableSellerArticles();
 
     }
 
-    @FXML
+    public void initializeTableSellerArticles() {
+    	ObservableList<Article> observableList;
+    	observableList = FXCollections.observableList(skymarket.getArticlesSeller());
+    	//System.out.println(skymarket.getArticlesSeller().get(0).getName());
+    	tvArticlesSeller.setItems(observableList);
+    	tcNameArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcDescriptionArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
+    	tcQuantityArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
+		
+	}
+
+	@FXML
     void modifyShipping(ActionEvent event) {
     	skymarket.test();
     }
@@ -1543,12 +1585,19 @@ public class SkyMarketGUI {
 
     }
     
+
+    @FXML
+    void btnAddToCart(ActionEvent event) {
+
+    }
+    
     //methods share screenAddNewCellphone, screenAddNewFridge, screenAddNewStove
     
     public void addNewArticle(Article newArticle) {
     	try {
     		skymarket.addNewArticleToArticles(newArticle);
     		skymarket.addNewArticleToUserSeller(skymarket.getCurrentUser().getUsername(), newArticle);
+    		skymarket.saveDataClients();
     		skymarket.saveDataArticles();
     	}catch(RepeatArticleCodeException race) {
     		newArticle.setCode(skymarket.generateRandomNumber());
