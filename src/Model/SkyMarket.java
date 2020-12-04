@@ -284,6 +284,8 @@ public class SkyMarket {
 		return articles;
 	}
 
+	
+	
 	/**
 	 * Setter of articles
 	 * <br>Pre:<b></b>
@@ -376,6 +378,19 @@ public class SkyMarket {
 			list.add(tempArr[c]);
 		}
 		return list;
+	}
+	
+	public LinkedList<Article> getArticlesSeller() {
+		LinkedList<Article> listSellerArticles = new LinkedList<>();
+		UserSeller currentU=  (UserSeller)(currentUser);
+		Article current= currentU.getSellArticles();
+		
+			while(current!=null) {
+				listSellerArticles.add(current);
+				current= current.getNextArticle();
+			}
+		
+		return listSellerArticles;
 	}
 	
 	public LinkedList<Article> getListProductsOnSale() {
@@ -637,6 +652,8 @@ public class SkyMarket {
 			return response;
 		}
 	}
+
+	
 	
 	
 	

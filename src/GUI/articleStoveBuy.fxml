@@ -157,6 +157,7 @@
                   </GridPane>
                </content>
             </ScrollPane>
+            <Button layoutX="363.0" layoutY="238.0" mnemonicParsing="false" onAction="#btnAddToCart" prefHeight="28.0" prefWidth="178.0" text="Agregar al Carrito" />
          </children>
       </AnchorPane>
    </center>
