@@ -1275,7 +1275,7 @@ public class SkyMarketGUI {
 
     @FXML
     void historySales(ActionEvent event) {
-    	
+    	testAlert();
     }
 
     @FXML
@@ -1789,6 +1789,13 @@ public class SkyMarketGUI {
     	
     	alertText += "el codigo de articulo ya existe";
     	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void testAlert() {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setHeaderText("Seguro?");
+    	alert.setContentText("Seguroooooooo?");
     	alert.showAndWait();
     }
 }
