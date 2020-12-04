@@ -1403,7 +1403,7 @@ public class SkyMarketGUI {
     @FXML
     public void continueToTypeTechnology(ActionEvent event) {
     	double batteryWatts = Double.parseDouble(txtBatteryWatsNT.getText());
-    	int screenSize = Integer.parseInt(txtScreenSizeNT.getText());
+    	double screenSize = Double.parseDouble(txtScreenSizeNT.getText());
     	int ram = Integer.parseInt(txtRamNT.getText());
     	String processor = txtProcessorNT.getText();
     	String type = cbTypeTechnologyNT.getValue();

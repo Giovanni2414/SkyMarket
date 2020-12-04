@@ -25,7 +25,7 @@ public class CellPhone extends Technology{
 	@param: numberOfSims
 	@param:numberOfCameras
 	**/
-	public CellPhone(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor, int numberOfSims, int numberOfCameras) {
+	public CellPhone(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, double screenSize, int ram, String processor, int numberOfSims, int numberOfCameras) {
 		super(name,code,price,description,picture,quantity,batteryWatts,screenSize,ram,processor);
 		this.numberOfSims = numberOfSims;
 		this.numberOfCameras = numberOfCameras;
