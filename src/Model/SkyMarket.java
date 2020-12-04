@@ -552,7 +552,10 @@ public class SkyMarket {
 		}
 	}
 	
-	public void importDataArticles() throws IOException {
+	public ArrayList<Integer> importDataArticles() throws IOException {
+		ArrayList<Integer> numLineError = new ArrayList<>();
+		int cont = 2;
+		
 		BufferedReader br = new BufferedReader(new FileReader(FILE_DATA_IMPORT_ARTICLES));
 		String line = br.readLine();
 		String [] info;
@@ -575,11 +578,13 @@ public class SkyMarket {
 				addNewArticleToArticles(newArticle);
 				addNewArticleToUserSeller(info[1], newArticle);
 			}catch(RepeatArticleCodeException race) {
-				System.out.println("mismoCodigo");
+				numLineError.add(cont);
 			}
+			cont += 1;
 			line = br.readLine();
 		}
 		br.close();
+		return numLineError;
 	}
 	
 	public CellPhone importNewCellphone(String[] info) {

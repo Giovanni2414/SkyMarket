@@ -25,6 +25,7 @@ import Model.UserSeller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ExportThread;
+import Thread.ImportThread;
 import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -1188,10 +1189,14 @@ public class SkyMarketGUI {
     
     @FXML
     void importArticles(ActionEvent event)  {
+    	ArrayList<Integer> listNum  = new ArrayList<>();
     	try {
-    		skymarket.importDataArticles();
+    		listNum = skymarket.importDataArticles();
     	}catch(IOException ioe) {
     		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importArticlesRepeatAlert(listNum);
     	}
     }
 
@@ -1204,13 +1209,22 @@ public class SkyMarketGUI {
     		fileImportAlert();
     	}
     	if(!listNum.isEmpty()) {
-    		importRepeatAlert(listNum);
+    		importClientsRepeatAlert(listNum);
     	}
     }
 
     @FXML
     void importUsersAndArticles(ActionEvent event) {
-
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataClient();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importClientsRepeatAlert(listNum);
+    	}
+    	new ImportThread(skymarket).start();
     }
     
     //methods menuExports
@@ -1742,7 +1756,7 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void importRepeatAlert(ArrayList<Integer> listNum) {
+    public void importClientsRepeatAlert(ArrayList<Integer> listNum) {
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Usuarios no importados");
     	String alertText = "En las lineas ";
@@ -1753,10 +1767,27 @@ public class SkyMarketGUI {
     		}else {
     			alertText += String.valueOf(listNum.get(i)) + ",";
     		}
-    		
     	}
     	
     	alertText += "el numero de identificacion o nombre de usuario se repitieron";
+    	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void importArticlesRepeatAlert(ArrayList<Integer> listNum) {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Articulos no importados");
+    	String alertText = "En las lineas ";
+    	
+    	for(int i = 0; i<listNum.size();i++) {
+    		if(i == listNum.size()-1) {
+    			alertText += String.valueOf(listNum.get(i)) + " ";
+    		}else {
+    			alertText += String.valueOf(listNum.get(i)) + ",";
+    		}
+    	}
+    	
+    	alertText += "el codigo de articulo ya existe";
     	alert.setContentText(alertText);
     	alert.showAndWait();
     }
