@@ -1168,8 +1168,12 @@ public class SkyMarketGUI {
     //methods menuImports
     
     @FXML
-    void importArticles(ActionEvent event) {
-
+    void importArticles(ActionEvent event)  {
+    	try {
+    		skymarket.importDataArticles();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
     }
 
     @FXML
@@ -1427,14 +1431,17 @@ public class SkyMarketGUI {
     }
     
     public void loadScreenAddNewStove() throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewFridge.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewStove.fxml"));
     	
     	fxmlLoader.setController(this);
     	
-    	Parent screenAddNewFridgePane = fxmlLoader.load();
+    	Parent screenAddNewStovePane = fxmlLoader.load();
     	
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(screenAddNewFridgePane);
+    	mainPanel.setCenter(screenAddNewStovePane);
+    	cbTypeStoveNS.getItems().add("ELECTRICA");
+    	cbTypeStoveNS.getItems().add("GAS");
+    	cbTypeStoveNS.getItems().add("ELECTRICA Y GAS");
     }
     
     //Methods screenAddNewComputer
