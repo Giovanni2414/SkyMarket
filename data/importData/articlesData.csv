@@ -1,0 +1,5 @@
+TIPO;Nombre Vendedor;Nombre;Codigo;Precio;Descripcion ;Ruta foto;Cantidad;;;;;;;
+1;juanmiloz;Google pixel 4;39023542;3699000;Celular alta gama;Google Pixel 4.JPEG;5;2800;6;6;Snapdragon 855;2;2;
+2;juanmiloz;Lenovo thinkpad E14;84923567;4750000;Computador perfecto para profesionales;Lenovo ThinkPad E14.jpg;3;3000;14;16;AMD Renoir;8;NO;
+3;juanmiloz;Nevera Mabe No Frost;72439543;1389000;Nevera color grafito;Mabe Nevera No Frost.jpg;2;80;299;1000;1.84;0.7;NO;NO
+4;juanmiloz;Estufa abba;79825439;400000;Estufa para sobremesa;Estufa abba electrica y a gas.jpg;6;8;0;800;0.51;0.51;4;ELECTRICA Y GAS

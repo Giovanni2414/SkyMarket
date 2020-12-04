@@ -8,8 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Exceptions.EmptyFieldException;
+import Exceptions.IdentificationRepeatException;
 import Exceptions.PasswordNotEqualsException;
 import Exceptions.RepeatArticleCodeException;
+import Exceptions.UsernameRepeatException;
 import Model.Article;
 import Model.CellPhone;
 import Model.Computer;
@@ -25,6 +27,7 @@ import Model.UserSeller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ExportThread;
+import Thread.ImportThread;
 import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -471,7 +474,6 @@ public class SkyMarketGUI {
 		try {
 			skymarket.loadDataArticles();
 		}catch(IOException | ClassNotFoundException iocnfe) {
-			iocnfe.printStackTrace();
 			serializableAlert();
 		}
 	}
@@ -668,6 +670,8 @@ public class SkyMarketGUI {
         	LocalDate birthday = dpBirthday.getValue();
         	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
         	skymarket.verificationPasswords(password, passwordVerify);
+        	skymarket.verifyIdentificationNotRepeat(identification);
+        	skymarket.verifyUsernameNotRepeat(username);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 0);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 0);
@@ -679,6 +683,12 @@ public class SkyMarketGUI {
     	}catch(PasswordNotEqualsException pnee) {
     		cleanFieldsRegister();
     		incorrectPasswordAlert();
+    	}catch(IdentificationRepeatException ire) {
+    		cleanFieldsRegister();
+    		identificationRepeatAlert();
+    	}catch(UsernameRepeatException unre) {
+    		cleanFieldsRegister();
+    		usernameRepeatAlert();
     	}
     }
     
@@ -696,6 +706,8 @@ public class SkyMarketGUI {
         	LocalDate birthday = dpBirthday.getValue();
         	skymarket.verificationFieldsRegister(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday);
         	skymarket.verificationPasswords(password, passwordVerify);
+        	skymarket.verifyIdentificationNotRepeat(identification);
+        	skymarket.verifyUsernameNotRepeat(username);
         	skymarket.newUser(name, lastName, identification, email, passwordVerify, username, pathPicture, birthday, 1);
         	cleanFieldsRegister();
         	clientAddedAlert(username, 1);
@@ -707,6 +719,12 @@ public class SkyMarketGUI {
     	}catch(PasswordNotEqualsException pnee) {
     		cleanFieldsRegister();
     		incorrectPasswordAlert();
+    	}catch(IdentificationRepeatException ire) {
+    		cleanFieldsRegister();
+    		identificationRepeatAlert();
+    	}catch(UsernameRepeatException unre) {
+    		cleanFieldsRegister();
+    		usernameRepeatAlert();
     	}
     }
     
@@ -1187,8 +1205,16 @@ public class SkyMarketGUI {
     //methods menuImports
     
     @FXML
-    void importArticles(ActionEvent event) {
-
+    void importArticles(ActionEvent event)  {
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataArticles();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importArticlesRepeatAlert(listNum);
+    	}
     }
 
     @FXML
@@ -1200,13 +1226,22 @@ public class SkyMarketGUI {
     		fileImportAlert();
     	}
     	if(!listNum.isEmpty()) {
-    		importRepeatAlert(listNum);
+    		importClientsRepeatAlert(listNum);
     	}
     }
 
     @FXML
     void importUsersAndArticles(ActionEvent event) {
-
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataClient();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importClientsRepeatAlert(listNum);
+    	}
+    	new ImportThread(skymarket).start();
     }
     
     //methods menuExports
@@ -1257,7 +1292,8 @@ public class SkyMarketGUI {
 
     @FXML
     void historySales(ActionEvent event) {
-    	
+    	testAlert();
+    	skymarket.crearAdministrador();
     }
 
     @FXML
@@ -1385,7 +1421,7 @@ public class SkyMarketGUI {
     @FXML
     public void continueToTypeTechnology(ActionEvent event) {
     	double batteryWatts = Double.parseDouble(txtBatteryWatsNT.getText());
-    	int screenSize = Integer.parseInt(txtScreenSizeNT.getText());
+    	double screenSize = Double.parseDouble(txtScreenSizeNT.getText());
     	int ram = Integer.parseInt(txtRamNT.getText());
     	String processor = txtProcessorNT.getText();
     	String type = cbTypeTechnologyNT.getValue();
@@ -1469,14 +1505,17 @@ public class SkyMarketGUI {
     }
     
     public void loadScreenAddNewStove() throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewFridge.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewStove.fxml"));
     	
     	fxmlLoader.setController(this);
     	
-    	Parent screenAddNewFridgePane = fxmlLoader.load();
+    	Parent screenAddNewStovePane = fxmlLoader.load();
     	
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(screenAddNewFridgePane);
+    	mainPanel.setCenter(screenAddNewStovePane);
+    	cbTypeStoveNS.getItems().add("ELECTRICA");
+    	cbTypeStoveNS.getItems().add("GAS");
+    	cbTypeStoveNS.getItems().add("ELECTRICA Y GAS");
     }
     
     //Methods screenAddNewComputer
@@ -1735,7 +1774,7 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void importRepeatAlert(ArrayList<Integer> listNum) {
+    public void importClientsRepeatAlert(ArrayList<Integer> listNum) {
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Usuarios no importados");
     	String alertText = "En las lineas ";
@@ -1746,11 +1785,49 @@ public class SkyMarketGUI {
     		}else {
     			alertText += String.valueOf(listNum.get(i)) + ",";
     		}
-    		
     	}
     	
     	alertText += "el numero de identificacion o nombre de usuario se repitieron";
     	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void importArticlesRepeatAlert(ArrayList<Integer> listNum) {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Articulos no importados");
+    	String alertText = "En las lineas ";
+    	
+    	for(int i = 0; i<listNum.size();i++) {
+    		if(i == listNum.size()-1) {
+    			alertText += String.valueOf(listNum.get(i)) + " ";
+    		}else {
+    			alertText += String.valueOf(listNum.get(i)) + ",";
+    		}
+    	}
+    	
+    	alertText += "el codigo de articulo ya existe";
+    	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void usernameRepeatAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Usuario repetido");
+    	alert.setContentText("El nombre de usuario con el que intento registrarse ya esta en uso");
+    	alert.showAndWait();
+    }
+    
+    public void identificationRepeatAlert() {
+    	Alert alert= new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Identificacion repetida");
+    	alert.setContentText("El numero de identificacion con la que intento registrarse ya esta en uso");
+    	alert.showAndWait();
+    }
+    
+    public void testAlert() {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setHeaderText("Seguro?");
+    	alert.setContentText("Seguroooooooo?");
     	alert.showAndWait();
     }
 }
