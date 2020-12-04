@@ -7,7 +7,7 @@ public class Technology extends Article{
 	 */
 	private static final long serialVersionUID = 1L;
 	private double batteryWatts;
-	private int screenSize;
+	private double screenSize;
 	private int ram;
 	private String processor; 
 	
@@ -25,7 +25,7 @@ public class Technology extends Article{
 	@param: ram
 	@param: processor
 	**/
-	public Technology(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, int screenSize, int ram, String processor) {
+	public Technology(String name,String code,double price, String description, String picture, int quantity,double batteryWatts, double screenSize, int ram, String processor) {
 		super(name,code,price,description,picture,quantity);
 		this.batteryWatts = batteryWatts;
 		this.screenSize = screenSize;
@@ -60,7 +60,7 @@ public class Technology extends Article{
 	<b>pre:</b>The Technology object must be created
 	<b>post:</b>obtain the size to the screen of the technology saved in variable "screenTechnology"
 	**/
-	public int getScreenSize() {
+	public double getScreenSize() {
 		return screenSize;
 	}
 
@@ -71,7 +71,7 @@ public class Technology extends Article{
 	<b>post:</b>the screen size will be saved in the variable "screenSize"
 	@param: screenSize
 	**/
-	public void setScreenSize(int screenSize) {
+	public void setScreenSize(double screenSize) {
 		this.screenSize = screenSize;
 	}
 

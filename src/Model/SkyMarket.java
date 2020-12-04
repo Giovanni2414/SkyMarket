@@ -186,18 +186,7 @@ public class SkyMarket {
 		
 		return search;
 	}
-	
-	/*
-	public void banUser(String identification) {
-		for(int i = 0; i<users.size();i++) {
-			if(users.get(i).getIdentification().) {
-				
-			}
-		}
-	}
-	*/
-	
-	
+
 	/**
 	 * Method to set an user in currentUser and login into the application
 	 * <br>Pre:<b></b>
@@ -218,7 +207,7 @@ public class SkyMarket {
 	
 	public void addNewArticleToArticles(Article newArticle) throws RepeatArticleCodeException{
 		for(int i = 0; i < articles.size(); i++) {
-			if(newArticle.getCode()==articles.get(i).getCode()) {
+			if(newArticle.getCode().equals(articles.get(i).getCode())) {
 				throw new RepeatArticleCodeException();
 			}
 		}
@@ -562,6 +551,66 @@ public class SkyMarket {
 			}
 		}
 	}
+	
+	public ArrayList<Integer> importDataArticles() throws IOException {
+		ArrayList<Integer> numLineError = new ArrayList<>();
+		int cont = 2;
+		
+		BufferedReader br = new BufferedReader(new FileReader(FILE_DATA_IMPORT_ARTICLES));
+		String line = br.readLine();
+		String [] info;
+		line = br.readLine();
+		
+		while(line!=null) {
+			info = line.split(";");
+			Article newArticle = null;
+			
+			if(info[0].equals("1")) {
+				newArticle = importNewCellphone(info);
+			}else if(info[0].equals("2")){
+				newArticle = importNewComputer(info);
+			}else if(info[0].equals("3")){
+				newArticle = importNewFridge(info);
+			}else if(info[0].equals("4")){
+				newArticle = importNewStove(info);
+			}
+			try {
+				addNewArticleToArticles(newArticle);
+				addNewArticleToUserSeller(info[1], newArticle);
+			}catch(RepeatArticleCodeException race) {
+				numLineError.add(cont);
+			}
+			cont += 1;
+			line = br.readLine();
+		}
+		br.close();
+		return numLineError;
+	}
+	
+	public CellPhone importNewCellphone(String[] info) {
+		CellPhone cp = new CellPhone(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11], Integer.parseInt(info[12]), Integer.parseInt(info[13]));
+		return cp;
+	}
+	
+	
+	public Computer importNewComputer(String [] info) {
+		boolean touch = (info[13].equalsIgnoreCase("Si"))?true:false;
+		Computer c = new Computer(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11] , Integer.parseInt(info[12]),touch);
+		return c;
+	}
+
+	public Fridge importNewFridge(String [] info) {
+		boolean smart = (info[13].equalsIgnoreCase("SI"))?true:false;
+		boolean frost = (info[14].equalsIgnoreCase("SI"))?true:false;
+		Fridge f = new Fridge(info[2],info[3],Double.parseDouble(info[4]),info[5],info[6],Integer.parseInt(info[7]),Double.parseDouble(info[8]),Double.parseDouble(info[9]),Double.parseDouble(info[10]),Double.parseDouble(info[11]),Double.parseDouble(info[12]),smart,frost);
+		return f;
+	}
+
+	public Stove importNewStove(String [] info) {
+		Stove s = new Stove(info[2],info[3],Double.parseDouble(info[4]),info[5],info[6],Integer.parseInt(info[7]),Double.parseDouble(info[8]),Double.parseDouble(info[9]),Double.parseDouble(info[10]),Double.parseDouble(info[11]),Double.parseDouble(info[12]),Integer.parseInt(info[13]),info[14]);
+		return s;
+	}
+	
 	
 	/**
 	 * laadDataClients

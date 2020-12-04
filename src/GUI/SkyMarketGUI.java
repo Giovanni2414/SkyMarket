@@ -25,6 +25,7 @@ import Model.UserSeller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import Thread.ExportThread;
+import Thread.ImportThread;
 import Thread.ProgressBarThread;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -1187,8 +1188,16 @@ public class SkyMarketGUI {
     //methods menuImports
     
     @FXML
-    void importArticles(ActionEvent event) {
-
+    void importArticles(ActionEvent event)  {
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataArticles();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importArticlesRepeatAlert(listNum);
+    	}
     }
 
     @FXML
@@ -1200,13 +1209,22 @@ public class SkyMarketGUI {
     		fileImportAlert();
     	}
     	if(!listNum.isEmpty()) {
-    		importRepeatAlert(listNum);
+    		importClientsRepeatAlert(listNum);
     	}
     }
 
     @FXML
     void importUsersAndArticles(ActionEvent event) {
-
+    	ArrayList<Integer> listNum  = new ArrayList<>();
+    	try {
+    		listNum = skymarket.importDataClient();
+    	}catch(IOException ioe) {
+    		fileImportAlert();
+    	}
+    	if(!listNum.isEmpty()) {
+    		importClientsRepeatAlert(listNum);
+    	}
+    	new ImportThread(skymarket).start();
     }
     
     //methods menuExports
@@ -1385,7 +1403,7 @@ public class SkyMarketGUI {
     @FXML
     public void continueToTypeTechnology(ActionEvent event) {
     	double batteryWatts = Double.parseDouble(txtBatteryWatsNT.getText());
-    	int screenSize = Integer.parseInt(txtScreenSizeNT.getText());
+    	double screenSize = Double.parseDouble(txtScreenSizeNT.getText());
     	int ram = Integer.parseInt(txtRamNT.getText());
     	String processor = txtProcessorNT.getText();
     	String type = cbTypeTechnologyNT.getValue();
@@ -1469,14 +1487,17 @@ public class SkyMarketGUI {
     }
     
     public void loadScreenAddNewStove() throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewFridge.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenAddNewStove.fxml"));
     	
     	fxmlLoader.setController(this);
     	
-    	Parent screenAddNewFridgePane = fxmlLoader.load();
+    	Parent screenAddNewStovePane = fxmlLoader.load();
     	
     	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(screenAddNewFridgePane);
+    	mainPanel.setCenter(screenAddNewStovePane);
+    	cbTypeStoveNS.getItems().add("ELECTRICA");
+    	cbTypeStoveNS.getItems().add("GAS");
+    	cbTypeStoveNS.getItems().add("ELECTRICA Y GAS");
     }
     
     //Methods screenAddNewComputer
@@ -1735,7 +1756,7 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void importRepeatAlert(ArrayList<Integer> listNum) {
+    public void importClientsRepeatAlert(ArrayList<Integer> listNum) {
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Usuarios no importados");
     	String alertText = "En las lineas ";
@@ -1746,10 +1767,27 @@ public class SkyMarketGUI {
     		}else {
     			alertText += String.valueOf(listNum.get(i)) + ",";
     		}
-    		
     	}
     	
     	alertText += "el numero de identificacion o nombre de usuario se repitieron";
+    	alert.setContentText(alertText);
+    	alert.showAndWait();
+    }
+    
+    public void importArticlesRepeatAlert(ArrayList<Integer> listNum) {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Articulos no importados");
+    	String alertText = "En las lineas ";
+    	
+    	for(int i = 0; i<listNum.size();i++) {
+    		if(i == listNum.size()-1) {
+    			alertText += String.valueOf(listNum.get(i)) + " ";
+    		}else {
+    			alertText += String.valueOf(listNum.get(i)) + ",";
+    		}
+    	}
+    	
+    	alertText += "el codigo de articulo ya existe";
     	alert.setContentText(alertText);
     	alert.showAndWait();
     }
