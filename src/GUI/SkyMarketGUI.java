@@ -1716,9 +1716,12 @@ public class SkyMarketGUI {
     	articleToBuy.setQuantity(articleToBuy.getQuantity()-sQuantityBuy.getValue());
     	
     	Article newArticleBuy = articleToBuy.clone();
+    	Article newArticleBuy2 = articleToBuy.clone();
     	newArticleBuy.setQuantity(sQuantityBuy.getValue());
     	newArticleBuy.setNextArticle(null);
-    	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy);
+    	newArticleBuy2.setQuantity(sQuantityBuy.getValue());
+    	newArticleBuy2.setNextArticle(null);
+    	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy2);
     	skymarket.addArticleBuyToBuyer(newArticleBuy);
     }
     

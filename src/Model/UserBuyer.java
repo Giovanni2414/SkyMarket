@@ -76,37 +76,31 @@ public class UserBuyer extends User {
 		this.history = history;
 	}
 	
-<<<<<<< HEAD
 	public void addArticleToHistory(Article newArticle) {
-=======
+		if(history == null) {
+			//System.out.println("Inicializo historial del comprador");
+			history = newArticle;
+		}else {
+			//System.out.println("Añado nuevo nodo al historial del comprador");
+			addArticleToHistory(history, newArticle);
+		}
+	}
+	
 	/**
 	 * Method to add a new article to the bastek adding a new node
 	 * <br><b>Pre:</b>
 	 * <br><b>Post: A new node has been added to the history buys</b>
 	 * @param newArticle
 	 */
-<<<<<<< HEAD
-	public void addArticleToHistory(Article newArticle) {
-		if(history == null) {
-			history = newArticle;
-		} else {
-			addArticleToHistory(history, newArticle);
-=======
 	public void addArticleToBasket(Article newArticle) {
->>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
+		/*
 		if(history == null) {
 			history = newArticle;
 		}else {
 			addArticleToHistory(history.getNextArticle(), newArticle);
->>>>>>> 3e5a1ed3c7e5fcc099d6f28851deaf766e064b28
-		}
+		}*/
 	}
 	
-<<<<<<< HEAD
-	public void addArticleToHistory(Article current, Article newArticle) {
-		if(current==null) {
-			current=newArticle;
-=======
 	/**
 	 * Recursive method to add a new node into the basket history buys
 	 * <br><b>Pre:</b> First node of article must be initializated
@@ -115,10 +109,11 @@ public class UserBuyer extends User {
 	 * @param newArticle The new article node to add
 	 */
 	public void addArticleToHistory(Article current, Article newArticle) {
-		if(current.getNextArticle()==null) {
+		if(current.getNextArticle() == null) {
+			//System.out.println("Está nulo");
 			current.setNextArticle(newArticle);
->>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
 		}else {
+			//System.out.println("Itero buscando el siguiente nodo");
 			addArticleToHistory(current.getNextArticle(), newArticle);
 		}
 	}

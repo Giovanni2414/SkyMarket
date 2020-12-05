@@ -63,10 +63,10 @@ class UserSellerTest {
 		setupStage1();
 		LocalDate ld = LocalDate.now();
 		UserSeller userTest = new UserSeller("","","","","","","",ld);
-		userTest.addArticleToHistory(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
+		userTest.addArticleToHistorySeller(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
 		assertNotNull(userTest.getHistory());
 		assertNull(userTest.getHistory().getNextArticle());
-		userTest.addArticleToHistory(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
+		userTest.addArticleToHistorySeller(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
 		assertNotNull(userTest.getHistory().getNextArticle());
 		assertNull(userTest.getHistory().getNextArticle().getNextArticle());
 		assertNull(userTest.getHistory().getPrevArticle());

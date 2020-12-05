@@ -435,10 +435,6 @@ public class SkyMarket {
 			listArticlesSolds.add(currentArticle);
 			currentArticle = currentArticle.getNextArticle();
 		}
-<<<<<<< HEAD
-		
-=======
->>>>>>> 3e5a1ed3c7e5fcc099d6f28851deaf766e064b28
 		return listArticlesSolds;
 	}
 	

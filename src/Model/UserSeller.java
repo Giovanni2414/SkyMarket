@@ -190,27 +190,22 @@ public class UserSeller extends User{
 		}
 	}
 	
-<<<<<<< HEAD
-	public void addArticleToHistorySeller(Article newArticle) {
-=======
 	/**
 	 * Method to set a new root of the history of sales
 	 * <br><b>Pre:</b>
 	 * <br><b>Post: A new root has been setted</b>
 	 * @param newArticle
 	 */
-	public void addArticleToHistory(Article newArticle) {
->>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
+	public void addArticleToHistorySeller(Article newArticle) {
 		if(history == null) {
+			//System.out.println("Inicializo historial del vendedor");
 			history = newArticle;
-		}else {
+		} else {
+			//System.out.println("Añado nuevo nodo al historial del Vendedor");
 			addArticleToHistorySeller(history, newArticle);
 		}
 	}
-	
-<<<<<<< HEAD
-	public void addArticleToHistorySeller(Article current, Article newArticle) {
-=======
+
 	/**
 	 * Method helper of addArticleToHistory  with the function of add a new node into the history
 	 * <br><b>Pre: A principal root must be initializated</b>
@@ -218,8 +213,8 @@ public class UserSeller extends User{
 	 * @param current The current node to value
 	 * @param newArticle The new node to add into the list
 	 */
-	public void addArticleToHistory(Article current, Article newArticle) {
->>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
+	public void addArticleToHistorySeller(Article current, Article newArticle) {
+		//System.out.println("Itero buscando el siguiente nodo");
 		if(current.getNextArticle() == null) {
 			current.setNextArticle(newArticle); 
 		}else {
