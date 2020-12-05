@@ -33,6 +33,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -41,6 +42,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -53,7 +56,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.event.EventHandler;
 
 public class SkyMarketGUI {
@@ -447,6 +451,14 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<Article, Integer> tcQuantityArticleSeller;
     
+    // Attributes directPurchase
+    
+    @FXML
+    private Spinner<Integer> sQuantityBuy;
+
+    @FXML
+    private Label lbPriceToShopping;
+    
 	/**
 	 * Constructor of SkyMarketGUI
 	 * <br><b>Pre:<b><br>
@@ -814,7 +826,6 @@ public class SkyMarketGUI {
     	tvArticlesTSUB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-            	//System.out.println(tvArticlesOnSale.getSelectionModel().getSelectedItem());
                managementArticleToBuy(tvArticlesTSUB.getSelectionModel().getSelectedItem());
             }
         });
@@ -929,7 +940,7 @@ public class SkyMarketGUI {
     	lbArticleTouch.setText(String.valueOf(article.isTouchString()));
     	
     	String path = PATH_PICTURE_ARTICLES_COMPUTERS + article.getPicture();
-    	System.out.println(path);
+    	
     	Image newImage = new Image( new FileInputStream(path));
     
     	imgProductImage.setImage(newImage);
@@ -1209,6 +1220,7 @@ public class SkyMarketGUI {
     	ArrayList<Integer> listNum  = new ArrayList<>();
     	try {
     		listNum = skymarket.importDataArticles();
+    		importedSuccessfullyAlert();
     	}catch(IOException ioe) {
     		fileImportAlert();
     	}
@@ -1222,6 +1234,7 @@ public class SkyMarketGUI {
     	ArrayList<Integer> listNum  = new ArrayList<>();
     	try {
     		listNum = skymarket.importDataClient();
+    		importedSuccessfullyAlert();
     	}catch(IOException ioe) {
     		fileImportAlert();
     	}
@@ -1235,6 +1248,7 @@ public class SkyMarketGUI {
     	ArrayList<Integer> listNum  = new ArrayList<>();
     	try {
     		listNum = skymarket.importDataClient();
+    		importedSuccessfullyAlert();
     	}catch(IOException ioe) {
     		fileImportAlert();
     	}
@@ -1620,14 +1634,42 @@ public class SkyMarketGUI {
     //methods articleCellphoneBuy
     
     @FXML
-    void btnBuyButton(ActionEvent event) {
-
+    void btnBuyButton(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("directPurchase.fxml")); 
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent directPurchasePane = fxmlLoader.load();
+    	
+    	Stage stage = new Stage();
+    	stage.setScene(new Scene(directPurchasePane));
+    	stage.setTitle("Compra");
+    	stage.initModality(Modality.WINDOW_MODAL);
+    	
+    	stage.show();
+    	SpinnerValueFactory<Integer> s = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.parseInt(lbArticleQuantity.getText()));
+    	sQuantityBuy.setValueFactory(s);
+    	lbPriceToShopping.setText(lbArticlePrice.getText());
+    }
+    
+    @FXML
+    void testClic(MouseEvent event) {
+    	double temp = Double.parseDouble(lbArticlePrice.getText());
+    	Long newPrice = sQuantityBuy.getValue()*Math.round(temp);
+    	lbPriceToShopping.setText(String.valueOf(newPrice));
     }
     
 
     @FXML
     void btnAddToCart(ActionEvent event) {
 
+    }
+    
+    //methods directPurchase
+    
+    @FXML
+    void buyArticleDirect(ActionEvent event) {
+    	
     }
     
     //methods share screenAddNewCellphone, screenAddNewFridge, screenAddNewStove
@@ -1821,6 +1863,13 @@ public class SkyMarketGUI {
     	Alert alert= new Alert(AlertType.ERROR);
     	alert.setHeaderText("Identificacion repetida");
     	alert.setContentText("El numero de identificacion con la que intento registrarse ya esta en uso");
+    	alert.showAndWait();
+    }
+    
+    public void importedSuccessfullyAlert() {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setHeaderText("Importación completada");
+    	alert.setContentText("Los datos fueron importados de manera exitosa");
     	alert.showAndWait();
     }
     
