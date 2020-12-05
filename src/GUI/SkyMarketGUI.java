@@ -451,6 +451,9 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<Article, Integer> tcQuantityArticleSeller;
     
+    @FXML
+    private Label lbTitle;
+    
     // Attributes directPurchase
     
     @FXML
@@ -803,12 +806,25 @@ public class SkyMarketGUI {
     
     @FXML
     void historyShopping(ActionEvent event) {
-    	skymarket.test();
+    	
     }
 
     @FXML
     void viewBasket(ActionEvent event) throws IOException {
     	
+    }
+    
+    @FXML
+    void viewListArticleForSale(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenToBuyArticles.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenToBuyArticlePane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenToBuyArticlePane);
+    	initializeTableBuyArticles();
     }
 
 
@@ -975,20 +991,6 @@ public class SkyMarketGUI {
     
     	imgProductImage.setImage(newImage);
     }
-    
-    @FXML
-    void viewListArticleForSale(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("screenToBuyArticles.fxml"));
-    	
-    	fxmlLoader.setController(this);
-    	
-    	Parent screenToBuyArticlePane = fxmlLoader.load();
-    	
-    	mainPanel.getChildren().clear();
-    	mainPanel.setCenter(screenToBuyArticlePane);
-    	initializeTableBuyArticles();
-    }
-
 
     
    //methods mainScreenAdministraitor
@@ -1305,14 +1307,7 @@ public class SkyMarketGUI {
     }
 
     @FXML
-    void historySales(ActionEvent event) {
-    	testAlert();
-    	skymarket.crearAdministrador();
-    }
-
-    @FXML
-    void viewListArticlesToSell(ActionEvent event) throws IOException {
-    	
+    void historySales(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showArticlesSeller.fxml"));
     	
     	fxmlLoader.setController(this);
@@ -1321,26 +1316,54 @@ public class SkyMarketGUI {
     	
     	mainPanel.getChildren().clear();
     	mainPanel.setCenter(screenSellerArticlesPane);
-    	initializeTableSellerArticles();
-
+    	lbTitle.setText("Productos vendidos");
+    	initializeTableSoldArticles();
     }
-
-    public void initializeTableSellerArticles() {
+    
+    public void initializeTableSoldArticles() {
     	ObservableList<Article> observableList;
-    	observableList = FXCollections.observableList(skymarket.getArticlesSeller());
-    	//System.out.println(skymarket.getArticlesSeller().get(0).getName());
+    	observableList = FXCollections.observableList(skymarket.getArticlesSolds());
+    	
     	tvArticlesSeller.setItems(observableList);
     	tcNameArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
     	tcCodeArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
     	tcPriceArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
     	tcDescriptionArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
     	tcQuantityArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
-		
+    	if(skymarket.getArticlesSolds().isEmpty()) {
+    		historyArticleSoldEmpty();
+    	}
+    }
+
+    @FXML
+    void viewListArticlesToSell(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showArticlesSeller.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent screenSellerArticlesPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(screenSellerArticlesPane);
+    	lbTitle.setText("Mis productos en venta");
+    	initializeTableSellerArticles();
+    }
+
+    public void initializeTableSellerArticles() {
+    	ObservableList<Article> observableList;
+    	observableList = FXCollections.observableList(skymarket.getArticlesSeller());
+    	
+    	tvArticlesSeller.setItems(observableList);
+    	tcNameArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcDescriptionArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
+    	tcQuantityArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
 	}
 
 	@FXML
     void modifyShipping(ActionEvent event) {
-    	skymarket.test();
+    	
     }
     
     //methods screenAddNewArticle
@@ -1545,9 +1568,8 @@ public class SkyMarketGUI {
     	Technology currentArticleT = (Technology)currentArticle;
     	Computer newComputer = new Computer(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(),numberOfPorts,touch);
     	
-    	String name = skymarket.getCurrentUser().getName();
-    	String lastName = skymarket.getCurrentUser().getLastName();
-    	newComputer.setNameSeller(name + " " + lastName);
+    	String username = skymarket.getCurrentUser().getUsername();
+    	newComputer.setNameSeller(username);
     	
     	addNewArticle(newComputer);
     	
@@ -1568,9 +1590,8 @@ public class SkyMarketGUI {
     	Technology currentArticleT = (Technology)currentArticle;
     	CellPhone newCellphone = new CellPhone(currentArticleT.getName(), currentArticleT.getCode(), currentArticleT.getPrice(), currentArticleT.getDescription(), currentArticleT.getPicture(), currentArticleT.getQuantity(), currentArticleT.getBatteryWatts(), currentArticleT.getScreenSize(), currentArticleT.getRam(), currentArticleT.getProcessor(), numberSims, numberCameras);
     	
-    	String name = skymarket.getCurrentUser().getName();
-    	String lastName = skymarket.getCurrentUser().getLastName();
-    	newCellphone.setNameSeller(name + " " + lastName);
+    	String username = skymarket.getCurrentUser().getUsername();
+    	newCellphone.setNameSeller(username);
     	
     	addNewArticle(newCellphone);
     	
@@ -1595,9 +1616,8 @@ public class SkyMarketGUI {
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
     	Fridge newFridge = new Fridge(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), smart, frost);
     	
-    	String name = skymarket.getCurrentUser().getName();
-    	String lastName = skymarket.getCurrentUser().getLastName();
-    	newFridge.setNameSeller(name + " " + lastName);
+    	String username = skymarket.getCurrentUser().getUsername();
+    	newFridge.setNameSeller(username);
     	
     	addNewArticle(newFridge);
     	
@@ -1618,9 +1638,8 @@ public class SkyMarketGUI {
     	HomeAppliances currentArticleH = (HomeAppliances) currentArticle;
     	Stove newStove = new Stove(currentArticleH.getName(), currentArticleH.getCode(), currentArticleH.getPrice(), currentArticleH.getDescription(), currentArticleH.getPicture(), currentArticleH.getQuantity(), currentArticleH.getWeight(), currentArticleH.getCapacity(), currentArticleH.getWattsConsum(), currentArticleH.getHeight(), currentArticleH.getWidth(), numberOfNozzles , typeStove);
     	
-    	String name = skymarket.getCurrentUser().getName();
-    	String lastName = skymarket.getCurrentUser().getLastName();
-    	newStove.setNameSeller(name + " " + lastName);
+    	String username = skymarket.getCurrentUser().getUsername();
+    	newStove.setNameSeller(username);
     	
     	addNewArticle(newStove);
     	
@@ -1668,8 +1687,16 @@ public class SkyMarketGUI {
     //methods directPurchase
     
     @FXML
-    void buyArticleDirect(ActionEvent event) {
+    void buyArticleDirect(ActionEvent event) throws CloneNotSupportedException {
+    	buyArticleAlert();
+    	Article articleToBuy = skymarket.searchArticleByCode(lbArticleCode.getText());
+    	articleToBuy.setQuantity(articleToBuy.getQuantity()-sQuantityBuy.getValue());
     	
+    	Article newArticleBuy = articleToBuy.clone();
+    	newArticleBuy.setQuantity(sQuantityBuy.getValue());
+    	newArticleBuy.setNextArticle(null);
+    	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy);
+    	skymarket.addArticleBuyToBuyer(newArticleBuy);
     }
     
     //methods share screenAddNewCellphone, screenAddNewFridge, screenAddNewStove
@@ -1873,10 +1900,17 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void testAlert() {
+    public void buyArticleAlert() {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setHeaderText("Seguro?");
-    	alert.setContentText("Seguroooooooo?");
+    	alert.setHeaderText("¿Esta seguro de comprar el articulo?");
+    	alert.setContentText("Confirme si desea llevar el articulo que selecciono");
+    	alert.showAndWait();
+    }
+    
+    public void historyArticleSoldEmpty() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Lista vacia");
+    	alert.setContentText("No ha vendido articulos aun");
     	alert.showAndWait();
     }
 }

@@ -30,7 +30,7 @@
                </font>
             </Label>
             <Button layoutX="160.0" layoutY="94.0" mnemonicParsing="false" onAction="#buyArticleDirect" text="Comprar" />
-            <Label fx:id="lbPriceToShopping" layoutX="159.0" layoutY="61.0" onInputMethodTextChanged="#testClic" prefHeight="17.0" prefWidth="64.0" />
+            <Label fx:id="lbPriceToShopping" layoutX="133.0" layoutY="61.0" onInputMethodTextChanged="#testClic" prefHeight="17.0" prefWidth="124.0" />
             <Spinner fx:id="sQuantityBuy" layoutX="192.0" layoutY="16.0" onMouseClicked="#testClic" prefHeight="17.0" prefWidth="73.0" />
          </children>
       </AnchorPane>
