@@ -8,12 +8,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import Exceptions.CartQuantityException;
 import Exceptions.EmptyFieldException;
 import Exceptions.IdentificationRepeatException;
 import Exceptions.PasswordNotEqualsException;
 import Exceptions.RepeatArticleCodeException;
 import Exceptions.UsernameRepeatException;
 import Model.Article;
+import Model.CartItem;
 import Model.CellPhone;
 import Model.Computer;
 import Model.Fridge;
@@ -486,7 +488,30 @@ public class SkyMarketGUI {
     @FXML
     private TableColumn<UserSeller, Boolean> tcBanBinary;
     
+    
+    @FXML
+    private TableView<CartItem> tvCart;
+
+    @FXML
+    private TableColumn<CartItem,String> tcNameArticleCart;
+
+    @FXML
+    private TableColumn<CartItem, String> tcCodeArticleCart;
+
+    @FXML
+    private TableColumn<CartItem, Double> tcPriceArticleCart;
+
+    @FXML
+    private TableColumn<CartItem, String> tcDescriptionArticleCart;
+
+    @FXML
+    private TableColumn<CartItem, Integer> tcQuantityArticleCart;
+    
+    
     private Stage modalStage;
+    
+    private Stage modalStageCart;
+    
     
 	/**
 	 * Constructor of SkyMarketGUI
@@ -858,10 +883,6 @@ public class SkyMarketGUI {
     	}
     }
 
-    @FXML
-    void viewBasket(ActionEvent event) throws IOException {
-    	
-    }
     
     @FXML
     void viewListArticleForSale(ActionEvent event) throws IOException {
@@ -1760,9 +1781,79 @@ public class SkyMarketGUI {
     	lbPriceToShopping.setText(String.valueOf(newPrice));
     }
     
-    @FXML
-    void btnAddToCart(ActionEvent event) {
+    
+    //Cart Methods
 
+    @FXML
+    void btnBuyFromCart(ActionEvent event) {
+
+    }
+    
+
+    @FXML
+    void viewCart(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cartViewBuyer.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent cartView = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(cartView);
+    	initializateTableCartBinaryTree();
+    }
+    
+    
+    public void initializateTableCartBinaryTree() {
+    	ObservableList<CartItem> observableList;
+    	observableList = FXCollections.observableList(skymarket.getBinaryListCart());
+    	
+    	tvCart.setItems(observableList);
+    	tcNameArticleCart.setCellValueFactory(new PropertyValueFactory<CartItem, String>("Name"));
+    	tcCodeArticleCart.setCellValueFactory(new PropertyValueFactory<CartItem, String>("Code"));
+    	tcPriceArticleCart.setCellValueFactory(new PropertyValueFactory<CartItem, Double>("Price"));
+    	tcDescriptionArticleCart.setCellValueFactory(new PropertyValueFactory<CartItem, String>("Description"));
+    	tcQuantityArticleCart.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("Quantity"));
+		
+	}
+
+	@FXML
+    void btnAddToCartModal(ActionEvent event) throws IOException {
+    	addToCartAlert();
+    }
+    
+   
+
+	public void cartAdder() throws IOException {
+    	Article articleToBuy = skymarket.searchArticleByCode(lbArticleCode.getText());
+    	int quantity=sQuantityBuy.getValue();
+    	CartItem ci= new CartItem(articleToBuy,quantity);
+    	try {
+			skymarket.addCartItemTree(ci,articleToBuy.getQuantity());
+			cartSuccessfulAlert();
+		} catch (CartQuantityException e) {
+			cartQuantityAlert();
+		}
+    }
+    
+    
+    @FXML
+    void btnAddToCart(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addToCartModal.fxml")); 
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent addToCartPane = fxmlLoader.load();
+    	
+    	modalStageCart = new Stage();
+    	modalStageCart.setScene(new Scene(addToCartPane));
+    	modalStageCart.setTitle("Agregar al Carrito");
+    	modalStageCart.initModality(Modality.WINDOW_MODAL);
+    	
+    	modalStageCart.show();
+    	SpinnerValueFactory<Integer> s = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.parseInt(lbArticleQuantity.getText()));
+    	sQuantityBuy.setValueFactory(s);
+    	lbPriceToShopping.setText(lbArticlePrice.getText());
     }
     
     public void buyArticleAdder(int calification) throws CloneNotSupportedException {
@@ -1869,6 +1960,7 @@ public class SkyMarketGUI {
     public void logout(ActionEvent event) throws IOException {
     	loadLogin();
     	skymarket.setCurrentUser(null);
+    	skymarket.resetCart();
     }
     
     //Alerts
@@ -2022,7 +2114,38 @@ public class SkyMarketGUI {
     	
     }
     
-    public void outOfStockAlert() {
+    public void addToCartAlert() throws IOException {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setHeaderText("¿Esta seguro de que quiere agregar al carrito?");
+    	alert.setContentText("Confirme si desea agregar el articulo que selecciono");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	if (result.get() == ButtonType.OK){
+    		cartAdder();
+    		modalStageCart.close();
+    	} 
+		
+	} 
+    
+    public void cartQuantityAlert() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Cantidad no disponible");
+    	alert.setContentText("La cantidad que desea pedir excede la cantidad disponible incluyendo los items en tu carrito");
+    	alert.showAndWait();
+		
+	}
+    public void cartSuccessfulAlert() throws IOException {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setHeaderText("Articulo agregado al carrito exitosamente");
+    	alert.setContentText("El articulo fue agregado al carrito de manera exitosa");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		loginManagement(skymarket.getCurrentUser());
+    	}
+		
+	}
+
+	public void outOfStockAlert() {
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Articulo no disponible");
     	alert.setContentText("No se encuentran cantidades disponibles");

@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import Exceptions.CartQuantityException;
 import Exceptions.EmptyFieldException;
 import Exceptions.IdentificationRepeatException;
 import Exceptions.PasswordNotEqualsException;
@@ -29,57 +30,68 @@ public class SkyMarket {
 	 * Constant of path serializable users
 	 */
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData.ap2";
-	
+
 	/**
 	 * Constant of path serializable articles
 	 */
 	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData.ap2";
-	
+
 	/**
 	 * Constant of path for export data users
 	 */
 	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
-	
+
 	/**
 	 * Constant of path for export data articles
 	 */
 	public final static String FILE_DATA_EXPORT_ARTICLES = "data/exportData/articlesData.csv";
-	
+
 	/**
 	 * Constant of path for import data articles
 	 */
 	public final static String FILE_DATA_IMPORT_CLIENTS = "data/importData/clientsData.csv";
-	
+
 	/**
 	 * Constant of path for import data articles
 	 */
 	public final static String FILE_DATA_IMPORT_ARTICLES = "data/importData/articlesData.csv";
-	
+
 	/**
 	 * The current user logged in the program
 	 */
 	private User currentUser;
-	
+
 	/**
 	 * Linked list with the users created on the application
 	 */
 	private LinkedList<User> users;
-	
+
 	/**
 	 * Linked list with the products to sell
 	 */
 	public LinkedList<Article> articles;
-	
+
 	/**
 	 * Root of binary tree
 	 */
 	private UserSeller rootSeller;
-	
+
 	/**
 	 * List
 	 */
-	ArrayList<UserSeller> binaryList = new ArrayList<>();
-	
+	private ArrayList<UserSeller> binaryList = new ArrayList<>();
+
+
+	/**
+	 * Root of the cart binary tree
+	 */
+	private CartItem rootCartItem;
+
+	/**
+	 * List
+	 */
+	private ArrayList<CartItem> binaryListCart = new ArrayList<>();
+
 	/**
 	 * Constructor of SkyMarket, set the currentUser on null
 	 * <br>Pre:<b></b>
@@ -91,7 +103,7 @@ public class SkyMarket {
 		setArticles(new LinkedList<>());
 		rootSeller = null;
 	}
-	
+
 	/**
 	 * Method to verify password
 	 * <br>Pre:<b>password diferent to null</b>
@@ -104,7 +116,95 @@ public class SkyMarket {
 			throw new PasswordNotEqualsException();
 		}
 	}
-	
+
+	//LogOut
+	public void resetCart() {
+		rootCartItem = null;
+		binaryListCart.clear();
+	}
+
+	//Mostrar Carro
+	public ArrayList<CartItem> getBinaryListCart() {
+		binaryListCart.clear();
+		createListBinaryCart(rootCartItem);
+		return binaryListCart;
+	}
+
+	//No se llama
+	public void createListBinaryCart(CartItem a) {
+		if(a!=null) {
+			createListBinaryCart(a.getRight());
+			binaryListCart.add(a);
+			createListBinaryCart(a.getLeft());
+		}
+	}
+
+	//All confirmar el agregar carro
+	public void addCartItemTree(CartItem c, int cantidadDisponible) throws CartQuantityException {
+		CartItem compare =searchCartItem(c.getCode(),c.getPrice());
+		if(compare!=null) {
+			if(c.getQuantity()+compare.getQuantity()<=cantidadDisponible) {
+				compare.setQuantity(c.getQuantity()+compare.getQuantity());
+			}else {
+				throw new CartQuantityException();
+			}
+		}else {
+			if(getRootCartItem() == null) {
+				setRootCartItem(c);
+			} else {
+				addCartBinaryTree(getRootCartItem(), c);
+			}
+		}	
+	}
+
+
+
+	//Recursive
+	public CartItem searchCartItem(String code, double price) {
+		CartItem search=null;
+
+		if(rootCartItem!=null) {
+			search=searchCartItem(rootCartItem,code, price);
+		}
+
+		return search;
+	}
+
+	private CartItem searchCartItem(CartItem current, String code, double price) {
+		CartItem search=null;
+		if(current.getCode().equals(code)) {
+			search=current;
+		}else if(current.getPrice()> price && current.getLeft()!=null) {
+			search=searchCartItem(current.getLeft(),code,price);
+		}else if(current.getPrice()< price && current.getRight()!=null) {
+			search=searchCartItem(current.getRight(),code,price);
+		}
+
+		return search;
+	}
+
+
+
+	private void addCartBinaryTree(CartItem miracle, CartItem u) {
+
+		if(miracle.getArticle().getPrice()>=u.getArticle().getPrice()) {
+			if(miracle.getLeft()==null) {
+				miracle.setLeft(u);
+				u.setFather(miracle);
+			}else {
+				addCartBinaryTree(miracle.getLeft(),u);
+			}
+		}else {
+			if(miracle.getRight()==null) {
+				miracle.setRight(u);
+				u.setFather(miracle);
+			}else {
+				addCartBinaryTree(miracle.getRight(),u);
+			}
+		}
+	}
+
+
 	public ArrayList<UserSeller> getBinaryList() {
 		rootSeller = null;
 		binaryList.clear();
@@ -112,7 +212,7 @@ public class SkyMarket {
 		createListBinary(rootSeller);
 		return binaryList;
 	}
-	
+
 	public void createListBinary(UserSeller u) {
 		if(u!=null) {
 			createListBinary(u.getRight());
@@ -120,7 +220,7 @@ public class SkyMarket {
 			createListBinary(u.getLeft());
 		}
 	}
-	
+
 	public void createBinaryTreeCalification() {
 		ArrayList<UserSeller> tempList = new ArrayList<>();
 		for(int c = 0; c < users.size(); c++) {
@@ -136,7 +236,7 @@ public class SkyMarket {
 			addSellerBinaryTree(tempList.get(c));
 		}
 	}
-	
+
 	private void addSellerBinaryTree(UserSeller u) {
 		if(getRootSeller() == null) {
 			setRootSeller(u);
@@ -144,25 +244,25 @@ public class SkyMarket {
 			addSellerBinaryTree(getRootSeller(), u);
 		}
 	}
-	
+
 	private void addSellerBinaryTree(UserSeller miracle, UserSeller u) {
 		if(miracle.getCalification()>=u.getCalification()) {
-            if(miracle.getLeft()==null) {
-            	miracle.setLeft(u);
-                u.setFather(miracle);
-            }else {
-            	addSellerBinaryTree(miracle.getLeft(),u);
-            }
-        }else {
-            if(miracle.getRight()==null) {
-            	miracle.setRight(u);
-                u.setFather(miracle);
-            }else {
-            	addSellerBinaryTree(miracle.getRight(),u);
-            }
-        }
+			if(miracle.getLeft()==null) {
+				miracle.setLeft(u);
+				u.setFather(miracle);
+			}else {
+				addSellerBinaryTree(miracle.getLeft(),u);
+			}
+		}else {
+			if(miracle.getRight()==null) {
+				miracle.setRight(u);
+				u.setFather(miracle);
+			}else {
+				addSellerBinaryTree(miracle.getRight(),u);
+			}
+		}
 	}
-	
+
 	/**
 	 * Method to verify info of register
 	 * <br>Pre:<b> </b>
@@ -180,7 +280,7 @@ public class SkyMarket {
 			throw new EmptyFieldException();
 		}
 	}
-	
+
 	/**
 	 * Method to add a new registered user
 	 * <br>Pre:<b>LinkedList users must be initializated</b>
@@ -212,7 +312,7 @@ public class SkyMarket {
 			users.add(c, newUserObject);
 		}
 	}
-	
+
 	/**
 	 * Method to logout from the application with the put of currentUser = null
 	 * <br>Pre:<b>currentUser must be different of null</b>
@@ -223,7 +323,7 @@ public class SkyMarket {
 			currentUser = null;
 		}
 	}
-	
+
 	/**
 	 * Comparator to add users in order
 	 * <br>Pre:<b></b>
@@ -235,7 +335,7 @@ public class SkyMarket {
 	private int comparatorAddUser(String username1, String username2) {
 		return username1.compareToIgnoreCase(username2);
 	}
-	
+
 	/**
 	 * Binary search to get an user using the username
 	 * <br>Pre:<b>users must be initializated</b>
@@ -249,7 +349,7 @@ public class SkyMarket {
 			boolean find = false;
 			int in = 0;
 			int fin = users.size();
-			
+
 			while(in <= fin && !find) {
 				int pos = (int) Math.floor((in+fin)/2);
 				if(pos != users.size()) {
@@ -268,7 +368,7 @@ public class SkyMarket {
 		}
 		return userSeek;
 	}
-	
+
 	/**
 	 * Method to search an user using the identification
 	 * <br>Pre:<b>List of users must be initializated</b>
@@ -279,13 +379,13 @@ public class SkyMarket {
 	public UserSeller searchUserByIdentification(String username) {
 		LinkedList<UserSeller> list = getListUsersSellers();
 		UserSeller search = null; 
-		
+
 		for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).getUsername().equals(username)) {
 				search = list.get(i);
 			}
 		}
-		
+
 		return search;
 	}
 
@@ -306,7 +406,7 @@ public class SkyMarket {
 			}
 		}
 	}
-	
+
 	/**
 	 * Method helper to add a new article into articles list
 	 * <br>Pre:<b></b>
@@ -322,7 +422,7 @@ public class SkyMarket {
 		}
 		articles.add(newArticle);
 	}
-	
+
 	/**
 	 * Method to add a new article in sale
 	 * <br>Pre:<b> ArrayList of users and articles must be initializated</b>
@@ -343,7 +443,7 @@ public class SkyMarket {
 		}
 		user.addArticleToSellArticles(newArticle);
 	}
-	
+
 	/**
 	 * Getter of users linked list
 	 * <br>Pre:<b>LinkedList users must be initializated</b>
@@ -353,7 +453,7 @@ public class SkyMarket {
 	public LinkedList<User> getUsers() {
 		return users;
 	}
-	
+
 	/**
 	 * Setter of users linked list
 	 * <br>Pre:<b></b>
@@ -363,7 +463,7 @@ public class SkyMarket {
 	public void setUsers(LinkedList<User> newList) {
 		users = newList;
 	}
-	
+
 	/**
 	 * Getter of currentUser
 	 * <br>Pre:<b>currentUser must be initializated</b>
@@ -373,7 +473,7 @@ public class SkyMarket {
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	
+
 	/**
 	 * Setter of currentUser
 	 * <br>Pre:<b></b>
@@ -383,7 +483,7 @@ public class SkyMarket {
 	public void setCurrentUser(User newUser) {
 		currentUser = newUser;
 	}
-	
+
 	/**
 	 * Getter of articles
 	 * <br>Pre:<b>Linked list articles must be initializated</b>
@@ -394,8 +494,8 @@ public class SkyMarket {
 		return articles;
 	}
 
-	
-	
+
+
 	/**
 	 * Setter of articles
 	 * <br>Pre:<b></b>
@@ -405,7 +505,7 @@ public class SkyMarket {
 	public void setArticles(LinkedList<Article> articles) {
 		this.articles = articles;
 	}
-	
+
 	/**
 	 * generateRandomNumber
 	 * <br>Pre:<b></b>
@@ -417,7 +517,7 @@ public class SkyMarket {
 		String newCode = String.valueOf(number);
 		return newCode;
 	}
-	
+
 	/**
 	 * verificationFieldsAddArticle
 	 * <br>Pre:<b></b>
@@ -428,7 +528,7 @@ public class SkyMarket {
 			throw new EmptyFieldException();
 		}
 	}
-	
+
 	/**
 	 * Method to get the list of users sorted using algorithm of insertion
 	 * <br>Pre:<b> users ArrayList must be initializated</b>
@@ -452,7 +552,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to get the list of users sorted using algorithm of selection
 	 * <br>Pre:<b> users ArrayList must be initializated</b>
@@ -460,28 +560,28 @@ public class SkyMarket {
 	 * @return A sorted list of users
 	 */
 	public LinkedList<User> getListUsersFiltredNameSelection() {
-	    LinkedList<User> list = new LinkedList<>();
-	    User[] tempArr = users.toArray(new User[users.size()]);
-	    for(int c = 0; c < tempArr.length - 1; c++ ) {
-	        int menor= c;
-	        int index = c;
+		LinkedList<User> list = new LinkedList<>();
+		User[] tempArr = users.toArray(new User[users.size()]);
+		for(int c = 0; c < tempArr.length - 1; c++ ) {
+			int menor= c;
+			int index = c;
 
-	        for(int v = c+1; v < tempArr.length; v++) {
-	            if(tempArr[v].getName().compareToIgnoreCase(tempArr[menor].getName()) > 0) {
-	                menor=v;
-	                index = v;
-	            }
-	        }
-	        User temp = tempArr[c];
-	        tempArr[c] = tempArr[menor];
-	        tempArr[index] = temp;
-	    }
-	    for(int c = 0; c < tempArr.length; c++) {
-	        list.add(tempArr[c]);
-	    }
-	    return list;
+			for(int v = c+1; v < tempArr.length; v++) {
+				if(tempArr[v].getName().compareToIgnoreCase(tempArr[menor].getName()) > 0) {
+					menor=v;
+					index = v;
+				}
+			}
+			User temp = tempArr[c];
+			tempArr[c] = tempArr[menor];
+			tempArr[index] = temp;
+		}
+		for(int c = 0; c < tempArr.length; c++) {
+			list.add(tempArr[c]);
+		}
+		return list;
 	}
-	
+
 	/**
 	 * Method to get the list of users sorted using algorithm of bubble
 	 * <br>Pre:<b> users ArrayList must be initializated</b>
@@ -495,10 +595,10 @@ public class SkyMarket {
 		for(int c = 0; c < tempArr.length; c++) {
 			for(int v = 1; v < (tempArr.length - c); v++) {
 				if(Long.parseLong(tempArr[v-1].getIdentification()) > Long.parseLong(tempArr[v].getIdentification())) {  
-                    //swap elements  
-                    temp = tempArr[v-1];  
-                    tempArr[v-1] = tempArr[v];  
-                    tempArr[v] = temp;  
+					//swap elements  
+					temp = tempArr[v-1];  
+					tempArr[v-1] = tempArr[v];  
+					tempArr[v] = temp;  
 				}
 			}
 		}
@@ -507,7 +607,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to get the list of articles on sale from a seller
 	 * <br>Pre:<b> First node of articles in the seller must be initializated</b>
@@ -518,16 +618,16 @@ public class SkyMarket {
 		LinkedList<Article> listSellerArticles = new LinkedList<>();
 		UserSeller currentU=  (UserSeller)(currentUser);
 		Article current= currentU.getSellArticles();
-		
+
 		while(current!=null) {
 			listSellerArticles.add(current);
 			current = current.getNextArticle();
 		}
-		
+
 		return listSellerArticles;
 	}
-	
-	
+
+
 	/**
 	 * Method to get a list with sold history from a seller
 	 * <br>Pre:<b> First node of history into the seller must be initializated</b>
@@ -538,14 +638,14 @@ public class SkyMarket {
 		LinkedList<Article> listArticlesSolds = new LinkedList<>();
 		UserSeller currentU=  (UserSeller)(currentUser);
 		Article currentArticle = currentU.getHistory();
-		
+
 		while(currentArticle!=null) {
 			listArticlesSolds.add(currentArticle);
 			currentArticle = currentArticle.getNextArticle();
 		}
 		return listArticlesSolds;
 	}
-	
+
 	/**
 	 * Method to get a lish with purchased articles from a buyer
 	 * <br>Pre:<b> First node of history into the buyer must be initializated</b>
@@ -556,14 +656,14 @@ public class SkyMarket {
 		LinkedList<Article> listArticlesPurchased = new LinkedList<Article>();
 		UserBuyer currentU = (UserBuyer)(currentUser);
 		Article currentArticle = currentU.getHistory();
-		
+
 		while(currentArticle!=null) {
 			listArticlesPurchased.add(currentArticle);
 			currentArticle = currentArticle.getNextArticle();
 		}
 		return listArticlesPurchased;
 	}
-	
+
 	/**
 	 * Method to get a list of articles on sale
 	 * <br>Pre:<b> ArrayList of articles must be initializated</b>
@@ -577,7 +677,7 @@ public class SkyMarket {
 		}
 		return listAllProductsOnSale;
 	}
-	
+
 	/**
 	 * Method to get a list of users sellers
 	 * <br>Pre:<b> Arraylist of users must be initializated</b>
@@ -586,17 +686,17 @@ public class SkyMarket {
 	 */
 	public LinkedList<UserSeller> getListUsersSellers() {
 		LinkedList<UserSeller> listAllUsersSellers = new LinkedList<>();
-		
+
 		for(int i = 0; i < users.size();i++) {
 			if(users.get(i) instanceof UserSeller) {
 				UserSeller current = (UserSeller)(users.get(i));
 				listAllUsersSellers.add(current);
 			}
 		}
-		
+
 		return listAllUsersSellers;
 	}
-	
+
 	/**
 	 * Method to export data clients in a file with extension .csv
 	 * <br>Pre:<b> users ArrayList must be initializated</b>
@@ -613,7 +713,7 @@ public class SkyMarket {
 		}
 		pw.close();
 	}
-	
+
 	/**
 	 * Method to export data articles in a file with extension .csv
 	 * <br>Pre:<b> articles ArrayList must be initializated</b>
@@ -626,30 +726,30 @@ public class SkyMarket {
 		LinkedList<Computer> listComputer = getOnlyComputer();
 		LinkedList<Fridge> listFridge = getOnlyFridge();
 		LinkedList<Stove> listStove = getOnlyStove();
-		
+
 		PrintWriter pw = new PrintWriter(FILE_DATA_EXPORT_ARTICLES);
-		
+
 		pw.print("ARTICULOS CELULARES\n");
 		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Bateria en watts"+s+"Tamaños de pantalla"+s+"Ram"+s+"Procesador"+s+"Numero de sims"+s+"Numero de camaras\n");
 		for(int i = 0; i<listCellphone.size();i++) {
 			CellPhone current = listCellphone.get(i);
 			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getBatteryWatts()+s+current.getScreenSize()+s+current.getRam()+s+current.getProcessor()+s+current.getNumberOfSims()+s+current.getNumberOfCameras()+"\n");
 		}
-		
+
 		pw.print("\nARTICULOS COMPUTADORES\n");
 		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Bateria en watts"+s+"Tamaños de pantalla"+s+"Ram"+s+"Procesador"+s+"Numero de puertos"+s+"Touch\n");
 		for(int i = 0; i<listComputer.size();i++) {
 			Computer current = listComputer.get(i);
 			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getBatteryWatts()+s+current.getScreenSize()+s+current.getRam()+s+current.getProcessor()+s+current.getNumberOfPorts()+s+current.isTouchString()+"\n");
 		}
-		
+
 		pw.print("\nARTICULOS NEVERAS\n");
 		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Peso"+s+"Capacidad"+s+"Consumo en watts"+s+"Altura"+s+"Ancho"+s+"Smart"+s+"Sistema frost\n");
 		for(int i = 0; i<listFridge.size();i++) {
 			Fridge current = listFridge.get(i);
 			pw.print(current.getName()+s+current.getCode()+s+current.getPrice()+s+current.getDescription()+s+current.getPicture()+s+current.getQuantity()+s+current.getWeight()+s+current.getCapacity()+s+current.getWattsConsum()+s+current.getHeight()+s+current.getWidth()+s+current.isSmartString()+s+current.isFrostString()+"\n");
 		}
-		
+
 		pw.print("\nARTICULOS NEVERAS\n");
 		pw.print("Nombre"+s+"Codigo"+s+"Precio"+s+"Descripción"+s+"Ruta foto"+s+"Cantidad"+s+"Peso"+s+"Capacidad"+s+"Consumo en watts"+s+"Altura"+s+"Ancho"+s+"Numero de boquillas"+s+"tipo de estufa\n");
 		for(int i = 0; i<listStove.size();i++) {
@@ -658,7 +758,7 @@ public class SkyMarket {
 		}
 		pw.close();
 	}
-	
+
 	/**
 	 * Method to get a list with only articles of class Cellphone
 	 * <br>Pre:<b> articles ArrayList must be initializated</b>
@@ -675,7 +775,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to get a list with only articles of class Computer
 	 * <br>Pre:<b> articles ArrayList must be initializated</b>
@@ -692,7 +792,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to get a list with only articles of class Fridge
 	 * <br>Pre:<b> articles ArrayList must be initializated</b>
@@ -709,7 +809,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to get a list with only articles of class Stove
 	 * <br>Pre:<b> articles ArrayList must be initializated</b>
@@ -726,7 +826,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Method to import data clients from a .csv file
 	 * <br>Pre:<b> </b>
@@ -738,12 +838,12 @@ public class SkyMarket {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		ArrayList<Integer> numLineError = new ArrayList<>();
 		int cont = 2;
-		
+
 		BufferedReader br = new BufferedReader(new FileReader(FILE_DATA_IMPORT_CLIENTS));
 		String line = br.readLine();
 		String [] info;
 		line = br.readLine();
-		
+
 		while(line != null) {
 			boolean repeat = false;
 			info = line.split(";");
@@ -754,7 +854,7 @@ public class SkyMarket {
 				numLineError.add(cont);
 				repeat = true; 
 			}
-			
+
 			if(!repeat) {
 				String date = info[7];
 				LocalDate lc = LocalDate.parse(date,formatter);
@@ -766,7 +866,7 @@ public class SkyMarket {
 		br.close();
 		return numLineError;
 	}
-	
+
 	/**
 	 * Method to verify the new user dont contains a repeated username
 	 * <br>Pre:<b> users ArrayList must be initializated</b>
@@ -781,7 +881,7 @@ public class SkyMarket {
 			}
 		}
 	}
-	
+
 	public void verifyIdentificationNotRepeat(String identification) throws IdentificationRepeatException{
 		for(int i = 0; i<users.size();i++) {
 			if(identification.equalsIgnoreCase(users.get(i).getIdentification())) {
@@ -789,20 +889,20 @@ public class SkyMarket {
 			}
 		}
 	}
-	
+
 	public ArrayList<Integer> importDataArticles() throws IOException {
 		ArrayList<Integer> numLineError = new ArrayList<>();
 		int cont = 2;
-		
+
 		BufferedReader br = new BufferedReader(new FileReader(FILE_DATA_IMPORT_ARTICLES));
 		String line = br.readLine();
 		String [] info;
 		line = br.readLine();
-		
+
 		while(line!=null) {
 			info = line.split(";");
 			Article newArticle = null;
-			
+
 			if(info[0].equals("1")) {
 				newArticle = importNewCellphone(info);
 			}else if(info[0].equals("2")){
@@ -825,13 +925,13 @@ public class SkyMarket {
 		br.close();
 		return numLineError;
 	}
-	
+
 	public CellPhone importNewCellphone(String[] info) {
 		CellPhone cp = new CellPhone(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11], Integer.parseInt(info[12]), Integer.parseInt(info[13]));
 		return cp;
 	}
-	
-	
+
+
 	public Computer importNewComputer(String [] info) {
 		boolean touch = (info[13].equalsIgnoreCase("Si"))?true:false;
 		Computer c = new Computer(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11] , Integer.parseInt(info[12]),touch);
@@ -849,7 +949,7 @@ public class SkyMarket {
 		Stove s = new Stove(info[2],info[3],Double.parseDouble(info[4]),info[5],info[6],Integer.parseInt(info[7]),Double.parseDouble(info[8]),Double.parseDouble(info[9]),Double.parseDouble(info[10]),Double.parseDouble(info[11]),Double.parseDouble(info[12]),Integer.parseInt(info[13]),info[14]);
 		return s;
 	}
-	
+
 	public Article searchArticleByCode(String code) {
 		Article article = null;
 		for(int i = 0; i < articles.size(); i++) {
@@ -860,7 +960,7 @@ public class SkyMarket {
 
 		return article;
 	}
-	
+
 	public void addArticleSoldToSeller(String username, Article articleSold) {
 		UserSeller seller = null;
 		for(int i = 0; i<users.size(); i++) {
@@ -871,13 +971,13 @@ public class SkyMarket {
 		seller.addArticleToHistorySeller(articleSold);
 		seller.modifyQuantity(articleSold.getCode(), articleSold.getQuantity());
 	}
-	
+
 	public void addArticleBuyToBuyer(Article articleSold) {
 		UserBuyer buyer = (UserBuyer)(currentUser);
 		buyer.addArticleToHistory(articleSold);
 	}
-	
-	
+
+
 	/**
 	 * laadDataClients
 	 * allows load the data serializable
@@ -890,7 +990,7 @@ public class SkyMarket {
 		users = (LinkedList<User>)ois.readObject();
 		ois.close();
 	}
-	
+
 	/**
 	 * saveDataClients
 	 * <br>Pre:<b>There must be information to serialize</b>
@@ -901,7 +1001,7 @@ public class SkyMarket {
 		oos.writeObject(users);
 		oos.close();
 	}
-	
+
 	/**
 	 * laadDataAricles
 	 * allows load the data serializable
@@ -914,7 +1014,7 @@ public class SkyMarket {
 		articles = (LinkedList<Article>)ois.readObject();
 		ois.close();
 	}
-	
+
 	/**
 	 * saveDataArticles
 	 * <br>Pre:<b>There must be information to serialize</b>
@@ -925,7 +1025,7 @@ public class SkyMarket {
 		oos.writeObject(articles);
 		oos.close();
 	}
-	
+
 	public LinkedList<Article> getArticlesPricesComparator(int fil) {
 		LinkedList<Article> list = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
@@ -943,7 +1043,7 @@ public class SkyMarket {
 		}
 		return list;
 	}
-	
+
 	public class priceComparatorMayToMen implements Comparator<Article> {
 		@Override
 		public int compare(Article u1, Article u2) {
@@ -956,7 +1056,7 @@ public class SkyMarket {
 			return response;
 		}
 	}
-	
+
 	public class priceComparatorMenToMay implements Comparator<Article> {
 		@Override
 		public int compare(Article u1, Article u2) {
@@ -969,25 +1069,25 @@ public class SkyMarket {
 			return response;
 		}
 	}
-	
+
 	public LinkedList<Article> getArticlesAZ(int fil) {
 		LinkedList<Article> list = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
 			list.add(articles.get(c));
 		}
 		switch(fil) {
-			case 1:
-				nameComparatorZA nc = new nameComparatorZA();
-				Collections.sort(list, nc);
-				break;
-			case 2:
-				nameComparatorAZ cn = new nameComparatorAZ();
-				Collections.sort(list, cn);
-				break;
+		case 1:
+			nameComparatorZA nc = new nameComparatorZA();
+			Collections.sort(list, nc);
+			break;
+		case 2:
+			nameComparatorAZ cn = new nameComparatorAZ();
+			Collections.sort(list, cn);
+			break;
 		}
 		return list;
 	}
-	
+
 	public class nameComparatorAZ implements Comparator<Article> {
 		@Override
 		public int compare(Article u1, Article u2) {
@@ -1000,7 +1100,7 @@ public class SkyMarket {
 			return response;
 		}
 	}
-	
+
 	public class nameComparatorZA implements Comparator<Article> {
 		@Override
 		public int compare(Article u1, Article u2) {
@@ -1013,21 +1113,21 @@ public class SkyMarket {
 			return response;
 		}
 	}
-	
+
 	//metodo para agregar administrador
 	public void crearAdministrador() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-        String date = "12/01/1964";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		String date = "12/01/1964";
 
-        LocalDate localDate = LocalDate.parse(date, formatter);
+		LocalDate localDate = LocalDate.parse(date, formatter);
 
-        newUser("Jeff", "Bezos", "190234853", "jeff@amazon.com", "jeffrey", "TheBigJeff", "Jeff.jpg", localDate , 3);
-        try {
-            saveDataClients();
-        }catch(IOException ioe) {
+		newUser("Jeff", "Bezos", "190234853", "jeff@amazon.com", "jeffrey", "TheBigJeff", "Jeff.jpg", localDate , 3);
+		try {
+			saveDataClients();
+		}catch(IOException ioe) {
 
-        }
-    }
+		}
+	}
 
 	public UserSeller getRootSeller() {
 		return rootSeller;
@@ -1035,5 +1135,13 @@ public class SkyMarket {
 
 	public void setRootSeller(UserSeller rootSeller) {
 		this.rootSeller = rootSeller;
+	}
+
+	public CartItem getRootCartItem() {
+		return rootCartItem;
+	}
+
+	public void setRootCartItem(CartItem rootCartItem) {
+		this.rootCartItem = rootCartItem;
 	}
 }
