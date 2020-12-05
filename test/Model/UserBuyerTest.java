@@ -55,4 +55,17 @@ class UserBuyerTest {
 		assertNull(userTest.getHistory());
 		assertEquals(ld,userTest.getBirthday());
 	}
+	
+	@Test
+	public void testAddArticleToHistory() {
+		setupStage1();
+		LocalDate ld = LocalDate.now();
+		UserBuyer userTest = new UserBuyer("","","","","","","",ld);
+		assertNull(userTest.getHistory());
+		userTest.addArticleToHistory(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
+		assertNotNull(userTest.getHistory());
+		assertNull(userTest.getHistory().getNextArticle());
+		userTest.addArticleToHistory(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
+		assertNotNull(userTest.getHistory().getNextArticle());
+	}
 }

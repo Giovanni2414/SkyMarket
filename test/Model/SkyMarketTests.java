@@ -6,10 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
+
+import Exceptions.RepeatArticleCodeException;
 
 class SkyMarketTests {
 
@@ -25,6 +28,22 @@ class SkyMarketTests {
 		object.newUser("Jairo", "Torres", "1006055396", "Giovanni2414g@gmail.com", "1234", "xJairo", "images/", LocalDate.now(),1);
 		object.newUser("Camila", "Andrea", "1006055396", "Giovanni2414g@gmail.com", "1234", "xCamila", "images/", LocalDate.now(),0);
 		return object;
+	}
+	
+	@Test
+	void testAddNewArticleToArticles() throws RepeatArticleCodeException {
+		SkyMarket object = setupStage1();
+		object.addNewArticleToArticles(new Article("Y9", "12345", 1000000, "Celular gama media", "data/PictureHuaweiY9", 3));
+	}
+	
+	@Test
+	void testSearchUserByIdentification() throws ClassNotFoundException, IOException {
+		SkyMarket object = setupStage1();
+		object.loadDataClients();
+		User u = object.searchUserByIdentification("juanmiloz");
+		assertNotNull(u);
+		User m = object.searchUserByIdentification("4if3iofjfi");
+		assertNull(m);
 	}
 	
 	@Test

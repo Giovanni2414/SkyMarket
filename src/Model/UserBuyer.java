@@ -82,11 +82,11 @@ public class UserBuyer extends User {
 	 * <br><b>Post: A new node has been added to the history buys</b>
 	 * @param newArticle
 	 */
-	public void addArticleToBasket(Article newArticle) {
+	public void addArticleToHistory(Article newArticle) {
 		if(history == null) {
 			history = newArticle;
-		}else {
-			addArticleToBasket(history, newArticle);
+		} else {
+			addArticleToHistory(history, newArticle);
 		}
 	}
 	
@@ -97,11 +97,11 @@ public class UserBuyer extends User {
 	 * @param current The current node to value
 	 * @param newArticle The new article node to add
 	 */
-	public void addArticleToBasket(Article current, Article newArticle) {
+	public void addArticleToHistory(Article current, Article newArticle) {
 		if(current.getNextArticle()==null) {
 			current.setNextArticle(newArticle);
 		}else {
-			addArticleToBasket(current.getNextArticle(), newArticle);
+			addArticleToHistory(current.getNextArticle(), newArticle);
 		}
 	}
 }

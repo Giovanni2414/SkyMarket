@@ -136,7 +136,7 @@ public class UserSeller extends User{
 	 * <br><b>Post:</b> A new first node has been setted into sell Articles
 	 * @param newArticle The new article to set how root
 	 */
-	public void addArticleToArticlesSeller(Article newArticle) {
+	public void addArticleToSellArticles(Article newArticle) {
 		if(sellArticles == null) {
 			sellArticles = newArticle;
 		}else {

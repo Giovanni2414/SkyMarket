@@ -237,6 +237,13 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method helper to add a new article into articles list
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b></b>
+	 * @param newArticle
+	 * @throws RepeatArticleCodeException
+	 */
 	public void addNewArticleToArticles(Article newArticle) throws RepeatArticleCodeException{
 		for(int i = 0; i < articles.size(); i++) {
 			if(newArticle.getCode().equals(articles.get(i).getCode())) {
@@ -257,7 +264,7 @@ public class SkyMarket {
 				}
 			}
 		}
-		user.addArticleToArticlesSeller(newArticle);
+		user.addArticleToSellArticles(newArticle);
 	}
 	
 	/**
@@ -424,18 +431,11 @@ public class SkyMarket {
 		UserSeller currentU=  (UserSeller)(currentUser);
 		Article currentArticle = currentU.getHistory();
 		
-		System.out.println(currentArticle.getName()+"1");
-		System.out.println(currentArticle.getNextArticle().getName()+"2");
-		System.out.println(currentArticle.getNextArticle().getNextArticle().getName()+"2");
-		System.out.println(currentArticle.getNextArticle().getNextArticle().getNextArticle().getName()+"4");
-		
-		
-		/*
 		while(currentArticle!=null) {
 			listArticlesSolds.add(currentArticle);
 			currentArticle = currentArticle.getNextArticle();
 		}
-		*/
+		
 		return listArticlesSolds;
 	}
 	
@@ -688,7 +688,7 @@ public class SkyMarket {
 	
 	public void addArticleBuyToBuyer(Article articleSold) {
 		UserBuyer buyer = (UserBuyer)(currentUser);
-		buyer.addArticleToBasket(articleSold);
+		buyer.addArticleToHistory(articleSold);
 	}
 	
 	
