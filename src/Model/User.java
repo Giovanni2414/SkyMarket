@@ -4,29 +4,64 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class User implements Serializable{
+	
 	/**
-	 * 
+	 * Serial version UID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The user mainly name
+	 */
 	private String name;
+	
+	/**
+	 * The user lastname
+	 */
 	private String lastName;
+	
+	/**
+	 * The user identification
+	 */
 	private String identification;
+	
+	/**
+	 * The user email
+	 */
 	private String email;
-	private String password; 
+	
+	/**
+	 * The user password
+	 */
+	private String password;
+	
+	/**
+	 * The unique username to enter into the application
+	 */
 	private String username;
+	
+	/**
+	 * The path of the profile picture
+	 */
 	private String picture;
+	
+	/**
+	 * The birthday of the user
+	 */
 	private LocalDate birthday;
 
-	/*
-	name: User
-	Its the constructor of User
-	@param: name
-	@param: lastName
-	@param: identification
-	@param: email
-	@param: password
-	@param: username
-	@param: picture
+	/**
+	* Its the constructor of User
+	* <br><b>Pre:</b> 
+	* <br><b>Post: All variables will be initializated</b> 
+	* @param name The user mainly name
+	* @param lastName The user lastname 
+	* @param identification The user identification
+	* @param email The user email
+	* @param password The user password
+	* @param username The unique username for this user to enter into the application
+	* @param picture The path of profile picture
+	* @param birthday The birthday of this user
 	**/
 	public User(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
 		this.name = name;
@@ -39,169 +74,161 @@ public class User implements Serializable{
 		this.birthday = birthday;
 	}
 	
-	/*
-	name: getName
-	allows to obtain the name of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the name of the user saved in variable "name"
+	/**
+	* Allows to obtain the name of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the name of the user saved in variable "name"</b> 
+	* @return The user mainly name
 	**/
 	public String getName() {
 		return name;
 	}
 	
-	/*
-	name: setName
-	allows entering a new name for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the name will be saved in the variable "name"
-	@param: name
+	/**
+	* Allows entering a new name for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the name will be saved in the variable "name"</b> 
+	* @param name The new user mainly name to set
 	**/
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	/*
-	name: getLastName
-	allows to obtain the last name of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the last name of the user saved in variable "lastName"
+	/**
+	* Allows to obtain the last name of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the last name of the user saved in variable "lastName"</b> 
+	* @return The user lastname
 	**/
 	public String getLastName() {
 		return lastName;
 	}
 	
-	/*
-	name: setLastName
-	allows entering a new last name for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the last name will be saved in the variable "lastName"
-	@param: lastName
+	/**
+	* Allows entering a new last name for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the last name will be saved in the variable "lastName"</b> 
+	* @param lastName The new user lastname to set
 	**/
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 	
-	/*
-	name: getIdentification
-	allows to obtain the identification of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the identification of the user saved in variable "identification"
+	/**
+	* Allows to obtain the identification of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the identification of the user saved in variable "identification"</b> 
+	* @return The identification of this user
 	**/
 	public String getIdentification() {
 		return identification;
 	}
 	
-	/*
-	name: setIdentification
-	allows entering a new identification for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the identification will be saved in the variable "identification"
-	@param: identification
+	/**
+	* Allows entering a new identification for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the identification will be saved in the variable "identification"</b> 
+	* @param identification The new identification to set
 	**/
 	public void setIdentification(String identification) {
 		this.identification = identification;
 	}
 	
-	/*
-	name: getEmail
-	allows to obtain the email of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the email of the user saved in variable "email"
+	/**
+	* Allows to obtain the email of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the email of the user saved in variable "email"</b> 
+	* @return The user email
 	**/
 	public String getEmail() {
 		return email;
 	}
 
-	/*
-	name: setEmail
-	allows entering a new email for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the email will be saved in the variable "email"
-	@param: email
+	/**
+	* Allows entering a new email for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the email will be saved in the variable "email"</b> 
+	* @param email The new user email to set
 	**/
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
-	/*
-	name: getPassword
-	allows to obtain the password of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the password of the user saved in variable "password"
+	/**
+	* Allows to obtain the password of the User
+	* <br><b>Pre: The user object must be created</b>
+	* <br><b>Post: obtain the password of the user saved in variable "password"</b>
+	* @return The user password
 	**/
 	public String getPassword() {
 		return password;
 	}
 	
-	/*
-	name: setPassword
-	allows entering a new password for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the password will be saved in the variable "password"
-	@param: password
+	/**
+	* Allows entering a new password for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the password will be saved in the variable "password"</b> 
+	* @param password The new user password to set
 	**/
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
-	/*
-	name: getUsername
-	allows to obtain the username of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the username of the user saved in variable "username"
+	/**
+	* Allows to obtain the username of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the username of the user saved in variable "username"</b>
+	* @return The unique username to login into the application
 	**/
 	public String getUsername() {
 		return username;
 	}
 	
-	/*
-	name: setUsername
-	allows entering a new username for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the username will be saved in the variable "username"
-	@param: username
+	/**
+	* Allows entering a new username for the User
+	* <br><b>Pre:The user object must be created</b> 
+	* <br><b>Post:the username will be saved in the variable "username"</b> 
+	* @param username The new username unique to set
 	**/
 	public void setUsername(String username) {
 		this.username = username;
 	}
 	
-	/*
-	name: getPicture
-	allows to obtain the path picture of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the path picture of the user saved in variable "picture"
+	/**
+	* Allows to obtain the path picture of the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: obtain the path picture of the user saved in variable "picture"</b> 
+	* @return Return the path of profile picture for this user
 	**/
 	public String getPicture() {
 		return picture;
 	}
 	
-	/*
-	name: setPicture
-	allows entering a new path picture for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the path picture will be saved in the variable "picture"
-	@param: picture
+	/**
+	* allows entering a new path picture for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the path picture will be saved in the variable "picture"</b> 
+	* @param picture The new path of profile picture
 	**/
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 	
-	/*
-	name: getBirthday
-	allows to obtain the birthday of the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>obtain the birthday of the user saved in variable "birthday"
+	/**
+	* Allows to obtain the birthday of the User
+	* <br><b>Pre: The user object must be created </b> 
+	* <br><b>Post: obtain the birthday of the user saved in variable "birthday"</b> 
+	* @return The birthday of this user
 	**/
 	public LocalDate getBirthday() {
 		return birthday;
 	}
 
-	/*
-	name: setBirthday
-	allows entering a new birthday for the User
-	<b>pre:</b>The user object must be created
-	<b>post:</b>the birthday will be saved in the variable "birthday"
-	@param: birthday
+	/**
+	* Allows entering a new birthday for the User
+	* <br><b>Pre: The user object must be created</b> 
+	* <br><b>Post: the birthday will be saved in the variable "birthday"</b> 
+	* @param birthday The new birthday date to ser for this user
 	**/
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
