@@ -29,6 +29,21 @@ public class UserSeller extends User{
 	 */
 	private boolean ban;
 	
+	/**
+	 * Right node to use in binary tree
+	 */
+	private UserSeller right;
+	
+	/**
+	 * Left node to use in binary tree
+	 */
+	private UserSeller left;
+	
+	/**
+	 * Father node to user in binary tree
+	 */
+	private UserSeller father;
+	
 	/***
 	* Its the constructor of UserSeller
 	* <br><b>Pre:</b> 
@@ -48,6 +63,9 @@ public class UserSeller extends User{
 		history = null;
 		sellArticles = null;
 		ban = false;
+		right = null;
+		left = null;
+		father = null;
 	}
 	
 	/***
@@ -220,5 +238,44 @@ public class UserSeller extends User{
 		}else {
 			addArticleToHistorySeller(current.getNextArticle(), newArticle);
 		}
+	}
+	
+	/**
+	 * Method to change the calification, if the calification == 0, set directly the new input
+	 * <br><b>Pre: Calification must be initializated</b>
+	 * <br><b>Post: The calification setted for this seller</b>
+	 * @param calification The new calification to value in the variable
+	 */
+	public void changeCalification(int calification) {
+		if(getCalification() == 0) {
+			setCalification(calification);
+		} else {
+			double temp = (getCalification() + calification) / 2;
+			setCalification(temp);
+		}
+	}
+
+	public UserSeller getRight() {
+		return right;
+	}
+
+	public void setRight(UserSeller right) {
+		this.right = right;
+	}
+
+	public UserSeller getLeft() {
+		return left;
+	}
+
+	public void setLeft(UserSeller left) {
+		this.left = left;
+	}
+
+	public UserSeller getFather() {
+		return father;
+	}
+
+	public void setFather(UserSeller father) {
+		this.father = father;
 	}
 }

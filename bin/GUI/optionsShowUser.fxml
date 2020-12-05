@@ -78,6 +78,11 @@
                   <Image url="@../../data/iconPacks/basic-icons/210-contact-information.png" />
                </image>
             </ImageView>
+            <Button layoutX="215.0" layoutY="277.0" mnemonicParsing="false" onAction="#createBinaryTreeBtn" prefHeight="25.0" prefWidth="171.0" text="Vendedores por calificacion">
+               <font>
+                  <Font name="System Bold Italic" size="11.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </center>

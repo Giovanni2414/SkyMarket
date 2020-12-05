@@ -23,19 +23,19 @@ public class Administraitor extends User{
 	
 	/**
 	* Its the constructor of Administraitor
-	* @param: name
-	* @param: lastName
-	* @param: identification
-	* @param: password
-	* @param: username
-	* @param: picture
+	* @param: name 
+	* @param: lastName 
+	* @param: identification 
+	* @param: password 
+	* @param: username 
+	* @param: picture 
 	**/
 	public Administraitor(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday,LinkedList<User> users) {
 		super(name,lastName,identification,email,password,username,picture,birthday);
 		this.users = new ArrayList<>(users);
 		//duda con cambio de LinkedList a ArrayList
 	}
-
+	
 	/**
 	 * Getter of ArrayList users
 	 * <br><b>Pre:<b> ArrayList users must be initializated

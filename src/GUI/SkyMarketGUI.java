@@ -465,6 +465,27 @@ public class SkyMarketGUI {
     @FXML
     private Label lbPriceToShopping;
     
+    @FXML
+    private TableView<UserSeller> tvUserSellerListBinary;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcUsernameBinary;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcIdentificationBinary;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcNameBinary;
+
+    @FXML
+    private TableColumn<UserSeller, String> tcLastNameBinary;
+
+    @FXML
+    private TableColumn<UserSeller, Double> tcCalificationBinary;
+
+    @FXML
+    private TableColumn<UserSeller, Boolean> tcBanBinary;
+    
     private Stage modalStage;
     
 	/**
@@ -1700,20 +1721,44 @@ public class SkyMarketGUI {
     }
     
     @FXML
+    void createBinaryTreeBtn(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showSellersByCalification.fxml"));
+    	
+    	fxmlLoader.setController(this);
+    	
+    	Parent showUsersByCalificationScreen = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showUsersByCalificationScreen);
+    	initializateTableUsersBinaryTree();
+    }
+    
+    private void initializateTableUsersBinaryTree() {
+    	ObservableList <UserSeller> observableList;
+    	observableList = FXCollections.observableList(skymarket.getBinaryList());
+    	
+    	tvUserSellerListBinary.setItems(observableList);
+    	tcUsernameBinary.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Username"));
+    	tcIdentificationBinary.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Identification"));
+    	tcNameBinary.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("Name"));
+    	tcLastNameBinary.setCellValueFactory(new PropertyValueFactory<UserSeller, String>("LastName"));
+    	tcCalificationBinary.setCellValueFactory(new PropertyValueFactory<UserSeller, Double>("Calification"));
+    	tcBanBinary.setCellValueFactory(new PropertyValueFactory<UserSeller,Boolean>("Ban"));
+    }
+    
+    @FXML
     void testClic(MouseEvent event) {
     	double temp = Double.parseDouble(lbArticlePrice.getText());
     	Long newPrice = sQuantityBuy.getValue()*Math.round(temp);
     	lbPriceToShopping.setText(String.valueOf(newPrice));
     }
     
-
     @FXML
     void btnAddToCart(ActionEvent event) {
 
     }
     
-  
-    public void buyArticleAdder() throws CloneNotSupportedException {
+    public void buyArticleAdder(int calification) throws CloneNotSupportedException {
     	Article articleToBuy = skymarket.searchArticleByCode(lbArticleCode.getText());
     	articleToBuy.setQuantity(articleToBuy.getQuantity()-sQuantityBuy.getValue());
     	
@@ -1725,6 +1770,8 @@ public class SkyMarketGUI {
     	newArticleBuy2.setNextArticle(null);
     	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy2);
     	skymarket.addArticleBuyToBuyer(newArticleBuy);
+    	UserSeller u = skymarket.searchUserByIdentification(articleToBuy.getNameSeller());
+    	u.changeCalification(calification);
     }
     
     //methods directPurchase
@@ -1759,16 +1806,16 @@ public class SkyMarketGUI {
 		::::::::::::|:::|::::::::::::::::
 		:::::::::/’\|:::|/’\:::::::::::::
 		:::::/”\|:::|:::|:::|:\::::::::::
-		::::|:::[@]:::|:::|::::\:::::::::
+		::::|::::[@]:::|:::|::::\:::::::::
 		::::|:::|:::|:::|:::|:::\::::::::
 		::::|:~:~::~::~:|:::::::)::::::::
 		::::|:::::::::::::::::::/::::::::
 		:::::\:::::::::::::::::/:::::::::
 		::::::\:::::::::::::::/::::::::::
-		:::::::\::::_____::/:::::::::::::
-		::::::::|–//”`\–:::|:::::::::::::
-		::::::::| ((:+=))::|:::::::::::::
-		::::::::|–\_|_//–::|:::::::::::::
+		:::::::\::::_______::/:::::::::::::
+		::::::::|__–//”`\–::|:::::::::::::
+		::::::::|  ((:+=))::|:::::::::::::
+		::::::::|:–-\_|_//–:|:::::::::::::
      */
     
     
@@ -1960,15 +2007,16 @@ public class SkyMarketGUI {
     	Optional<ButtonType> result = alert.showAndWait();
     	
     	if (result.get() == ButtonType.OK){
-    		buyArticleAdder();
-    	   modalStage.close();
-    	   buySuccessfulAlert();
+    		int calification = 0;
+    		calification = buySuccessfulAlert();
+    		buyArticleAdder(calification);
+    		modalStage.close();
     	} 
     	
     }
     
-    public void buySuccessfulAlert() {
-    	
+    public int buySuccessfulAlert() {
+    	int calification = 0;
     	ArrayList<Integer> choices = new ArrayList<>();
     	choices.add(1);
     	choices.add(2);
@@ -1984,12 +2032,10 @@ public class SkyMarketGUI {
     	
     	Optional<Integer> result = dialog.showAndWait();
     	if (result.isPresent()){
-    		
-    		//Capturar calificación
-    	    System.out.println("Your choice: " + result.get());
+    		//Capturar la calificacion
+    		calification = result.get();
     	}
-    	
-   
+    	return calification;
     }
     
     public void historyArticleSoldEmpty() {

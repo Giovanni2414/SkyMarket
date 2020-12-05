@@ -71,6 +71,16 @@ public class SkyMarket {
 	public LinkedList<Article> articles;
 	
 	/**
+	 * Root of binary tree
+	 */
+	private UserSeller rootSeller;
+	
+	/**
+	 * List
+	 */
+	ArrayList<UserSeller> binaryList = new ArrayList<>();
+	
+	/**
 	 * Constructor of SkyMarket, set the currentUser on null
 	 * <br>Pre:<b></b>
 	 * <br>Post:<b>object of SkyMarket with currentUser started in null</b>
@@ -79,6 +89,7 @@ public class SkyMarket {
 		currentUser = null;
 		users = new LinkedList<>();
 		setArticles(new LinkedList<>());
+		rootSeller = null;
 	}
 	
 	/**
@@ -92,6 +103,64 @@ public class SkyMarket {
 		if(!password.equals(passwordVerify)) {
 			throw new PasswordNotEqualsException();
 		}
+	}
+	
+	public ArrayList<UserSeller> getBinaryList() {
+		rootSeller = null;
+		binaryList.clear();
+		createBinaryTreeCalification();
+		createListBinary(rootSeller);
+		return binaryList;
+	}
+	
+	public void createListBinary(UserSeller u) {
+		if(u!=null) {
+			createListBinary(u.getRight());
+			binaryList.add(u);
+			createListBinary(u.getLeft());
+		}
+	}
+	
+	public void createBinaryTreeCalification() {
+		ArrayList<UserSeller> tempList = new ArrayList<>();
+		for(int c = 0; c < users.size(); c++) {
+			if(users.get(c) instanceof UserSeller) {
+				UserSeller u = (UserSeller) users.get(c);
+				u.setRight(null);
+				u.setLeft(null);
+				u.setFather(null);
+				tempList.add(u);
+			}
+		}
+		for(int c = 0; c < tempList.size(); c++) {
+			addSellerBinaryTree(tempList.get(c));
+		}
+	}
+	
+	private void addSellerBinaryTree(UserSeller u) {
+		if(getRootSeller() == null) {
+			setRootSeller(u);
+		} else {
+			addSellerBinaryTree(getRootSeller(), u);
+		}
+	}
+	
+	private void addSellerBinaryTree(UserSeller miracle, UserSeller u) {
+		if(miracle.getCalification()>=u.getCalification()) {
+            if(miracle.getLeft()==null) {
+            	miracle.setLeft(u);
+                u.setFather(miracle);
+            }else {
+            	addSellerBinaryTree(miracle.getLeft(),u);
+            }
+        }else {
+            if(miracle.getRight()==null) {
+            	miracle.setRight(u);
+                u.setFather(miracle);
+            }else {
+            	addSellerBinaryTree(miracle.getRight(),u);
+            }
+        }
 	}
 	
 	/**
@@ -254,6 +323,13 @@ public class SkyMarket {
 		articles.add(newArticle);
 	}
 	
+	/**
+	 * Method to add a new article in sale
+	 * <br>Pre:<b> ArrayList of users and articles must be initializated</b>
+	 * <br>Post:<b> A new article to sale has been added</b>
+	 * @param username The username of the user seller
+	 * @param newArticle The new article to add
+	 */
 	public void addNewArticleToUserSeller(String username, Article newArticle) {
 		boolean find = false; 
 		UserSeller user = null;
@@ -353,6 +429,12 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method to get the list of users sorted using algorithm of insertion
+	 * <br>Pre:<b> users ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A sorted list of users
+	 */
 	public LinkedList<User> getListUsersFiltredNameInsertion() {
 		LinkedList<User> list = new LinkedList<>();
 		User[] tempArr = users.toArray(new User[users.size()]);
@@ -371,6 +453,12 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to get the list of users sorted using algorithm of selection
+	 * <br>Pre:<b> users ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A sorted list of users
+	 */
 	public LinkedList<User> getListUsersFiltredNameSelection() {
 	    LinkedList<User> list = new LinkedList<>();
 	    User[] tempArr = users.toArray(new User[users.size()]);
@@ -394,6 +482,12 @@ public class SkyMarket {
 	    return list;
 	}
 	
+	/**
+	 * Method to get the list of users sorted using algorithm of bubble
+	 * <br>Pre:<b> users ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A sorted list of users
+	 */
 	public LinkedList<User> getListUsersFiltredIdentificationBubble() {
 		LinkedList<User> list = new LinkedList<>();
 		User[] tempArr = users.toArray(new User[users.size()]);
@@ -414,6 +508,12 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to get the list of articles on sale from a seller
+	 * <br>Pre:<b> First node of articles in the seller must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list of articles
+	 */
 	public LinkedList<Article> getArticlesSeller() {
 		LinkedList<Article> listSellerArticles = new LinkedList<>();
 		UserSeller currentU=  (UserSeller)(currentUser);
@@ -427,6 +527,13 @@ public class SkyMarket {
 		return listSellerArticles;
 	}
 	
+	
+	/**
+	 * Method to get a list with sold history from a seller
+	 * <br>Pre:<b> First node of history into the seller must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list of articles
+	 */
 	public LinkedList<Article> getArticlesSolds(){
 		LinkedList<Article> listArticlesSolds = new LinkedList<>();
 		UserSeller currentU=  (UserSeller)(currentUser);
@@ -439,6 +546,12 @@ public class SkyMarket {
 		return listArticlesSolds;
 	}
 	
+	/**
+	 * Method to get a lish with purchased articles from a buyer
+	 * <br>Pre:<b> First node of history into the buyer must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list of articles
+	 */
 	public LinkedList<Article> getArticlesPurchased(){
 		LinkedList<Article> listArticlesPurchased = new LinkedList<Article>();
 		UserBuyer currentU = (UserBuyer)(currentUser);
@@ -451,6 +564,12 @@ public class SkyMarket {
 		return listArticlesPurchased;
 	}
 	
+	/**
+	 * Method to get a list of articles on sale
+	 * <br>Pre:<b> ArrayList of articles must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list of articles
+	 */
 	public LinkedList<Article> getListProductsOnSale() {
 		LinkedList<Article> listAllProductsOnSale = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
@@ -459,7 +578,12 @@ public class SkyMarket {
 		return listAllProductsOnSale;
 	}
 	
-	
+	/**
+	 * Method to get a list of users sellers
+	 * <br>Pre:<b> Arraylist of users must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list of users sellers
+	 */
 	public LinkedList<UserSeller> getListUsersSellers() {
 		LinkedList<UserSeller> listAllUsersSellers = new LinkedList<>();
 		
@@ -473,6 +597,12 @@ public class SkyMarket {
 		return listAllUsersSellers;
 	}
 	
+	/**
+	 * Method to export data clients in a file with extension .csv
+	 * <br>Pre:<b> users ArrayList must be initializated</b>
+	 * <br>Post:<b> A file with extension .csv created on the FILE_DATA_EXPORT_USERS path</b>
+	 * @throws FileNotFoundException Exception if the file can't be created
+	 */
 	public void exportDataClients() throws FileNotFoundException {
 		String s = File.pathSeparator;
 		PrintWriter pw = new PrintWriter(FILE_DATA_EXPORT_USERS);
@@ -484,6 +614,12 @@ public class SkyMarket {
 		pw.close();
 	}
 	
+	/**
+	 * Method to export data articles in a file with extension .csv
+	 * <br>Pre:<b> articles ArrayList must be initializated</b>
+	 * <br>Post:<b> A file with extension .csv created on the FILE_DATA_EXPORT_ARTICLES path</b>
+	 * @throws FileNotFoundException Exception if the file can't be created
+	 */
 	public void exportDataArticles() throws FileNotFoundException {
 		String s = File.pathSeparator;
 		LinkedList<CellPhone> listCellphone = getOnlyCellphone();
@@ -523,6 +659,12 @@ public class SkyMarket {
 		pw.close();
 	}
 	
+	/**
+	 * Method to get a list with only articles of class Cellphone
+	 * <br>Pre:<b> articles ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list only with cellphone articles
+	 */
 	public LinkedList<CellPhone> getOnlyCellphone() {
 		LinkedList<CellPhone> list = new LinkedList<>();
 		for(int i = 0; i < articles.size(); i++) {
@@ -534,6 +676,12 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to get a list with only articles of class Computer
+	 * <br>Pre:<b> articles ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list only with Computer articles
+	 */
 	public LinkedList<Computer> getOnlyComputer() {
 		LinkedList<Computer> list = new LinkedList<>();
 		for(int i = 0; i < articles.size(); i++) {
@@ -545,6 +693,12 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to get a list with only articles of class Fridge
+	 * <br>Pre:<b> articles ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list only with Fridge articles
+	 */
 	public LinkedList<Fridge> getOnlyFridge() {
 		LinkedList<Fridge> list = new LinkedList<>();
 		for(int i = 0; i < articles.size(); i++) {
@@ -556,6 +710,12 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to get a list with only articles of class Stove
+	 * <br>Pre:<b> articles ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @return A list only with Stove articles
+	 */
 	public LinkedList<Stove> getOnlyStove() {
 		LinkedList<Stove> list = new LinkedList<>();
 		for(int i = 0; i < articles.size(); i++) {
@@ -567,6 +727,13 @@ public class SkyMarket {
 		return list;
 	}
 	
+	/**
+	 * Method to import data clients from a .csv file
+	 * <br>Pre:<b> </b>
+	 * <br>Post:<b> Records of the file saved into the application, ArrayList of users</b>
+	 * @return A list with the errors on especfic lines
+	 * @throws IOException Exception if the file can't be readed
+	 */
 	public ArrayList<Integer> importDataClient() throws IOException {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		ArrayList<Integer> numLineError = new ArrayList<>();
@@ -600,6 +767,13 @@ public class SkyMarket {
 		return numLineError;
 	}
 	
+	/**
+	 * Method to verify the new user dont contains a repeated username
+	 * <br>Pre:<b> users ArrayList must be initializated</b>
+	 * <br>Post:<b> </b>
+	 * @param username The new user name to value
+	 * @throws UsernameRepeatException Exception if the username repeat
+	 */
 	public void verifyUsernameNotRepeat(String username) throws UsernameRepeatException{
 		for(int i = 0; i<users.size();i++) {
 			if(username.equalsIgnoreCase(users.get(i).getUsername())) {
@@ -854,4 +1028,12 @@ public class SkyMarket {
 
         }
     }
+
+	public UserSeller getRootSeller() {
+		return rootSeller;
+	}
+
+	public void setRootSeller(UserSeller rootSeller) {
+		this.rootSeller = rootSeller;
+	}
 }
