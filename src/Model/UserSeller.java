@@ -149,19 +149,19 @@ public class UserSeller extends User{
 		}
 	}
 	
-	public void addArticleToHistory(Article newArticle) {
+	public void addArticleToHistorySeller(Article newArticle) {
 		if(history == null) {
 			history = newArticle;
 		}else {
-			addArticleToHistory(history, newArticle);
+			addArticleToHistorySeller(history, newArticle);
 		}
 	}
 	
-	public void addArticleToHistory(Article current, Article newArticle) {
+	public void addArticleToHistorySeller(Article current, Article newArticle) {
 		if(current.getNextArticle() == null) {
-			current.setNextArticle(newArticle);
+			current.setNextArticle(newArticle); 
 		}else {
-			addArticleToHistory(current.getNextArticle(), newArticle);
+			addArticleToHistorySeller(current.getNextArticle(), newArticle);
 		}
 	}
 }

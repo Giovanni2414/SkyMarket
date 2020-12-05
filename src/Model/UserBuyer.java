@@ -69,19 +69,19 @@ public class UserBuyer extends User {
 		this.history = history;
 	}
 	
-	public void addArticleToBasket(Article newArticle) {
+	public void addArticleToHistory(Article newArticle) {
 		if(history == null) {
 			history = newArticle;
 		}else {
-			addArticleToBasket(history, newArticle);
+			addArticleToHistory(history.getNextArticle(), newArticle);
 		}
 	}
 	
-	public void addArticleToBasket(Article current, Article newArticle) {
-		if(current.getNextArticle()==null) {
-			current.setNextArticle(newArticle);
+	public void addArticleToHistory(Article current, Article newArticle) {
+		if(current==null) {
+			current=newArticle;
 		}else {
-			addArticleToBasket(current.getNextArticle(), newArticle);
+			addArticleToHistory(current.getNextArticle(), newArticle);
 		}
 	}
 }

@@ -381,10 +381,10 @@ public class SkyMarket {
 		UserSeller currentU=  (UserSeller)(currentUser);
 		Article current= currentU.getSellArticles();
 		
-			while(current!=null) {
-				listSellerArticles.add(current);
-				current = current.getNextArticle();
-			}
+		while(current!=null) {
+			listSellerArticles.add(current);
+			current = current.getNextArticle();
+		}
 		
 		return listSellerArticles;
 	}
@@ -394,19 +394,23 @@ public class SkyMarket {
 		UserSeller currentU=  (UserSeller)(currentUser);
 		Article currentArticle = currentU.getHistory();
 		
-		System.out.println(currentArticle.getName()+"1");
-		System.out.println(currentArticle.getNextArticle().getName()+"2");
-		System.out.println(currentArticle.getNextArticle().getNextArticle().getName()+"2");
-		System.out.println(currentArticle.getNextArticle().getNextArticle().getNextArticle().getName()+"4");
-		
-		
-		/*
 		while(currentArticle!=null) {
 			listArticlesSolds.add(currentArticle);
 			currentArticle = currentArticle.getNextArticle();
 		}
-		*/
 		return listArticlesSolds;
+	}
+	
+	public LinkedList<Article> getArticlesPurchased(){
+		LinkedList<Article> listArticlesPurchased = new LinkedList<Article>();
+		UserBuyer currentU = (UserBuyer)(currentUser);
+		Article currentArticle = currentU.getHistory();
+		
+		while(currentArticle!=null) {
+			listArticlesPurchased.add(currentArticle);
+			currentArticle = currentArticle.getNextArticle();
+		}
+		return listArticlesPurchased;
 	}
 	
 	public LinkedList<Article> getListProductsOnSale() {
@@ -652,13 +656,13 @@ public class SkyMarket {
 				seller = (UserSeller)(users.get(i));
 			}
 		}
-		seller.addArticleToHistory(articleSold);
+		seller.addArticleToHistorySeller(articleSold);
 		seller.modifyQuantity(articleSold.getCode(), articleSold.getQuantity());
 	}
 	
 	public void addArticleBuyToBuyer(Article articleSold) {
 		UserBuyer buyer = (UserBuyer)(currentUser);
-		buyer.addArticleToBasket(articleSold);
+		buyer.addArticleToHistory(articleSold);
 	}
 	
 	
