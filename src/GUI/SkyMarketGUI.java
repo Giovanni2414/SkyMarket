@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import Exceptions.EmptyFieldException;
 import Exceptions.IdentificationRepeatException;
@@ -37,8 +38,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -461,6 +464,8 @@ public class SkyMarketGUI {
 
     @FXML
     private Label lbPriceToShopping;
+    
+    private Stage modalStage;
     
 	/**
 	 * Constructor of SkyMarketGUI
@@ -1683,12 +1688,12 @@ public class SkyMarketGUI {
     	
     	Parent directPurchasePane = fxmlLoader.load();
     	
-    	Stage stage = new Stage();
-    	stage.setScene(new Scene(directPurchasePane));
-    	stage.setTitle("Compra");
-    	stage.initModality(Modality.WINDOW_MODAL);
+    	modalStage = new Stage();
+    	modalStage.setScene(new Scene(directPurchasePane));
+    	modalStage.setTitle("Compra");
+    	modalStage.initModality(Modality.WINDOW_MODAL);
     	
-    	stage.show();
+    	modalStage.show();
     	SpinnerValueFactory<Integer> s = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.parseInt(lbArticleQuantity.getText()));
     	sQuantityBuy.setValueFactory(s);
     	lbPriceToShopping.setText(lbArticlePrice.getText());
@@ -1707,11 +1712,8 @@ public class SkyMarketGUI {
 
     }
     
-    //methods directPurchase
-    
-    @FXML
-    void buyArticleDirect(ActionEvent event) throws CloneNotSupportedException {
-    	buyArticleAlert();
+  
+    public void buyArticleAdder() throws CloneNotSupportedException {
     	Article articleToBuy = skymarket.searchArticleByCode(lbArticleCode.getText());
     	articleToBuy.setQuantity(articleToBuy.getQuantity()-sQuantityBuy.getValue());
     	
@@ -1723,6 +1725,13 @@ public class SkyMarketGUI {
     	newArticleBuy2.setNextArticle(null);
     	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy2);
     	skymarket.addArticleBuyToBuyer(newArticleBuy);
+    }
+    
+    //methods directPurchase
+    
+    @FXML
+    void buyArticleDirect(ActionEvent event) throws CloneNotSupportedException {
+    	buyArticleAlert();
     }
     
     //methods share screenAddNewCellphone, screenAddNewFridge, screenAddNewStove
@@ -1944,11 +1953,43 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void buyArticleAlert() {
+    public void buyArticleAlert() throws CloneNotSupportedException {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setHeaderText("¿Esta seguro de comprar el articulo?");
     	alert.setContentText("Confirme si desea llevar el articulo que selecciono");
-    	alert.showAndWait();
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	if (result.get() == ButtonType.OK){
+    		buyArticleAdder();
+    	   modalStage.close();
+    	   buySuccessfulAlert();
+    	} 
+    	
+    }
+    
+    public void buySuccessfulAlert() {
+    	
+    	ArrayList<Integer> choices = new ArrayList<>();
+    	choices.add(1);
+    	choices.add(2);
+    	choices.add(3);
+    	choices.add(4);
+    	choices.add(5);
+
+    	ChoiceDialog<Integer> dialog = new ChoiceDialog<>(5, choices);
+    	dialog.setTitle("Compra exitosa");
+    	dialog.setHeaderText("Su compra fue realizada exitosamente");
+    	dialog.setContentText("Califica tu vendedor:");
+
+    	
+    	Optional<Integer> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		
+    		//Capturar calificación
+    	    System.out.println("Your choice: " + result.get());
+    	}
+    	
+   
     }
     
     public void historyArticleSoldEmpty() {
