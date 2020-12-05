@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-public class Article implements Serializable{
+public class Article implements Serializable, Cloneable{
 	
 	/**
 	 * 
@@ -216,5 +216,8 @@ public class Article implements Serializable{
 		this.nameSeller = nameSeller;
 	}
 	
-	
+	public Article clone() throws CloneNotSupportedException {
+		Article articleToClone = (Article)super.clone();
+		return articleToClone;
+	}
 }

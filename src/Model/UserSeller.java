@@ -133,6 +133,22 @@ public class UserSeller extends User{
 		}
 	}
 	
+	public void modifyQuantity(String codeProduct, int quantity) {
+		if(sellArticles.getCode().equals(codeProduct)) {
+			sellArticles.setQuantity(sellArticles.getQuantity()-quantity);
+		}else {
+			modifyQuantity(sellArticles.getNextArticle(), codeProduct, quantity);
+		}
+	}
+	
+	public void modifyQuantity(Article current, String codeProduct, int quantity) {
+		if(current.getCode().equals(codeProduct)) {
+			current.setQuantity(current.getQuantity()-quantity);
+		}else {
+			modifyQuantity(current.getNextArticle(), codeProduct, quantity);
+		}
+	}
+	
 	public void addArticleToHistory(Article newArticle) {
 		if(history == null) {
 			history = newArticle;

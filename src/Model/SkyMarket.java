@@ -383,10 +383,30 @@ public class SkyMarket {
 		
 			while(current!=null) {
 				listSellerArticles.add(current);
-				current= current.getNextArticle();
+				current = current.getNextArticle();
 			}
 		
 		return listSellerArticles;
+	}
+	
+	public LinkedList<Article> getArticlesSolds(){
+		LinkedList<Article> listArticlesSolds = new LinkedList<>();
+		UserSeller currentU=  (UserSeller)(currentUser);
+		Article currentArticle = currentU.getHistory();
+		
+		System.out.println(currentArticle.getName()+"1");
+		System.out.println(currentArticle.getNextArticle().getName()+"2");
+		System.out.println(currentArticle.getNextArticle().getNextArticle().getName()+"2");
+		System.out.println(currentArticle.getNextArticle().getNextArticle().getNextArticle().getName()+"4");
+		
+		
+		/*
+		while(currentArticle!=null) {
+			listArticlesSolds.add(currentArticle);
+			currentArticle = currentArticle.getNextArticle();
+		}
+		*/
+		return listArticlesSolds;
 	}
 	
 	public LinkedList<Article> getListProductsOnSale() {
@@ -576,6 +596,7 @@ public class SkyMarket {
 			}else if(info[0].equals("4")){
 				newArticle = importNewStove(info);
 			}
+			newArticle.setNameSeller(info[1]);
 			try {
 				addNewArticleToArticles(newArticle);
 				addNewArticleToUserSeller(info[1], newArticle);
@@ -611,6 +632,33 @@ public class SkyMarket {
 	public Stove importNewStove(String [] info) {
 		Stove s = new Stove(info[2],info[3],Double.parseDouble(info[4]),info[5],info[6],Integer.parseInt(info[7]),Double.parseDouble(info[8]),Double.parseDouble(info[9]),Double.parseDouble(info[10]),Double.parseDouble(info[11]),Double.parseDouble(info[12]),Integer.parseInt(info[13]),info[14]);
 		return s;
+	}
+	
+	public Article searchArticleByCode(String code) {
+		Article article = null;
+		for(int i = 0; i < articles.size(); i++) {
+			if(code.equals(articles.get(i).getCode())) {
+				article = articles.get(i);
+			}
+		}
+
+		return article;
+	}
+	
+	public void addArticleSoldToSeller(String username, Article articleSold) {
+		UserSeller seller = null;
+		for(int i = 0; i<users.size(); i++) {
+			if(username.equals(users.get(i).getUsername())) {
+				seller = (UserSeller)(users.get(i));
+			}
+		}
+		seller.addArticleToHistory(articleSold);
+		seller.modifyQuantity(articleSold.getCode(), articleSold.getQuantity());
+	}
+	
+	public void addArticleBuyToBuyer(Article articleSold) {
+		UserBuyer buyer = (UserBuyer)(currentUser);
+		buyer.addArticleToBasket(articleSold);
 	}
 	
 	
@@ -660,14 +708,6 @@ public class SkyMarket {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SERIALIZABLE_ARTICLE));
 		oos.writeObject(articles);
 		oos.close();
-	}
-	
-	public void test() {
-		for(int i = 0; i<articles.size();i++) {
-    		System.out.println("name: " + articles.get(i).getName());
-    		System.out.println("code: " + articles.get(i).getCode());
-    		System.out.println("price: " + articles.get(i).getPrice());
-    	}
 	}
 	
 	public LinkedList<Article> getArticlesPricesComparator(int fil) {
@@ -757,7 +797,8 @@ public class SkyMarket {
 			return response;
 		}
 	}
-
+	
+	//metodo para agregar administrador
 	public void crearAdministrador() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         String date = "12/01/1964";
