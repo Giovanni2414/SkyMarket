@@ -25,11 +25,34 @@ import Exceptions.UsernameRepeatException;
 
 public class SkyMarket {
 
+	/**
+	 * Constant of path serializable users
+	 */
 	public final static String FILE_SERIALIZABLE_USERS = "data/serializableData/clientsData.ap2";
+	
+	/**
+	 * Constant of path serializable articles
+	 */
 	public final static String FILE_SERIALIZABLE_ARTICLE = "data/serializableData/articlesData.ap2";
+	
+	/**
+	 * Constant of path for export data users
+	 */
 	public final static String FILE_DATA_EXPORT_USERS = "data/exportData/usersData.csv";
+	
+	/**
+	 * Constant of path for export data articles
+	 */
 	public final static String FILE_DATA_EXPORT_ARTICLES = "data/exportData/articlesData.csv";
+	
+	/**
+	 * Constant of path for import data articles
+	 */
 	public final static String FILE_DATA_IMPORT_CLIENTS = "data/importData/clientsData.csv";
+	
+	/**
+	 * Constant of path for import data articles
+	 */
 	public final static String FILE_DATA_IMPORT_ARTICLES = "data/importData/articlesData.csv";
 	
 	/**
@@ -176,6 +199,13 @@ public class SkyMarket {
 		return userSeek;
 	}
 	
+	/**
+	 * Method to search an user using the identification
+	 * <br>Pre:<b>List of users must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param username Username to search
+	 * @return Return the users finded or null
+	 */
 	public UserSeller searchUserByIdentification(String username) {
 		LinkedList<UserSeller> list = getListUsersSellers();
 		UserSeller search = null; 
@@ -307,7 +337,7 @@ public class SkyMarket {
 	/**
 	 * verificationFieldsAddArticle
 	 * <br>Pre:<b></b>
-	 * <br>Post:<b>check the content of the fields to add a new article
+	 * <br>Post:<b>check the content of the fields to add a new article</b>
 	 */
 	public void verificationFieldsAddArticle(String name,String code,double price, String description, String picture, int quantity,String type) throws EmptyFieldException{
 		if(name == null || code == null || price == 0  || description == null || picture == null || quantity == 0 || type == null) {

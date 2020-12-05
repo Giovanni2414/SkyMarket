@@ -5,21 +5,30 @@ import java.time.LocalDate;
 public class UserBuyer extends User {
 	
 	/**
-	 * 
+	 * Serial version UID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The first node of the basket to buy
+	 */
 	private Article basket;
+	
+	/**
+	 * The first node of article history buys
+	 */
 	private Article history;
 	
-	/*
-	name: UserBuyer
-	Its the constructor of UserBuyer
-	@param: name
-	@param: lastName
-	@param: identification
-	@param: password
-	@param: username
-	@param: picture
+	/**
+	* Its the constructor of UserBuyer
+	* <br><b>Pre:</b> 
+	* <br><b>Post: All the variables will be initializated</b> 
+	* @param name The user mainly name
+	* @param lastName the user lastname
+	* @param identification The user identification
+	* @param password The user password
+	* @param username The user unique username to enter into the application
+	* @param picture The user profile picture path
 	**/
 	public UserBuyer(String name, String lastName, String identification,String email, String password, String username, String picture, LocalDate birthday) {
 		super(name,lastName,identification,email,password,username,picture,birthday);
@@ -27,48 +36,52 @@ public class UserBuyer extends User {
 		history = null;
 	}
 	
-	/*
-	name: getBasket
-	allows to obtain the basket of the user buyer
-	<b>pre:</b>The UserBuyer object must be created
-	<b>post:</b>obtain the basket of the user buyer saved in variable "basket"
+	/**
+	* allows to obtain the basket of the user buyer
+	* <br><b>Pre: The UserBuyer object must be created</b> 
+	* <br><b>Post: obtain the basket of the user buyer saved in variable "basket"</b> 
+	* @return The first node of the basket buys
 	**/
 	public Article getBasket() {
 		return basket;
 	}
 	
-	/*
-	name: setBasket
-	allows entering a new basket for the user buyer
-	<b>pre:</b>The UserBuyer object must be created
-	<b>post:</b>the basket will be saved in the variable "basket"
-	@param: basket
+	/**
+	* Allows entering a new basket for the user buyer
+	* <br><b>Pre: The UserBuyer object must be created</b> 
+	* <br><b>Post: the basket will be saved in the variable "basket"</b> 
+	* @param basket
 	**/
 	public void setBasket(Article basket) {
 		this.basket = basket;
 	}
 	
-	/*
-	name: getHistory
-	allows to obtain the history sales of the user buyer
-	<b>pre:</b>The UserBuyer object must be created
-	<b>post:</b>obtain the history sales of the user buyer saved in variable "history"
+	/**
+	* Allows to obtain the history sales of the user buyer
+	* <br><b>Pre: The UserBuyer object must be created</b> 
+	* <br><b>Post: obtain the history sales of the user buyer saved in variable "history"</b> 
+	* @return The first node of the history buys
 	**/
 	public Article getHistory() {
 		return history; 
 	}
 	
-	/*
-	name: setHistory
-	allows entering a new history sales for the user buyer
-	<b>pre:</b>The UserBuyer object must be created
-	<b>post:</b>the history sales will be saved in the variable "history"
-	@param: history
+	/**
+	* Allows entering a new history sales for the user buyer
+	* <br><b>Pre: The UserBuyer object must be created</b> 
+	* <br><b>Post: the history sales will be saved in the variable "history"</b> 
+	* @param history The new first node of the history buys
 	**/
 	public void setHistory(Article history) {
 		this.history = history;
 	}
 	
+	/**
+	 * Method to add a new article to the bastek adding a new node
+	 * <br><b>Pre:</b>
+	 * <br><b>Post: A new node has been added to the history buys</b>
+	 * @param newArticle
+	 */
 	public void addArticleToBasket(Article newArticle) {
 		if(history == null) {
 			history = newArticle;
@@ -77,6 +90,13 @@ public class UserBuyer extends User {
 		}
 	}
 	
+	/**
+	 * Recursive method to add a new node into the basket history buys
+	 * <br><b>Pre:</b> First node of article must be initializated
+	 * <br><b>Post:</b> A new node has been added to the history
+	 * @param current The current node to value
+	 * @param newArticle The new article node to add
+	 */
 	public void addArticleToBasket(Article current, Article newArticle) {
 		if(current.getNextArticle()==null) {
 			current.setNextArticle(newArticle);
