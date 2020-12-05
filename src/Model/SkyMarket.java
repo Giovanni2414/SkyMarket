@@ -96,6 +96,7 @@ public class SkyMarket {
 	
 	/**
 	 * Method to verify info of register
+	 * <br>Pre:<b> </b>
 	 * <br>Post:<b>the info  to register is not null</b>
 	 * @param name Name of the user
 	 * @param lastname LastName of the user
