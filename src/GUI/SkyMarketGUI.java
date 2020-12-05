@@ -891,13 +891,20 @@ public class SkyMarketGUI {
     	tvArticlesTSUB.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent event) {
-               managementArticleToBuy(tvArticlesTSUB.getSelectionModel().getSelectedItem());
+            	if(tvArticlesTSUB.getSelectionModel().getSelectedItem().getQuantity()==0) {
+            		outOfStockAlert();
+            	}else {
+            		 managementArticleToBuy(tvArticlesTSUB.getSelectionModel().getSelectedItem());
+            	}
+              
             }
         });
         
     }
     
-    public void managementArticleToBuy(Article article) {
+    
+
+	public void managementArticleToBuy(Article article) {
     	try {
     		if(article instanceof CellPhone) {
         		CellPhone articleC = (CellPhone)(article);
@@ -1777,7 +1784,7 @@ public class SkyMarketGUI {
     //methods directPurchase
     
     @FXML
-    void buyArticleDirect(ActionEvent event) throws CloneNotSupportedException {
+    void buyArticleDirect(ActionEvent event) throws CloneNotSupportedException, IOException {
     	buyArticleAlert();
     }
     
@@ -2000,7 +2007,7 @@ public class SkyMarketGUI {
     	alert.showAndWait();
     }
     
-    public void buyArticleAlert() throws CloneNotSupportedException {
+    public void buyArticleAlert() throws CloneNotSupportedException, IOException {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setHeaderText("¿Esta seguro de comprar el articulo?");
     	alert.setContentText("Confirme si desea llevar el articulo que selecciono");
@@ -2015,7 +2022,15 @@ public class SkyMarketGUI {
     	
     }
     
-    public int buySuccessfulAlert() {
+    public void outOfStockAlert() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Articulo no disponible");
+    	alert.setContentText("No se encuentran cantidades disponibles");
+    	alert.showAndWait();
+		
+	}
+    
+    public int buySuccessfulAlert() throws IOException {
     	int calification = 0;
     	ArrayList<Integer> choices = new ArrayList<>();
     	choices.add(1);
@@ -2034,6 +2049,8 @@ public class SkyMarketGUI {
     	if (result.isPresent()){
     		//Capturar la calificacion
     		calification = result.get();
+    		loginManagement(skymarket.getCurrentUser());
+    		
     	}
     	return calification;
     }

@@ -32,7 +32,7 @@
          </children>
       </AnchorPane>
    </top>
-   <center>
+   <bottom>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="228.0" layoutY="14.0" text="Ordenar usuarios por:">
@@ -78,12 +78,17 @@
                   <Image url="@../../data/iconPacks/basic-icons/210-contact-information.png" />
                </image>
             </ImageView>
-            <Button layoutX="215.0" layoutY="277.0" mnemonicParsing="false" onAction="#createBinaryTreeBtn" prefHeight="25.0" prefWidth="171.0" text="Vendedores por calificacion">
+            <Button layoutX="215.0" layoutY="277.0" mnemonicParsing="false" onAction="#createBinaryTreeBtn" prefHeight="25.0" prefWidth="171.0" text="Vendedores por calificación">
                <font>
-                  <Font name="System Bold Italic" size="11.0" />
+                  <Font size="11.0" />
                </font>
             </Button>
+            <ImageView fitHeight="64.0" fitWidth="62.0" layoutX="270.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/iconPacks/basic-icons/206-user-6.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-   </center>
+   </bottom>
 </BorderPane>
