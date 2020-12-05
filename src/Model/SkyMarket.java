@@ -105,6 +105,12 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Orchest the creation of the binary tree and
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b> Binary tree created and ArrayList global binaryList filled</b>
+	 * @return The List of UsersSellers after the creation of the binary tree
+	 */
 	public ArrayList<UserSeller> getBinaryList() {
 		rootSeller = null;
 		binaryList.clear();
@@ -113,6 +119,12 @@ public class SkyMarket {
 		return binaryList;
 	}
 	
+	/**
+	 * Add the binary tree users into an ArrayList global to return
+	 * <br>Pre:<b> ArrayList global binaryList must be initializated</b>
+	 * <br>Post:<b> Objects added into the global ArrayList bianryList</b>
+	 * @param u The actual user to value
+	 */
 	public void createListBinary(UserSeller u) {
 		if(u!=null) {
 			createListBinary(u.getRight());
@@ -121,6 +133,11 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Candidate method to create a new binary tree with users, criteria = calification
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b> The global temp list initializated again and </b>
+	 */
 	public void createBinaryTreeCalification() {
 		ArrayList<UserSeller> tempList = new ArrayList<>();
 		for(int c = 0; c < users.size(); c++) {
@@ -137,6 +154,12 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method to add an UserSeller into a binary tree
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b> A new user added into the binary tree</b>
+	 * @param u The new user to add
+	 */
 	private void addSellerBinaryTree(UserSeller u) {
 		if(getRootSeller() == null) {
 			setRootSeller(u);
@@ -145,6 +168,13 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * MEthod to add an UserSeller into a binary tree
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b> New user added to the binary tree</b>
+	 * @param miracle The actual node to value
+	 * @param u The new user to add
+	 */
 	private void addSellerBinaryTree(UserSeller miracle, UserSeller u) {
 		if(miracle.getCalification()>=u.getCalification()) {
             if(miracle.getLeft()==null) {
@@ -782,6 +812,13 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method to verify don't duplicate identification
+	 * <br>Pre:<b> ArrayList users must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param identification The idenfitication to value
+	 * @throws IdentificationRepeatException Exception if the idenficiation already exists
+	 */
 	public void verifyIdentificationNotRepeat(String identification) throws IdentificationRepeatException{
 		for(int i = 0; i<users.size();i++) {
 			if(identification.equalsIgnoreCase(users.get(i).getIdentification())) {
@@ -790,6 +827,13 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method to import data clients from a .csv file
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b> Users added into the ArrayList users</b>
+	 * @return Return a list of number lines where errores has ocurred
+	 * @throws IOException Exception if the file can't be reader
+	 */
 	public ArrayList<Integer> importDataArticles() throws IOException {
 		ArrayList<Integer> numLineError = new ArrayList<>();
 		int cont = 2;
@@ -826,18 +870,38 @@ public class SkyMarket {
 		return numLineError;
 	}
 	
+	/**
+	 * Helper to import the Cellphone from a .csv file
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b></b>
+	 * @param info Receive a line to split
+	 * @return Return an object of type Cellphone
+	 */
 	public CellPhone importNewCellphone(String[] info) {
 		CellPhone cp = new CellPhone(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11], Integer.parseInt(info[12]), Integer.parseInt(info[13]));
 		return cp;
 	}
 	
-	
+	/**
+	 * Helper to import the Computer from a .csv file
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b></b>
+	 * @param info Receive a line to split
+	 * @return Return an object of type Computer
+	 */
 	public Computer importNewComputer(String [] info) {
 		boolean touch = (info[13].equalsIgnoreCase("Si"))?true:false;
 		Computer c = new Computer(info[2], info[3], Double.parseDouble(info[4]), info[5], info[6], Integer.parseInt(info[7]), Double.parseDouble(info[8]), Integer.parseInt(info[9]), Integer.parseInt(info[10]), info[11] , Integer.parseInt(info[12]),touch);
 		return c;
 	}
 
+	/**
+	 * Helper to import the Fridge from a .csv file
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b></b>
+	 * @param info Receive a line to split
+	 * @return Return an object of type Fridge
+	 */
 	public Fridge importNewFridge(String [] info) {
 		boolean smart = (info[13].equalsIgnoreCase("SI"))?true:false;
 		boolean frost = (info[14].equalsIgnoreCase("SI"))?true:false;
@@ -845,11 +909,25 @@ public class SkyMarket {
 		return f;
 	}
 
+	/**
+	 * Helper to import the stove from a .csv file
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b></b>
+	 * @param info Receive a line to split
+	 * @return Return an object of type stove
+	 */
 	public Stove importNewStove(String [] info) {
 		Stove s = new Stove(info[2],info[3],Double.parseDouble(info[4]),info[5],info[6],Integer.parseInt(info[7]),Double.parseDouble(info[8]),Double.parseDouble(info[9]),Double.parseDouble(info[10]),Double.parseDouble(info[11]),Double.parseDouble(info[12]),Integer.parseInt(info[13]),info[14]);
 		return s;
 	}
 	
+	/**
+	 * Method to search an article using the code
+	 * <br>Pre:<b>The ArrayList of articles must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param Code the code of article to search
+	 * @return Return finded article
+	 */
 	public Article searchArticleByCode(String code) {
 		Article article = null;
 		for(int i = 0; i < articles.size(); i++) {
@@ -861,6 +939,13 @@ public class SkyMarket {
 		return article;
 	}
 	
+	/**
+	 * Method to add an sold article into the history of their seller
+	 * <br>Pre:<b>ArrayList of users must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param username Username of the seller
+	 * @param articleSold The article to add
+	 */
 	public void addArticleSoldToSeller(String username, Article articleSold) {
 		UserSeller seller = null;
 		for(int i = 0; i<users.size(); i++) {
@@ -926,6 +1011,13 @@ public class SkyMarket {
 		oos.close();
 	}
 	
+	/**
+	 * Method to get a sorted LinkedList with articles, criteria: Price
+	 * <br>Pre:<b>The ArrayList of articles must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param fil The type of criteria to sort
+	 * @return Return a sorted list of articles
+	 */
 	public LinkedList<Article> getArticlesPricesComparator(int fil) {
 		LinkedList<Article> list = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
@@ -970,6 +1062,13 @@ public class SkyMarket {
 		}
 	}
 	
+	/**
+	 * Method to get a sorted LinkedList with articles
+	 * <br>Pre:<b>The ArrayList of articles must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @param fil The type of sort, 1 = A-Z, 2 = Z-A
+	 * @return A list with the sorted articles
+	 */
 	public LinkedList<Article> getArticlesAZ(int fil) {
 		LinkedList<Article> list = new LinkedList<>();
 		for(int c = 0; c < articles.size(); c++) {
@@ -1014,7 +1113,11 @@ public class SkyMarket {
 		}
 	}
 	
-	//metodo para agregar administrador
+	/**
+	 * Method to crean an administrator
+	 * <br>Pre:<b>ArrayList of users must be initializated</b>
+	 * <br>Post:<b>A new user of type administrator added into the ArrayList users</b>
+	 */
 	public void crearAdministrador() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         String date = "12/01/1964";
@@ -1029,10 +1132,22 @@ public class SkyMarket {
         }
     }
 
+	/**
+	 * Getter of rootSeller
+	 * <br>Pre:<b>The variable must be initializated</b>
+	 * <br>Post:<b></b>
+	 * @return Return the rootSeller variable
+	 */
 	public UserSeller getRootSeller() {
 		return rootSeller;
 	}
 
+	/**
+	 * Setter of roomSeller
+	 * <br>Pre:<b></b>
+	 * <br>Post:<b>A new root seller has been setter</b>
+	 * @param rootSeller The new rootSeller to set
+	 */
 	public void setRootSeller(UserSeller rootSeller) {
 		this.rootSeller = rootSeller;
 	}
