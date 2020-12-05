@@ -805,8 +805,31 @@ public class SkyMarketGUI {
     //methods mainScreenUserBuyer
     
     @FXML
-    void historyShopping(ActionEvent event) {
+    void historyShopping(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showArticlesSeller.fxml"));
     	
+    	fxmlLoader.setController(this);
+    	
+    	Parent showArticlesPane = fxmlLoader.load();
+    	
+    	mainPanel.getChildren().clear();
+    	mainPanel.setCenter(showArticlesPane);
+    	initializeTableHistoryShoppings();
+    }
+    
+    public void initializeTableHistoryShoppings() {
+    	ObservableList<Article> observableList;
+    	observableList = FXCollections.observableList(skymarket.getArticlesPurchased());
+    	
+    	tvArticlesSeller.setItems(observableList);
+    	tcNameArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Name"));
+    	tcCodeArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Code"));
+    	tcPriceArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Double>("Price"));
+    	tcDescriptionArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, String>("Description"));
+    	tcQuantityArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
+    	if(skymarket.getArticlesPurchased().isEmpty()) {
+    		historyArticlePurchasedEmpty();
+    	}
     }
 
     @FXML
@@ -1911,6 +1934,13 @@ public class SkyMarketGUI {
     	Alert alert = new Alert(AlertType.ERROR);
     	alert.setHeaderText("Lista vacia");
     	alert.setContentText("No ha vendido articulos aun");
+    	alert.showAndWait();
+    }
+    
+    public void historyArticlePurchasedEmpty() {
+    	Alert alert = new Alert(AlertType.ERROR);
+    	alert.setHeaderText("Lista vacia");
+    	alert.setContentText("No ha comprado articulos aun");
     	alert.showAndWait();
     }
 }

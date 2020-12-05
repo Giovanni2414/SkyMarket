@@ -190,6 +190,9 @@ public class UserSeller extends User{
 		}
 	}
 	
+<<<<<<< HEAD
+	public void addArticleToHistorySeller(Article newArticle) {
+=======
 	/**
 	 * Method to set a new root of the history of sales
 	 * <br><b>Pre:</b>
@@ -197,13 +200,17 @@ public class UserSeller extends User{
 	 * @param newArticle
 	 */
 	public void addArticleToHistory(Article newArticle) {
+>>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
 		if(history == null) {
 			history = newArticle;
 		}else {
-			addArticleToHistory(history, newArticle);
+			addArticleToHistorySeller(history, newArticle);
 		}
 	}
 	
+<<<<<<< HEAD
+	public void addArticleToHistorySeller(Article current, Article newArticle) {
+=======
 	/**
 	 * Method helper of addArticleToHistory  with the function of add a new node into the history
 	 * <br><b>Pre: A principal root must be initializated</b>
@@ -212,10 +219,11 @@ public class UserSeller extends User{
 	 * @param newArticle The new node to add into the list
 	 */
 	public void addArticleToHistory(Article current, Article newArticle) {
+>>>>>>> 1fb2da4d68b0fa3314ee7f1e71c7ce1d013b7993
 		if(current.getNextArticle() == null) {
-			current.setNextArticle(newArticle);
+			current.setNextArticle(newArticle); 
 		}else {
-			addArticleToHistory(current.getNextArticle(), newArticle);
+			addArticleToHistorySeller(current.getNextArticle(), newArticle);
 		}
 	}
 }
