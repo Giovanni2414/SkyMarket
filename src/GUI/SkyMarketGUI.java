@@ -1438,11 +1438,7 @@ public class SkyMarketGUI {
     	tcQuantityArticleSeller.setCellValueFactory(new PropertyValueFactory<Article, Integer>("Quantity"));
 	}
 
-	@FXML
-    void modifyShipping(ActionEvent event) {
-    	
-    }
-    
+	
     //methods screenAddNewArticle
     
     @FXML
@@ -1738,6 +1734,7 @@ public class SkyMarketGUI {
     	Parent directPurchasePane = fxmlLoader.load();
     	
     	modalStage = new Stage();
+    	modalStage.getIcons().add(new Image(new FileInputStream("data/picturesApp/skymarket-icon.png")));
     	modalStage.setScene(new Scene(directPurchasePane));
     	modalStage.setTitle("Compra");
     	modalStage.initModality(Modality.WINDOW_MODAL);
@@ -1785,9 +1782,31 @@ public class SkyMarketGUI {
     //Cart Methods
 
     @FXML
-    void btnBuyFromCart(ActionEvent event) {
-
+    void btnBuyFromCart(ActionEvent event) throws CloneNotSupportedException, IOException {
+    	buyArticleFromCartAlert();
+    	
     }
+    	
+    
+    
+    public void buyFromCartAdder(int calification) throws CloneNotSupportedException {
+    	int itemsAmount=skymarket.getBinaryListCart().size();
+    	for (int i = 0; i < itemsAmount; i++) {
+    		Article articleToBuy = skymarket.searchArticleByCode(skymarket.getBinaryListCart().get(i).getCode());
+    		articleToBuy.setQuantity(articleToBuy.getQuantity()-skymarket.getBinaryListCart().get(i).getQuantity());
+    		Article newArticleBuy = articleToBuy.clone();
+        	Article newArticleBuy2 = articleToBuy.clone();
+        	newArticleBuy.setQuantity(skymarket.getBinaryListCart().get(i).getQuantity());
+        	newArticleBuy.setNextArticle(null);
+        	newArticleBuy2.setQuantity(skymarket.getBinaryListCart().get(i).getQuantity());
+        	newArticleBuy2.setNextArticle(null);
+        	skymarket.addArticleSoldToSeller(articleToBuy.getNameSeller(), newArticleBuy2);
+        	skymarket.addArticleBuyToBuyer(newArticleBuy);
+        	UserSeller u = skymarket.searchUserByIdentification(articleToBuy.getNameSeller());
+        	u.changeCalification(calification);
+		}
+    }
+    	
     
 
     @FXML
@@ -1846,6 +1865,7 @@ public class SkyMarketGUI {
     	Parent addToCartPane = fxmlLoader.load();
     	
     	modalStageCart = new Stage();
+    	modalStageCart.getIcons().add(new Image(new FileInputStream("data/picturesApp/skymarket-icon.png")));
     	modalStageCart.setScene(new Scene(addToCartPane));
     	modalStageCart.setTitle("Agregar al Carrito");
     	modalStageCart.initModality(Modality.WINDOW_MODAL);
@@ -1970,6 +1990,7 @@ public class SkyMarketGUI {
     	alert.setHeaderText("Campo vacío");
     	alert.setContentText("Todos los campos tienen que tener un dato ingresado");
     	alert.showAndWait();
+    	
     }
     
     public void fxmlNotFound() {
@@ -2110,6 +2131,8 @@ public class SkyMarketGUI {
     		calification = buySuccessfulAlert();
     		buyArticleAdder(calification);
     		modalStage.close();
+    		skymarket.saveDataClients();
+    		skymarket.saveDataArticles();
     	} 
     	
     }
@@ -2134,6 +2157,26 @@ public class SkyMarketGUI {
     	alert.showAndWait();
 		
 	}
+    
+    
+    public void buyArticleFromCartAlert() throws CloneNotSupportedException, IOException {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setHeaderText("¿Esta seguro de comprar los articulo?");
+    	alert.setContentText("Confirme si desea comprar los articulos");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	if (result.get() == ButtonType.OK){
+    		int calification = 0;
+    		calification = buySuccessfulFromCartAlert();
+    		buyFromCartAdder(calification);
+    		skymarket.saveDataClients();
+    		skymarket.saveDataArticles();
+    		skymarket.resetCart();
+    	} 
+    	
+    }
+    
+    
     public void cartSuccessfulAlert() throws IOException {
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setHeaderText("Articulo agregado al carrito exitosamente");
@@ -2150,6 +2193,32 @@ public class SkyMarketGUI {
     	alert.setHeaderText("Articulo no disponible");
     	alert.setContentText("No se encuentran cantidades disponibles");
     	alert.showAndWait();
+		
+	}
+	
+	public int buySuccessfulFromCartAlert() throws IOException {
+		int calification = 0;
+    	ArrayList<Integer> choices = new ArrayList<>();
+    	choices.add(1);
+    	choices.add(2);
+    	choices.add(3);
+    	choices.add(4);
+    	choices.add(5);
+
+    	ChoiceDialog<Integer> dialog = new ChoiceDialog<>(5, choices);
+    	dialog.setTitle("Compra exitosa");
+    	dialog.setHeaderText("Su compra fue realizada exitosamente");
+    	dialog.setContentText("Califica tu vendedores:");
+
+    	
+    	Optional<Integer> result = dialog.showAndWait();
+    	if (result.isPresent()){
+    		//Capturar la calificacion
+    		calification = result.get();
+    		loginManagement(skymarket.getCurrentUser());
+    		
+    	}
+    	return calification;
 		
 	}
     

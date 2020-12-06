@@ -34,28 +34,22 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="144.0" mnemonicParsing="false" onAction="#addArticleToSell" prefHeight="25.0" prefWidth="183.0" text="Agregar producto a vender" />
-            <Button layoutX="204.0" layoutY="144.0" mnemonicParsing="false" onAction="#viewListArticlesToSell" text="Ver lista de productos a vender" />
-            <Button layoutX="398.0" layoutY="144.0" mnemonicParsing="false" onAction="#historySales" prefHeight="25.0" prefWidth="188.0" text="Historial de productos vendidos" />
-            <Button layoutX="252.0" layoutY="264.0" mnemonicParsing="false" onAction="#modifyShipping" text="Modificar envio" />
-            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="66.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+            <Button layoutX="7.0" layoutY="176.0" mnemonicParsing="false" onAction="#addArticleToSell" prefHeight="25.0" prefWidth="183.0" text="Agregar producto a vender" />
+            <Button layoutX="197.0" layoutY="176.0" mnemonicParsing="false" onAction="#viewListArticlesToSell" text="Ver lista de productos a vender" />
+            <Button layoutX="391.0" layoutY="176.0" mnemonicParsing="false" onAction="#historySales" prefHeight="25.0" prefWidth="188.0" text="Historial de productos vendidos" />
+            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="59.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/iconPacks/e-commerce-icons/005-bag.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="261.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="81.0" fitWidth="79.0" layoutX="254.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/iconPacks/e-commerce-icons/081-shopping-bag-4.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="75.0" fitWidth="74.0" layoutX="455.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="75.0" fitWidth="74.0" layoutX="448.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/iconPacks/e-commerce-icons/089-ecommerce-1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="266.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/iconPacks/e-commerce-icons/024-delivery-truck.png" />
                </image>
             </ImageView>
          </children>
