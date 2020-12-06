@@ -3,7 +3,10 @@
 _Basic system about selling and buying created in the Java language implementing GUI interfaces created in SceneBuilder_
 
 ## Assignments
-<a href="https://github.com/Giovanni2414/SkyMarket/blob/master/docs/Mosquera%20A00365672%20-%20Sanin%20A00296776%20-%20Zorrilla%20-A00365972.pdf">First milestone assignment</a>
+<a href="https://github.com/Giovanni2414/SkyMarket/blob/master/docs/Assignments/Mosquera%20A00365672%20-%20Sanin%20A00296776%20-%20Zorrilla%20-A00365972.pdf">First milestone assignment</a>
+<a href="https://github.com/Giovanni2414/SkyMarket/blob/master/docs/Assignments/Assignment2.pdf">Second milestone assignment</a>
+
+[Sustentation Video](https://youtu.be/fN2FEIIMjyI) - Video explanation
 
 ## Starting 🚀
 
