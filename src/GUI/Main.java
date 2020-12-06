@@ -32,7 +32,7 @@ public class Main extends Application{
 		
 		skymarketGUI.loadProgressBar();
 
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(root,600,450);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("SkyMarket");
 		primaryStage.show();
