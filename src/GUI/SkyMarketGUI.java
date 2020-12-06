@@ -1734,6 +1734,7 @@ public class SkyMarketGUI {
     	Parent directPurchasePane = fxmlLoader.load();
     	
     	modalStage = new Stage();
+    	modalStage.getIcons().add(new Image(new FileInputStream("data/picturesApp/skymarket-icon.png")));
     	modalStage.setScene(new Scene(directPurchasePane));
     	modalStage.setTitle("Compra");
     	modalStage.initModality(Modality.WINDOW_MODAL);
@@ -1864,6 +1865,7 @@ public class SkyMarketGUI {
     	Parent addToCartPane = fxmlLoader.load();
     	
     	modalStageCart = new Stage();
+    	modalStageCart.getIcons().add(new Image(new FileInputStream("data/picturesApp/skymarket-icon.png")));
     	modalStageCart.setScene(new Scene(addToCartPane));
     	modalStageCart.setTitle("Agregar al Carrito");
     	modalStageCart.initModality(Modality.WINDOW_MODAL);
@@ -1988,6 +1990,7 @@ public class SkyMarketGUI {
     	alert.setHeaderText("Campo vacío");
     	alert.setContentText("Todos los campos tienen que tener un dato ingresado");
     	alert.showAndWait();
+    	
     }
     
     public void fxmlNotFound() {
