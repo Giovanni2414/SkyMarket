@@ -54,6 +54,8 @@ public class Article implements Serializable, Cloneable{
 	 */
 	private String nameSeller;
 	
+	
+	
 	/**
 	* Its the constructor of Article 
 	* <br><b>Pre:<b> 
@@ -262,4 +264,6 @@ public class Article implements Serializable, Cloneable{
 		Article articleToClone = (Article)super.clone();
 		return articleToClone;
 	}
+
+
 }

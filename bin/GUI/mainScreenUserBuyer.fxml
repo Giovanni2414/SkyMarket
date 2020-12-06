@@ -35,7 +35,7 @@
                </font>
             </Label>
             <Button layoutX="29.0" layoutY="155.0" mnemonicParsing="false" onAction="#viewListArticleForSale" text="Ver productos ofrecidos" />
-            <Button layoutX="233.0" layoutY="155.0" mnemonicParsing="false" onAction="#viewBasket" text="Ver carrito de compras" />
+            <Button layoutX="233.0" layoutY="155.0" mnemonicParsing="false" onAction="#viewCart" text="Ver carrito de compras" />
             <Button layoutX="429.0" layoutY="155.0" mnemonicParsing="false" onAction="#historyShopping" prefHeight="25.0" prefWidth="143.0" text="Historial de compras" />
             <ImageView fitHeight="86.0" fitWidth="95.0" layoutX="58.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
